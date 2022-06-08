@@ -1,0 +1,88 @@
+<div class="content">
+    <h1 style="text-align: center; font-weight: bold;">PING-PONG JÁTSZMA LEJÁTSZÁSA</h1>
+    <div class="players">
+        <div>
+            <div class="btn" ngbDropdown > 
+                <button type="button" class="btn"  
+                    [class.btn-outline-success] = "player1Selected"  
+                    [class.btn-outline-danger] = "!player1Selected" 
+                    ngbDropdownToggle>{{selPlayer1}}
+                </button>
+                <div class="dropdown-menu" ngbDropdownMenu>
+                    <button ngbDropdownItem *ngFor="let player of players" (click)="onP1Select(player.name)" >{{player.name}}</button>
+                </div>
+            </div>
+            <p>Pont: {{p1rating | number: '1.0-0'}} 
+                <span [class.hide]="p1Gain==0" [class.upcolor]="p1Gain > 0" [class.downcolor]="p1Gain < 0">{{p1Gain | number: '1.0-0'}}</span>
+                <i [class.hide]="p1Gain==0" [class.up]="p1Gain > 0" [class.down]="p1Gain<0" class="arrow"></i>
+            </p>
+        </div>
+        <p style="font-size: 150%;">vs</p>
+        <div>
+            <div class="btn" ngbDropdown> 
+                <button type="button" class="btn" 
+                    [class.btn-outline-success] = "player2Selected"  
+                    [class.btn-outline-danger] = "!player2Selected" 
+                    ngbDropdownToggle>{{selPlayer2}}
+                </button>
+                <div class="dropdown-menu" ngbDropdownMenu>
+                    <button ngbDropdownItem *ngFor="let player of players" (click)="onP2Select(player.name)" >{{player.name}}</button>
+                </div>
+            </div>
+            <p>Pont: {{p2rating | number: '1.0-0'}}
+                <span [class.hide]="p2Gain==0" [class.upcolor]="p2Gain > 0" [class.downcolor]="p2Gain < 0">{{p2Gain | number: '1.0-0'}}</span>
+                <i [class.hide]="p2Gain==0" [class.up]="p2Gain > 0" [class.down]="p2Gain<0" class="arrow"></i>
+            </p>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 1rem" class="btn" ngbDropdown> 
+        <button type="button" class="btn"
+            [class.btn-outline-success] = "winnerSelected"  
+            [class.btn-outline-danger] = "!winnerSelected" 
+            ngbDropdownToggle>{{selWinner}}
+        </button>
+        <div class="dropdown-menu" ngbDropdownMenu>
+            <button ngbDropdownItem *ngFor="let player of playing" (click)="onWSelect(player)" >{{player}}</button>
+        </div>
+    </div>
+    <div style="margin-bottom: 1rem">
+        <button class="btn btn-outline-info" (click)="playMatch()">Lejátszás</button>
+    </div>
+    <div>
+        <button class="btn btn-outline-info" (click)="openModal(content)">Jelenlegi Rangsor</button>
+    </div>
+</div>
+<div class="content" style="margin-top: 20px">
+    <h1 style="text-align: center; font-weight: bold;">JÁTÉKOS HOZZÁADÁSA</h1>
+</div>
+<div class="content" style="margin-top: 20px">
+    <h1 style="text-align: center; font-weight: bold;">JÁTÉKOS ELTÁVOLÍTÁSA</h1>
+</div>
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">RANGSOR</h4>
+        <button type="button"  class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <table>
+            <tr>
+                <th>Helyezés</th>
+                <th>Név</th>
+                <th>Pont</th>
+                <th>Játszott Meccsek</th>
+            </tr>
+            <tr *ngFor="let player of players | sort: 'rating'; let i = index">
+                <td>{{i+1}}.</td>
+                <td>{{player.name}}</td>
+                <td>{{player.rating | number: '1.0-0'}}</td>
+                <td>{{player.games}}</td>
+            </tr>
+          </table>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Bezárás</button>
+    </div>
+</ng-template>
+  
+

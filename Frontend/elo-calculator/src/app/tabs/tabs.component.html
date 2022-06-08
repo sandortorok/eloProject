@@ -1,0 +1,72 @@
+<button class="myheader" (click)="mynav.select(0)">
+    <img src="assets/header.png">
+</button>
+
+<ul ngbNav #mynav="ngbNav" style="display: none;">
+    <li [ngbNavItem] = "0">
+        <a ngbNavLink>HOME</a>
+        <ng-template ngbNavContent>
+            <button class = "icon" (click)="mynav.select(1)">
+                <img src="assets/chess_icon2.png">
+                <span style="margin-top: 20px;">Sakk</span>
+            </button>
+            <button class = "icon icon2" (click)="mynav.select(2)">
+                <img src="assets/pingpong_icon5.png">
+                <span style="margin-top: 20px;">Ping-Pong</span>
+            </button>
+            <button class = "icon icon6" (click)="mynav.select(6)">
+                <img src="assets/pingpong_icon5.png">
+                <span style="margin-top: 20px;">Páros</span>
+            </button>
+            <button class = "icon icon3" (click)="mynav.select(3)">
+                <img src="assets/klask_icon2.png">
+                <span style="margin-top: 20px;">Klask</span>
+            </button>
+            <button class = "icon icon5" (click)="mynav.select(5)">
+                <img src="assets/csocso_icon2.png">
+                <span style="margin-top: 20px;">Csocsó</span>
+            </button>
+            <button class = "icon icon4" (click)="mynav.select(4)">
+                <img src="assets/volley_icon3.png">
+                <span style="margin-top: 20px;">Röplabda</span>
+            </button>
+            <button class = "icon icon7" (click)="mynav.select(7)">
+                <img src="assets/frizbi_icon2.png">
+                <span style="margin-top: 20px;">Frizbi</span>
+            </button>
+            <button class = "icon icon8" (click)="mynav.select(8)">
+                <img src="assets/basketball_icon2.png">
+                <span style="margin-top: 20px;">Kosárlabda</span>
+            </button>
+            <button class = "icon icon9" (click)="mynav.select(9)">
+                <img src="assets/football_icon2.png">
+                <span style="margin-top: 20px;">Dekázás</span>
+            </button>
+        </ng-template>
+    </li>
+    <li [ngbNavItem] = "1" >
+        <a ngbNavLink>Sakk</a>
+        <ng-template ngbNavContent><app-chess-tab></app-chess-tab></ng-template>
+    </li>
+    <li [ngbNavItem] = "2" >
+        <a ngbNavLink>Ping-Pong</a>
+        <ng-template ngbNavContent><app-pingpong-tab></app-pingpong-tab></ng-template>
+    </li>
+
+    <li [ngbNavItem] = "3" >
+        <a ngbNavLink>Klask</a>
+        <ng-template ngbNavContent><app-klask-tab></app-klask-tab></ng-template>
+    </li>
+    <li [ngbNavItem] = "4">
+        <a ngbNavLink>Röplabda</a>
+        <ng-template ngbNavContent><app-bracket [mynav]="mynav"></app-bracket></ng-template>
+    </li>
+    <li [ngbNavItem] = "5">
+        <a ngbNavLink>Csocsó</a>
+        <ng-template ngbNavContent>Csocsó</ng-template>
+    </li>
+</ul>
+  
+
+<div [ngbNavOutlet]="mynav" class="items"></div>
+<!-- /#wrapper -->

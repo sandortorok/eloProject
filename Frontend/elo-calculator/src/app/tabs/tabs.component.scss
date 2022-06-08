@@ -1,0 +1,92 @@
+
+
+.icon{
+  background-color: #298F0D;
+  background-color: rgb(6, 109, 226);
+
+  border: 5px solid white;
+  border-radius: 10%;
+  color: white;
+  min-height: 12.5rem;
+  min-width: 12.5rem;
+  margin: 10px;
+}
+
+h1{
+  font-size: clamp(1rem, 1rem + 5vw, 5rem);
+}
+.icon:hover{
+  filter: brightness(85%);
+}
+.icon:active{
+  filter: brightness(60%);
+}
+
+span {
+  font: 600 25px 'Roboto', sans-serif;
+  order: 2;
+  display: block;
+}
+
+.icon2{
+  background-color: #ec1b5a;
+}
+.icon3{
+  background-color: #f86300;
+  background-color: #298F0D;
+
+
+}
+
+.icon4{
+  background-color: #ec1b5a;
+  background-color: #298F0D;
+  background-color: rgb(91, 99, 109);
+  background-color: rgb(6, 109, 226);
+  background-color: rgb(0, 38, 82);
+
+
+}
+.icon5{
+  background-color: #D89E00;
+  background-color: #f86300;
+}
+.icon6{
+  background-color: #f86300;
+  background-color: #D89E00;
+}
+.icon7{
+  background-color: rgb(20, 194, 98);
+}
+.icon8{
+  background-color: #7000d8;
+}
+.icon9{
+  background-color: #d80e00;
+}
+.myheader{
+  position: relative;
+  border: 0;
+  background-color: rgba(76, 175, 80, 0); 
+  border-radius: 10%; 
+  overflow: hidden;
+  margin:0 auto;
+  margin-bottom: 1rem;
+
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.items{
+  text-align: center;
+}
+.myheader:hover{
+  filter: brightness(85%);
+}
+.myheader:active{
+  filter: brightness(60%);
+}
+
+
+
+
