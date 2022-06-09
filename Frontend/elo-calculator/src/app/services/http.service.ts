@@ -97,7 +97,13 @@ export class HttpService {
     return this.http.post(this.url + '/pingponggames',body)
       .pipe(catchError(this.handleError));
   }
-
+/////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////VOLLEYBALL////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+  getVolleyTeams(){
+    return this.http.get(this.url+ '/volleyteams')
+      .pipe(catchError(this.handleError));
+  }
   private handleError(error:Response){
     if (error.status === 404){
       return throwError(new NotFoundError(error))

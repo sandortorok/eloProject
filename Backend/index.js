@@ -105,7 +105,7 @@ app.get('/klaskplayers', (req, res) => {
     })
 })
 
-app.post('/chessplayer', (req, res) => {
+app.post('/klaskplayer', (req, res) => {
     let msg = req.body;
     let games = 0
     let name = msg.name;
@@ -213,7 +213,16 @@ app.post('/pingponggames', (req, res) => {
         res.send({msg: 'Added Ping-Pong Game to DB'});
     })
 })
-
+/////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////VOLLEYBALL////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+app.get('/volleyteams', (req, res) => {
+    let sql = `SELECT * FROM volleyballTeams`;
+    let query = db.query(sql, (err, result) => {
+        if(err) throw err;
+        res.send(result);
+    })
+})
 // simple route
 app.get("/", (req, res) => {
     res.json({ hello: "This is my Angular backend :))))" });

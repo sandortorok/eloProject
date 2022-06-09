@@ -7,8 +7,17 @@ export interface Player {
   games: number;
 }
 
-export interface Tab{
-
+export interface Team{
+  teamName:string,
+  name1: string,
+  name2?: string,
+  name3?: string,
+  name4?: string,
+  name5?: string,
+  name6?: string,
+  name7?: string,
+  rating?: number,
+  games?:number
 }
 
 @Injectable({
@@ -18,11 +27,13 @@ export class DataService {
   chessPlayers: Player[] = [];
   klaskPlayers: Player[] = [];
   pingpongPlayers: Player[] = [];
+  volleyBallTeams: Team[] = []
 
   constructor(private httpservice: HttpService) {
     this.loadChessPlayers();
     this.loadKlaskPlayers();
     this.loadPingPongPlayers();
+    this.loadVolleyTeams();
   }
   
   loadChessPlayers(){
@@ -46,6 +57,14 @@ export class DataService {
       let myarray = Object.values(data);
       myarray.forEach(player=>{
         this.pingpongPlayers.push(player);
+      })
+    })
+  }
+  loadVolleyTeams(){
+    this.httpservice.getVolleyTeams().subscribe(data=>{
+      let myarray = Object.values(data);
+      myarray.forEach(team=>{
+        this.volleyBallTeams.push(team);
       })
     })
   }

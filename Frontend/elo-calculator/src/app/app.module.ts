@@ -1,5 +1,5 @@
+import { DataService } from './services/data.service';
 import { HttpService } from './services/http.service';
-import { SidebarDirective } from './directives/sidebar.directive';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
@@ -13,16 +13,21 @@ import { PingpongTabComponent } from './pingpong-tab/pingpong-tab.component';
 import { PlayerSortPipe } from './pipes/player-sort.pipe';
 import { BracketComponent } from './bracket/bracket.component';
 import { FormsModule } from '@angular/forms';
+import { NgbdModalContent } from './bracket/modal/modal.component';
+import { TeamComponent } from './bracket/team/team.component';
+import { MatchComponent } from './bracket/match/match.component';
 @NgModule({
   declarations: [
     AppComponent,
-    SidebarDirective,
     TabsComponent,
     ChessTabComponent,
     KlaskTabComponent,
     PingpongTabComponent,
     PlayerSortPipe,
-    BracketComponent
+    BracketComponent,
+    NgbdModalContent,
+    TeamComponent,
+    MatchComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +36,7 @@ import { FormsModule } from '@angular/forms';
     HttpClientModule,
     FormsModule
   ],
-  providers: [HttpService],
+  providers: [HttpService, DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

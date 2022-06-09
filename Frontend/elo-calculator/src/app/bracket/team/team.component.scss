@@ -1,0 +1,28 @@
+.team {
+    color:black;
+    padding: 0 5px;
+    margin: 3px 0;
+    height: 25px;
+    line-height: 25px;
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    background-color: #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    list-style-type: none;
+    opacity: 1;
+}
+.score {
+    font-size: 11px;
+    text-transform: uppercase;
+    float: right;
+    color: #2c7399;
+    font-weight: bold;
+    font-family: "Roboto Condensed", sans-serif;
+    position: absolute;
+    right: 5px;
+}
+.played{
+    opacity: 0.45;
+}

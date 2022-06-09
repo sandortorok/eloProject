@@ -31,10 +31,13 @@ export class ChessTabComponent implements OnInit {
   delSelected:boolean = false
   constructor(private dataservice: DataService, private httpservice: HttpService, private modalService: NgbModal) {
     this.players = dataservice.chessPlayers;
+    console.log(this.players.length);
     this.playing[2] = "Döntetlen"
   }
   
   ngOnInit(): void {
+    console.log(this.players.length);
+
   }
   onP1Select(value){
     this.selPlayer1 = value
