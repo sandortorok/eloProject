@@ -20,59 +20,60 @@
        </div>
     </header>
 	<section id="bracket">
-	<div class="container">
-	<div class="split">
-		<div class="round round-one current">
-			<div class="round-details">A CSOPORT<br/><span class="date">KEDD</span></div>
-            <app-match [team1] = "teams[0]" [team2] = "teams[1]"></app-match>
-            <app-match [team1] = "teams[1]" [team2] = "teams[2]"></app-match>					
-            <app-match [team1] = "teams[2]" [team2] = "teams[0]"></app-match>					
-			
-		</div>	<!-- END ROUND ONE -->
-	</div> 
-    <div class="split">
-         <div class="round current">
-            <div class="round-details">B CSOPORT<br/><span class="date">KEDD</span></div>
-            <ul class="matchup">
-				<app-team [name] = "(teams.length > 3) ? teams[3].teamName : 'B Csoport 1. Csapat'"></app-team>
-				<app-team [name] = "(teams.length > 4) ? teams[4].teamName : 'B Csoport 2. Csapat'"></app-team>
-            </ul>
-            <ul class="matchup">
-				<app-team [name] = "(teams.length > 4) ? teams[4].teamName : 'B Csoport 2. Csapat'"></app-team>
-				<app-team [name] = "(teams.length > 5) ? teams[5].teamName : 'B Csoport 3. Csapat'"></app-team>
-            </ul>
-            <ul class="matchup">
-				<app-team [name] = "(teams.length > 5) ? teams[5].teamName : 'B Csoport 3. Csapat'"></app-team>
-				<app-team [name] = "(teams.length > 3) ? teams[3].teamName : 'B Csoport 1. Csapat'"></app-team>
-            </ul>								
-        </div>	<!-- END ROUND ONE -->          				
-    </div>
-    <div class="champion">
-        <div class="semis-l" style="margin-bottom: 17%">
-            <div class="round-details">1.Elődöntő<br/><span class="date">Szerda-Csütörtök</span></div>		
-            <ul class ="matchup championship">
-                <app-team name = "A csop. 1.helyezett"></app-team>
-                <li class="team team-bottom">B csop. 2.helyezett<span class="vote-count">&nbsp;</span></li>
-            </ul>
-        </div>
-        <div class="semis-r">		
-            <div class="round-details">2.Elődöntő<br/><span class="date">Szerda-Csütörtök</span></div>		
-            <ul class ="matchup championship">
-                <li class="team team-top">B csop. 1.helyezett<span class="vote-count">&nbsp;</span></li>
-                <li class="team team-bottom">A csop. 2.helyezett<span class="vote-count">&nbsp;</span></li>
-            </ul>
-        </div>	
+        <div class="container">
+            <div class="split">
+                <div class="round round-one current">
+                    <div class="round-details">A CSOPORT<br/><span class="date">KEDD</span></div>
+                    <app-match [team1] = "teams[0]" [team2] = "teams[1]"></app-match>
+                    <app-match [team1] = "teams[1]" [team2] = "teams[2]"></app-match>					
+                    <app-match [team1] = "teams[2]" [team2] = "teams[0]"></app-match>					
+                    
+                </div>	<!-- END ROUND ONE -->
+            </div> 
+            <div class="split">
+                <div class="round current">
+                    <div class="round-details">B CSOPORT<br/><span class="date">KEDD</span></div>
+                    <ul class="matchup">
+                        <app-team [name] = "(teams.length > 3) ? teams[3].teamName : 'B Csoport 1. Csapat'"></app-team>
+                        <app-team [name] = "(teams.length > 4) ? teams[4].teamName : 'B Csoport 2. Csapat'"></app-team>
+                    </ul>
+                    <ul class="matchup">
+                        <app-team [name] = "(teams.length > 4) ? teams[4].teamName : 'B Csoport 2. Csapat'"></app-team>
+                        <app-team [name] = "(teams.length > 5) ? teams[5].teamName : 'B Csoport 3. Csapat'"></app-team>
+                    </ul>
+                    <ul class="matchup">
+                        <app-team [name] = "(teams.length > 5) ? teams[5].teamName : 'B Csoport 3. Csapat'"></app-team>
+                        <app-team [name] = "(teams.length > 3) ? teams[3].teamName : 'B Csoport 1. Csapat'"></app-team>
+                    </ul>								
+                </div>	<!-- END ROUND ONE -->          				
+            </div>
+            <div class="champion">
+                <div class="semis-l" style="margin-bottom: 17%">
+                    <div class="round-details">1.Elődöntő<br/><span class="date">Szerda-Csütörtök</span></div>		
+                    <ul class ="matchup championship">
+                        <app-team name = "A csop. 1.helyezett"></app-team>
+                        <li class="team team-bottom">B csop. 2.helyezett<span class="vote-count">&nbsp;</span></li>
+                    </ul>
+                </div>
+                <div class="semis-r">		
+                    <div class="round-details">2.Elődöntő<br/><span class="date">Szerda-Csütörtök</span></div>		
+                    <ul class ="matchup championship">
+                        <li class="team team-top">B csop. 1.helyezett<span class="vote-count">&nbsp;</span></li>
+                        <li class="team team-bottom">A csop. 2.helyezett<span class="vote-count">&nbsp;</span></li>
+                    </ul>
+                </div>	
 
-    </div>
-    <div class="champion">
-        <div class="final">
-            <div class="round-details">Döntő<br/><span class="date">Szerda-Csütörtök</span></div>		
-            <i class="fa fa-trophy"></i>
-            <ul class ="matchup championship">
-                <li class="team team-top">1. Elődöntő Győztes<span class="vote-count">&nbsp;</span></li>
-                <li class="team team-bottom">2. Elődöntő Győztes<span class="vote-count">&nbsp;</span></li>
-            </ul>
+            </div>
+            <div class="champion">
+                <div class="final">
+                    <div class="round-details">Döntő<br/><span class="date">Szerda-Csütörtök</span></div>		
+                    <i class="fa fa-trophy"></i>
+                    <ul class ="matchup championship">
+                        <li class="team team-top">1. Elődöntő Győztes<span class="vote-count">&nbsp;</span></li>
+                        <li class="team team-bottom">2. Elődöntő Győztes<span class="vote-count">&nbsp;</span></li>
+                    </ul>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-</section>
+    </section>
+</body>

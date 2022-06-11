@@ -16,7 +16,8 @@ import { FormsModule } from '@angular/forms';
 import { NgbdModalContent } from './bracket/modal/modal.component';
 import { TeamComponent } from './bracket/team/team.component';
 import { MatchComponent } from './bracket/match/match.component';
-import { SingleElimBracketComponent } from './single-elim-bracket/single-elim-bracket.component';
+import { SEBracketComponent } from './se-bracket/se-bracket.component';
+import { DEBracketComponent } from './de-bracket/de-bracket.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +30,8 @@ import { SingleElimBracketComponent } from './single-elim-bracket/single-elim-br
     NgbdModalContent,
     TeamComponent,
     MatchComponent,
-    SingleElimBracketComponent
+    SEBracketComponent,
+    DEBracketComponent
   ],
   imports: [
     BrowserModule,

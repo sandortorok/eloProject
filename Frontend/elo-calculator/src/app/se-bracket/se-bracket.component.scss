@@ -1,7 +1,5 @@
 body {
     font-family: "Istok Web", sans-serif;
-    background: url("http://picjumbo.com/wp-content/uploads/HNCK2189-1300x866.jpg") no-repeat #000;
-    background-size: cover;
     min-height: 100%;
     margin: 0;
     color: #000;
@@ -93,6 +91,9 @@ body {
     overflow: hidden;
     position: relative;
     list-style-type: none;
+    cursor: pointer;
+    width: min(90%, 300px);
+    opacity: 0.45;
 }
 
 .round {
@@ -114,12 +115,15 @@ body {
 }
 
 .matchup {
-    margin: 0;
+    display: grid;
+    place-items: center;
+    margin: 0 auto;
     width: 100%;
     padding: 10px 0;
     height: 60px;
     -webkit-transition: all 0.2s;
     transition: all 0.2s;
+
 }
 
 .round-2 .matchup {
@@ -155,18 +159,17 @@ body {
 .round li {
     background-color: #fff;
     box-shadow: none;
-    opacity: 0.45;
 }
-
-.current li {
+.current {
     opacity: 1;
 }
 
-.current li.team {
+.current.team {
     background-color: #fff;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
     opacity: 1;
 }
+
 
 
 .final {
@@ -212,4 +215,89 @@ body {
         border-bottom: 1px solid #b6b6b6;
         padding-bottom: 20px;
     }
+}
+
+
+
+
+
+
+$side-margin: 50px;
+$vertical-margin: 10px;
+
+body{
+  background-color: DarkSalmon ;
+}
+
+.wrapper{
+  display: flex;
+  height: 600px;
+  justify-content: center;
+}
+
+.item{
+  display: flex;
+  flex-direction: row-reverse;
+  p{
+    padding: 20px;
+    margin: 0;
+    background-color: Beige;
+  }
+  
+  &-parent{
+    position: relative;
+    margin-left: $side-margin;
+    display: flex;
+    align-items: center;
+    &:after{
+        position: absolute;
+        content: '';
+        width: $side-margin/2;
+        height: 2px;
+        left: 0;
+        top: 50%;
+        background-color: black;
+        transform: translateX(-100%);
+    }
+  }
+  &-childrens{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  &-child{
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    margin-top: $vertical-margin;
+    margin-bottom: $vertical-margin;
+    position: relative;
+    &:before{
+      content: '';
+      position: absolute;
+      background-color: blue;
+      right: 0;
+      top: 50%;
+      transform: translateX(100%);
+      width: 25px;
+      height: 2px;
+    }
+    &:after{
+      content: '';
+      position: absolute;
+      background-color: blue;
+      right: -$side-margin / 2;
+      height: calc(50% + 22px) ;
+      width: 2px;
+      top: 50%;
+    }
+    &:last-child{
+      &:after{
+        transform: translateY(-100%);
+      }
+    }
+    &:only-child:after{          
+      display: none;          
+    }
+  }
 }

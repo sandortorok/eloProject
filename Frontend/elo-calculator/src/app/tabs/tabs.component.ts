@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SingleEliminationGeneratorService } from '../services/single-elimination-generator.service';
+import { SEGeneratorService } from '../services/se-generator.service';
 
 @Component({
   selector: 'app-tabs',
@@ -8,7 +8,7 @@ import { SingleEliminationGeneratorService } from '../services/single-eliminatio
 })
 export class TabsComponent implements OnInit {
 
-  constructor(a: SingleEliminationGeneratorService) { }
+  constructor(a: SEGeneratorService) { }
 
   ngOnInit(): void {
   }
