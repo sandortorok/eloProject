@@ -11,7 +11,8 @@
             ngbDropdownToggle>{{selPlayer}}
         </button>
         <div class="dropdown-menu" ngbDropdownMenu>
-            <button ngbDropdownItem *ngFor="let team of teams" (click)="onSelect(team.teamName)" >{{team.teamName}}</button>
+            <button ngbDropdownItem (click)="onSelect(player1)" >{{player1}}</button>
+            <button ngbDropdownItem (click)="onSelect(player2)" >{{player2}}</button>
         </div>
     </div>
 </div>

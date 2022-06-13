@@ -1,6 +1,5 @@
 import { DataService, Team } from './../services/data.service';
 import { Component, Input, OnInit } from '@angular/core';
-import { NgbdModalContent } from './modal/modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 

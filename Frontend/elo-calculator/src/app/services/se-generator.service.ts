@@ -5,17 +5,17 @@ import { Injectable } from '@angular/core';
 })
 export class SEGeneratorService {
   constructor() {
-    this.generateMatches()
+    let players = 20
+    this.loadExampleTeams(players)
+    this.generateMatches(this.exampleTeams)
   }
   GeneratedGames:Object[] = [];
   players: string[] = [];
-  generateMatches() {
-    let exampleTeams:string[] = [];
-    for (let i = 0; i < 200; i++) {
-      exampleTeams.push(`${i + 1}. Játékos`);
-    }
+  exampleTeams:string[] = []
 
-    let players = 20;
+
+  generateMatches(inputTeams) {
+    let players = inputTeams.length;
     let closestBase = this.getClosest(players);
     let Elonyerok = closestBase - players;
     let Meccsek_Száma = closestBase / 2;
@@ -30,7 +30,7 @@ export class SEGeneratorService {
       let newGame = {};
       
       let teams: string[] = [];
-      teams.push(exampleTeams[teamNumber]);
+      teams.push(inputTeams[teamNumber]);
       teams.push("");
       teamNumber += 1;
       newGame['Meccs_id'] = matchID;
@@ -57,8 +57,8 @@ export class SEGeneratorService {
     for (let i = 0; i < Meccsek_Száma - Elonyerok; i++) {
       let newGame = {};
       let teams: string[] = [];
-      teams.push(exampleTeams[teamNumber]);
-      teams.push(exampleTeams[teamNumber + 1]);
+      teams.push(inputTeams[teamNumber]);
+      teams.push(inputTeams[teamNumber + 1]);
       teamNumber += 2;
       newGame['Meccs_id'] = matchID;
       matchID++;
@@ -124,8 +124,9 @@ export class SEGeneratorService {
       }     
     }
     this.GeneratedGames = games;
+    console.log(games);
     for (let i = 0; i < teamNumber; i++){
-      this.players.push(exampleTeams[i])
+      this.players.push(inputTeams[i])
     }
   }
   getRandomInt(max) {
@@ -142,5 +143,10 @@ export class SEGeneratorService {
       }
     }
     return -1;
+  }
+  loadExampleTeams(how_many){
+    for (let i = 0; i < how_many; i++) {
+      this.exampleTeams.push(`${i + 1}. Játékos`);
+    }
   }
 }

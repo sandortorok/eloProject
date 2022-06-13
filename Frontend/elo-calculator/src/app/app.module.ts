@@ -1,3 +1,4 @@
+import { SEModal } from './se-bracket/se-modal/se-modal.component';
 import { DataService } from './services/data.service';
 import { HttpService } from './services/http.service';
 import { NgModule } from '@angular/core';
@@ -31,7 +32,8 @@ import { DEBracketComponent } from './de-bracket/de-bracket.component';
     TeamComponent,
     MatchComponent,
     SEBracketComponent,
-    DEBracketComponent
+    SEModal,
+    DEBracketComponent,
   ],
   imports: [
     BrowserModule,
