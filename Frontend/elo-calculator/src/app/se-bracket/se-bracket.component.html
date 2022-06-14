@@ -11,8 +11,16 @@
 	<title>March Madness Stock Matchup</title>
 </head>
 <body>
-	<section id="bracket">
-        <div class="container" #container>
+    <app-spinner *ngIf="matches.length == 0"  ></app-spinner>
+    <div class="pyro">
+        <div class="before"></div>
+        <div class="after"></div>
+    </div>
+	<section *ngIf="matches.length > 0" id="bracket">
+        <div class="btn-wrapper">
+            <app-neon-button></app-neon-button>
+        </div>
+        <div  class="container" #container>
             <div class="split split-one" [ngStyle]="{'width': (team32) ? '42%' : '100%'}">
                 <div *ngFor="let round of rounds; let i = index" class="round round-{{i+1}}" >
                     <div class="round-details">Round {{i+1}}<br/><span class="date">March 16</span></div>
@@ -70,11 +78,12 @@
                             [class.win]="match.Csapatok[0]==match.Gyoztes && match.Gyoztes.length > 0"> 
                             {{match.Csapatok[0]}}<span class="score">{{match.score0}}</span></li>
                         <li class="team" (click)="onTeamClick($event)"
-                            [class.win]="match.Csapatok[1]==match.Gyoztes  && match.Gyoztes.length > 0"> 
-                            {{match.Csapatok[1]}}<span class="score">{{match.score1}}</span></li>
+                        [class.win]="match.Csapatok[1]==match.Gyoztes  && match.Gyoztes.length > 0"> 
+                        {{match.Csapatok[1]}}<span class="score">{{match.score1}}</span></li>
                     </ul>
                 </div>	<!-- END ROUND ONE -->
             </div> 
         </div>
 	</section>
+    
 </body>

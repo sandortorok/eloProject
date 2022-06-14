@@ -19,6 +19,8 @@ import { TeamComponent } from './bracket/team/team.component';
 import { MatchComponent } from './bracket/match/match.component';
 import { SEBracketComponent } from './se-bracket/se-bracket.component';
 import { DEBracketComponent } from './de-bracket/de-bracket.component';
+import { SpinnerComponent } from './spinner/spinner.component';
+import { NeonButtonComponent } from './neon-button/neon-button.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,6 +36,8 @@ import { DEBracketComponent } from './de-bracket/de-bracket.component';
     SEBracketComponent,
     SEModal,
     DEBracketComponent,
+    SpinnerComponent,
+    NeonButtonComponent,
   ],
   imports: [
     BrowserModule,

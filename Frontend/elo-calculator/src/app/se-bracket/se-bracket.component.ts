@@ -1,7 +1,8 @@
-import { SEGeneratorService } from '../services/se-generator.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SEModal } from './se-modal/se-modal.component';
+import { animate, style, transition, trigger } from '@angular/animations';
+import { SEGeneratorService } from './se-generator.service';
 
 @Component({
   selector: 'app-se-bracket',
@@ -10,8 +11,8 @@ import { SEModal } from './se-modal/se-modal.component';
 })
 export class SEBracketComponent implements OnInit {
   @ViewChild('container') container;
-  matches;
-  players;
+  matches:any[] = [];
+  players:any[] = [];
   playerElements: any[] = []
   rounds: Array<any> = [];
   rounds2: Array<any> = [];
@@ -21,34 +22,41 @@ export class SEBracketComponent implements OnInit {
 
   team32 = false;
   constructor(private bracket: SEGeneratorService, private modalService: NgbModal) {
-    this.matches = bracket.GeneratedGames;
-    this.players = bracket.players;
-    if (this.matches.length > 30) {
-      this.team32 = true;
-    }
-    for (let i = 0; i < 7; i++) {
-      let newRound = this.matches.filter(el => { return el.Round == (i + 1) });
-      if (newRound.length == 2 && this.team32) {
-        this.semi1 = newRound[0]
-        this.semi2 = newRound[1]
-      }
-      else if (newRound.length == 1 && this.team32) {
-        this.final = newRound[0]
-      }
-      else if (newRound.length > 0) {
-        if (this.team32) {
-          let newRound2 = newRound.splice(newRound.length / 2, newRound.length)
-          this.rounds2.push(newRound2)
-        }
-        this.rounds.push(newRound)
-      }
-    }
+    
   }
   ngOnInit(): void {
-  }
-  ngAfterViewInit() {
-    this.giveHoverEffect();
-    this.giveCurrentClass();
+    this.bracket.generated.subscribe(()=>{
+      this.matches = this.bracket.GeneratedGames;
+      this.players = this.bracket.players;
+      if (this.matches.length > 30) {
+        this.team32 = true;
+      }
+      for (let i = 0; i < 7; i++) {
+        let newRound = this.matches.filter(el => { return el.Round == (i + 1) });
+        if (newRound.length == 2 && this.team32) {
+          this.semi1 = newRound[0]
+          this.semi2 = newRound[1]
+        }
+        else if (newRound.length == 1 && this.team32) {
+          this.final = newRound[0]
+        }
+        else if (newRound.length > 0) {
+          if (this.team32) {
+            let newRound2 = newRound.splice(newRound.length / 2, newRound.length)
+            this.rounds2.push(newRound2)
+          }
+          this.rounds.push(newRound)
+        }
+      }
+      //meg kell várni míg renderel a view
+      setTimeout(() => {
+        if (this.container != undefined){
+          this.giveHoverEffect();
+          this.giveCurrentClass();
+        }
+      });
+    })
+    this.bracket.startGenerating('example')
   }
   giveCurrentClass() {
     let matchups = this.container.nativeElement.querySelectorAll('ul');
@@ -77,7 +85,7 @@ export class SEBracketComponent implements OnInit {
       samePlayer.forEach(e => {
         e.onmouseover = () => {
           samePlayer.forEach(same => {
-            same.style.border = "2px solid #2c7399";
+            same.style.border = "1px solid #000";
             same.style.opacity = 1;
           })
         }

@@ -7,7 +7,7 @@ h1{
   background-color: #298F0D;
   background-color: rgb(6, 109, 226);
   
-  background-image: linear-gradient(to bottom right, #231557 0%, #44107A 29%, #FF1361 67%, #FFF800 100%);
+  // background-image: linear-gradient(to bottom right, #231557 0%, #44107A 29%, #FF1361 67%, #FFF800 100%);
 
   border: 5px solid white;
   border-radius: 10%;
@@ -34,21 +34,21 @@ span {
 }
 .icon1{
   // background-image: radial-gradient(circle, #a7e99f 0%, #298F0D 100%);
-  background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+  // background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
 
 
 }
 .icon2{
   background-color: #e41150;  
   // background-image: linear-gradient(-225deg, #231557 0%, #44107A 29%, #FF1361 67%, #FFF800 100%);
-  background-image: linear-gradient(to bottom left, #231557 0%, #44107A 29%, #FF1361 67%, #FFF800 100%);
+  // background-image: linear-gradient(to bottom left, #231557 0%, #44107A 29%, #FF1361 67%, #FFF800 100%);
 
 }
 .icon3{
   background-color: #f86300;
   background-color: #298F0D;
   // background-image: linear-gradient(to right, #8e2de2, #4a00e0);
-  background-image: linear-gradient(to top left, #231557 0%, #44107A 29%, #FF1361 67%, #FFF800 100%);
+  // background-image: linear-gradient(to top left, #231557 0%, #44107A 29%, #FF1361 67%, #FFF800 100%);
 
 }
 .icon3:hover{
@@ -61,7 +61,7 @@ span {
   background-color: rgb(6, 109, 226);
   background-color: rgb(0, 38, 82);
   // background-image: linear-gradient(to top right, #fffbd5, #b20a2c);
-  background-image: linear-gradient(to top right, #231557 0%, #44107A 29%, #FF1361 67%, #FFF800 100%);
+  // background-image: linear-gradient(to top right, #231557 0%, #44107A 29%, #FF1361 67%, #FFF800 100%);
 
 }
 .icon4:hover{
@@ -69,21 +69,23 @@ span {
 .icon5{
   background-color: #D89E00;
   background-color: #f86300;
-  background-image: linear-gradient(to bottom left, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+  // background-image: linear-gradient(to bottom left, #051937, #004d7a, #008793, #00bf72, #a8eb12);
 }
 .icon6{
   background-color: #f86300;
   background-color: #D89E00;
   // background-image: linear-gradient(to top right, #f86300, #D89E00);
-  background-image: linear-gradient(to bottom right, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+  // background-image: linear-gradient(to bottom right, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+  transition: all 500ms ease-in-out;
 
   
 }
 .icon6:hover{
+  border-radius: 11% 89% 10% 90% / 90% 11% 89% 10% ;
 }
 .icon7{
   background-color: rgb(20, 194, 98);
-  background-image: linear-gradient(to top left, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+  // background-image: linear-gradient(to top left, #051937, #004d7a, #008793, #00bf72, #a8eb12);
 
 }
 .icon8{
@@ -95,7 +97,7 @@ span {
 .icon9{
   background-color: #d80e00;
   // background-image: linear-gradient(to top, #3f51b1 0%, #5a55ae 13%, #7b5fac 25%, #8f6aae 38%, #a86aa4 50%, #cc6b8e 62%, #f18271 75%, #f3a469 87%, #f7c978 100%)
-  background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+  // background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
 
 }
 .myheader{

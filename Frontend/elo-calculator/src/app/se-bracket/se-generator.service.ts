@@ -1,25 +1,65 @@
-import { Injectable } from '@angular/core';
+import { DataService, Player, Team } from '../services/data.service';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SEGeneratorService {
-  constructor() {
-    let players = 20
-    this.loadExampleTeams(players)
-    this.generateMatches(this.exampleTeams)
+  constructor(private data: DataService) {
   }
+  
   GeneratedGames:Object[] = [];
   players: string[] = [];
   exampleTeams:string[] = []
+  @Output() generated = new EventEmitter();
 
+  startGenerating(gameType: string = 'example', players?: Player[], teams?: Team[]){
+    let players_length = 20
+    if (players == undefined){}
+    if (teams == undefined){}
+    switch (gameType){
+      case 'example': 
+        this.loadExampleTeams(players_length)
+        this.generateMatches(this.exampleTeams)
+        setTimeout(() => {
+          this.generated.emit();
+        }, 1000);
+        break;
+      case 'volleyBall':
+        setTimeout(() => {
+          let arr:string[] = [];
+          this.data.volleyBallTeams.forEach(team=>{
+            arr.push(team.teamName)
+          })
+          this.generateMatches(arr)
+          this.generated.emit();
+        }, 1000);
+        break;
+      case 'chess':
+        setTimeout(() => {
+          let arr:string[] = [];
+          this.data.chessPlayers.forEach(player=>{
+            arr.push(player.name)
+          })
+          this.generateMatches(arr)
+          this.generated.emit();
+        }, 1000);
+        break;
+      default:
+        this.loadExampleTeams(players_length)
+        this.generateMatches(this.exampleTeams)
+        break;
+    }
 
-  generateMatches(inputTeams) {
-    let players = inputTeams.length;
+  }
+
+  generateMatches(input, teams?: boolean) {
+
+    let players = input.length;
     let closestBase = this.getClosest(players);
     let Elonyerok = closestBase - players;
     let Meccsek_Száma = closestBase / 2;
-    let teamNumber = 0;;
+    let teamNumber = 0;
     let matchID = 0;
     let games:Object[] = [];
     let RoundNumber = 1;
@@ -30,7 +70,7 @@ export class SEGeneratorService {
       let newGame = {};
       
       let teams: string[] = [];
-      teams.push(inputTeams[teamNumber]);
+      teams.push(input[teamNumber]);
       teams.push("");
       teamNumber += 1;
       newGame['Meccs_id'] = matchID;
@@ -57,8 +97,8 @@ export class SEGeneratorService {
     for (let i = 0; i < Meccsek_Száma - Elonyerok; i++) {
       let newGame = {};
       let teams: string[] = [];
-      teams.push(inputTeams[teamNumber]);
-      teams.push(inputTeams[teamNumber + 1]);
+      teams.push(input[teamNumber]);
+      teams.push(input[teamNumber + 1]);
       teamNumber += 2;
       newGame['Meccs_id'] = matchID;
       matchID++;
@@ -126,7 +166,7 @@ export class SEGeneratorService {
     this.GeneratedGames = games;
     console.log(games);
     for (let i = 0; i < teamNumber; i++){
-      this.players.push(inputTeams[i])
+      this.players.push(input[i])
     }
   }
   getRandomInt(max) {
@@ -148,5 +188,15 @@ export class SEGeneratorService {
     for (let i = 0; i < how_many; i++) {
       this.exampleTeams.push(`${i + 1}. Játékos`);
     }
+  }
+  async delay(ms: number) {
+      return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+  resolveAfter2Seconds(x) {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(x);
+      }, 2000);
+    });
   }
 }

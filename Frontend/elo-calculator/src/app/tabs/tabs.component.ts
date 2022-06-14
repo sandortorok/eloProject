@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SEGeneratorService } from '../services/se-generator.service';
+import { SEGeneratorService } from '../se-bracket/se-generator.service';
 
 @Component({
   selector: 'app-tabs',
