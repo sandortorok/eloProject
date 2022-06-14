@@ -80,7 +80,7 @@ body {
     font-size: 11px;
     text-transform: uppercase;
     float: right;
-    color: #2c7399;
+    color: #000000;
     font-weight: bold;
     font-family: "Roboto Condensed", sans-serif;
     right: 5px;
@@ -96,8 +96,9 @@ body {
     list-style-type: none;
     cursor: pointer;
     width: min(90%, 300px);
-    opacity: 0.45;
     box-sizing: border-box;
+    transition: all 0.5s ease-in-out;
+    opacity: 0.3;
 }
 
 .round {
@@ -154,7 +155,7 @@ body {
 .round-details {
     font-family: 'Roboto Condensed', sans-serif;
     font-size: 13px;
-    color: #2c7399;
+    color: #03e9f4;
     text-transform: uppercase;
     text-align: center;
     height: 40px;
@@ -185,11 +186,11 @@ body {
     font-size: 10px;
     letter-spacing: 2px;
     font-family: "Istok Web", sans-serif;
-    color: #3f915f;
+    color: rgb(71, 228, 9);
 }
 
 .win {
-    background-color: rgb(65, 197, 65) !important;
+    background-color: rgb(71, 228, 9) !important;
 }
 
 @media screen and (max-width: 980px) {
@@ -225,12 +226,21 @@ body {
 
 .btn-wrapper{
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    align-items: center;    
+    align-items: center;
+    margin-bottom: 2%;
+}
+.btn-wrapper>* {
+    margin-right: 5%;
+    margin-left: 5%;
 }
 
-
-
+@media screen and (max-width: 980px) {
+    .btn-wrapper>*{
+        margin-bottom: 10%;
+    }
+}
 
 
 

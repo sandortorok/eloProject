@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   db:
+    build: ./Backend/db
     image: sanyitorok/elo-db
     restart: always
     networks:
@@ -28,6 +29,7 @@ services:
     links:
       - db
     image: sanyitorok/elo-backend
+    build: ./Backend
     networks:
       elonet:
         ipv4_address: 172.22.0.3
@@ -42,6 +44,8 @@ services:
     links:
       - backend
     image: sanyitorok/elo-calculator
+    build: ./Frontend/elo-calculator
+
     networks:
       elonet:
         ipv4_address: 172.22.0.4

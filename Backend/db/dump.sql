@@ -24,6 +24,40 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/ `eloRatingDB` /*!40100 DEFAULT CHARACTE
 USE `eloRatingDB`;
 
 --
+-- Table structure for table `SEMatches`
+--
+
+DROP TABLE IF EXISTS `SEMatches`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8 */;
+CREATE TABLE `SEMatches` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `gameName` varchar(100) DEFAULT NULL,
+  `winner` varchar(100) DEFAULT NULL,
+  `player1` varchar(100) DEFAULT NULL,
+  `player2` varchar(100) DEFAULT NULL,
+  `round` int DEFAULT NULL,
+  `bye` tinyint(1) DEFAULT NULL,
+  `score1` int DEFAULT NULL,
+  `score2` int DEFAULT NULL,
+  `gameType` varchar(100) DEFAULT NULL,
+  `bottom` tinyint(1) DEFAULT NULL,
+  `nextMatch_ID` int DEFAULT NULL,
+  `match_ID` int DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `SEMatches`
+--
+
+LOCK TABLES `SEMatches` WRITE;
+/*!40000 ALTER TABLE `SEMatches` DISABLE KEYS */;
+/*!40000 ALTER TABLE `SEMatches` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `chessGames`
 --
 
@@ -38,7 +72,7 @@ CREATE TABLE `chessGames` (
   `p1Gain` double DEFAULT NULL,
   `p2Gain` double DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -47,7 +81,7 @@ CREATE TABLE `chessGames` (
 
 LOCK TABLES `chessGames` WRITE;
 /*!40000 ALTER TABLE `chessGames` DISABLE KEYS */;
-INSERT INTO `chessGames` VALUES (1,'ifj. Török Sándor','Török Máté',0.5,-12.219304718558988,12.219304718558988),(2,'ifj. Török Sándor','Török Máté',0,-58.86015130670762,58.86015130670762),(3,'Török Máté','ifj. Török Sándor',0,-57.9193967285064,57.9193967285064),(4,'Török Dániel','Török Dorotea',1,50,-50),(5,'Török Máté','Török Dorotea',1,47.149469267027825,-47.149469267027825),(6,'Török Dorotea','Török Dániel',1,69.9950138498782,-69.9950138498782),(7,'ifj. Török Sándor','Török Dániel',0.5,-7.169710901228086,7.169710901228086),(8,'ifj. Török Sándor','Török Máté',0,-50.86666152622968,50.866661526229564),(9,'ifj. Török Sándor','Török Máté',1,63.43569326161946,-63.43569326161946),(10,'ifj. Török Sándor','Török Dorotea',1,41.069991195892726,-41.069991195892726),(11,'ifj. Török Sándor','Török Dániel',0,-62.59791164975843,62.59791164975843),(12,'ifj. Török Sándor','Török Máté',1,48.61406543471219,-48.614065434712074);
+INSERT INTO `chessGames` VALUES (1,'ifj. Török Sándor','Török Máté',0.5,-12.219304718558988,12.219304718558988),(2,'ifj. Török Sándor','Török Máté',0,-58.86015130670762,58.86015130670762),(3,'Török Máté','ifj. Török Sándor',0,-57.9193967285064,57.9193967285064),(4,'Török Dániel','Török Dorotea',1,50,-50),(5,'Török Máté','Török Dorotea',1,47.149469267027825,-47.149469267027825),(6,'Török Dorotea','Török Dániel',1,69.9950138498782,-69.9950138498782),(7,'ifj. Török Sándor','Török Dániel',0.5,-7.169710901228086,7.169710901228086),(8,'ifj. Török Sándor','Török Máté',0,-50.86666152622968,50.866661526229564),(9,'ifj. Török Sándor','Török Máté',1,63.43569326161946,-63.43569326161946),(10,'ifj. Török Sándor','Török Dorotea',1,41.069991195892726,-41.069991195892726),(11,'ifj. Török Sándor','Török Dániel',0,-62.59791164975843,62.59791164975843),(12,'ifj. Török Sándor','Török Máté',1,48.61406543471219,-48.614065434712074),(13,'Török Dorotea','Török Máté',1,53.45123558068292,-53.45123558068292),(14,'ifj. Török Sándor','Török Dániel',1,48.146715893852615,-48.146715893852615),(15,'ifj. Török Sándor','Török Dániel',0,-65.2143568333986,65.21435683339871),(16,'Török Máté','ifj. Török Sándor',0,-30.479178788153945,30.47917878815406);
 /*!40000 ALTER TABLE `chessGames` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -64,7 +98,7 @@ CREATE TABLE `chessPlayers` (
   `rating` double DEFAULT NULL,
   `games` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,7 +107,7 @@ CREATE TABLE `chessPlayers` (
 
 LOCK TABLES `chessPlayers` WRITE;
 /*!40000 ALTER TABLE `chessPlayers` DISABLE KEYS */;
-INSERT INTO `chessPlayers` VALUES (1,'ifj. Török Sándor',1062.656448053227,16),(2,'Török Máté',955.795389858707,14),(3,'Török Dániel',1049.7726087011083,4),(4,'Török Dorotea',931.7755533869577,4),(5,'Török Sándor',1000,0);
+INSERT INTO `chessPlayers` VALUES (1,'ifj. Török Sándor',1076.067985901835,19),(2,'Török Máté',871.8649754898701,16),(3,'Török Dániel',1066.8402496406543,6),(4,'Török Dorotea',985.2267889676406,5),(5,'Török Sándor',1000,0);
 /*!40000 ALTER TABLE `chessPlayers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -146,7 +180,7 @@ CREATE TABLE `pingpongGames` (
   `p1Gain` double DEFAULT NULL,
   `p2Gain` double DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -155,7 +189,7 @@ CREATE TABLE `pingpongGames` (
 
 LOCK TABLES `pingpongGames` WRITE;
 /*!40000 ALTER TABLE `pingpongGames` DISABLE KEYS */;
-INSERT INTO `pingpongGames` VALUES (1,'Ping-Pong Mester','player3',1,50,-50),(2,'Ping-Pong Mester','player2',1,42.8536882591618,-42.8536882591618),(3,'Ping-Pong Mester','player6',1,36.946589830164385,-36.94658983016461),(4,'Ping-Pong Mester','player6',1,27.690379712270442,-27.690379712270442),(5,'Ping-Pong Mester','player6',1,21.777680478197908,-21.777680478197908),(6,'Ping-Pong Mester','player6',1,17.808233580113892,-17.808233580113892),(7,'Ping-Pong Mester','player6',1,15.002320248830529,-15.002320248830529),(8,'Ping-Pong Mester','player6',1,12.930253519386724,-12.930253519386724),(9,'Ping-Pong Mester','player6',1,11.344704177723543,-11.344704177723543),(10,'Ping-Pong Mester','player6',1,10.095888070539331,-10.095888070539331),(11,'Ping-Pong Mester','player6',1,9.088731028247139,-9.088731028247139),(12,'Ping-Pong Mester','player6',1,8.26035882552469,-8.26035882552469),(13,'Ping-Pong Mester','player6',1,7.567698943228834,-7.567698943228834),(14,'Ping-Pong Mester','player6',1,6.98033638484867,-6.98033638484867),(15,'Ping-Pong Mester','player6',0,-93.52377493091944,93.52377493091944),(16,'Ping-Pong Mester','player6',0,-83.10862908950003,83.10862908950003),(17,'Ping-Pong Mester','player6',0,-65.3966874256987,65.3966874256987),(18,'Ping-Pong Mester','player6',1,52.90634505044318,-52.90634505044318),(19,'Ping-Pong Mester','player6',1,37.92525890012507,-37.92525890012507),(20,'Ping-Pong Mester','player5',1,32.477120440997396,-32.477120440997396),(21,'Ping-Pong Mester','player4',1,28.51853465746126,-28.518534657461487),(22,'Ping-Pong Mester','ifj. Török Sándor',0,-74.70707065068882,74.70707065068905),(23,'Ping-Pong Mester','ifj. Török Sándor',0,-55.55084858920941,55.55084858920941),(24,'Ping-Pong Mester','ifj. Török Sándor',0,-39.73306598180943,39.73306598180943);
+INSERT INTO `pingpongGames` VALUES (1,'Ping-Pong Mester','player3',1,50,-50),(2,'Ping-Pong Mester','player2',1,42.8536882591618,-42.8536882591618),(3,'Ping-Pong Mester','player6',1,36.946589830164385,-36.94658983016461),(4,'Ping-Pong Mester','player6',1,27.690379712270442,-27.690379712270442),(5,'Ping-Pong Mester','player6',1,21.777680478197908,-21.777680478197908),(6,'Ping-Pong Mester','player6',1,17.808233580113892,-17.808233580113892),(7,'Ping-Pong Mester','player6',1,15.002320248830529,-15.002320248830529),(8,'Ping-Pong Mester','player6',1,12.930253519386724,-12.930253519386724),(9,'Ping-Pong Mester','player6',1,11.344704177723543,-11.344704177723543),(10,'Ping-Pong Mester','player6',1,10.095888070539331,-10.095888070539331),(11,'Ping-Pong Mester','player6',1,9.088731028247139,-9.088731028247139),(12,'Ping-Pong Mester','player6',1,8.26035882552469,-8.26035882552469),(13,'Ping-Pong Mester','player6',1,7.567698943228834,-7.567698943228834),(14,'Ping-Pong Mester','player6',1,6.98033638484867,-6.98033638484867),(15,'Ping-Pong Mester','player6',0,-93.52377493091944,93.52377493091944),(16,'Ping-Pong Mester','player6',0,-83.10862908950003,83.10862908950003),(17,'Ping-Pong Mester','player6',0,-65.3966874256987,65.3966874256987),(18,'Ping-Pong Mester','player6',1,52.90634505044318,-52.90634505044318),(19,'Ping-Pong Mester','player6',1,37.92525890012507,-37.92525890012507),(20,'Ping-Pong Mester','player5',1,32.477120440997396,-32.477120440997396),(21,'Ping-Pong Mester','player4',1,28.51853465746126,-28.518534657461487),(22,'Ping-Pong Mester','ifj. Török Sándor',0,-74.70707065068882,74.70707065068905),(23,'Ping-Pong Mester','ifj. Török Sándor',0,-55.55084858920941,55.55084858920941),(24,'Ping-Pong Mester','ifj. Török Sándor',0,-39.73306598180943,39.73306598180943),(25,'player3','ifj. Török Sándor',0,-21.98792972482181,21.987929724821697),(26,'Ping-Pong Mester','ifj. Török Sándor',1,73.1179749680482,-73.1179749680482),(27,'Ping-Pong Mester','ifj. Török Sándor',1,53.962040608869984,-53.962040608869984);
 /*!40000 ALTER TABLE `pingpongGames` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -181,7 +215,7 @@ CREATE TABLE `pingpongPlayers` (
 
 LOCK TABLES `pingpongPlayers` WRITE;
 /*!40000 ALTER TABLE `pingpongPlayers` DISABLE KEYS */;
-INSERT INTO `pingpongPlayers` VALUES (1,'ifj. Török Sándor',1169.990985221708,3),(2,'player2',957.1463117408382,1),(3,'player3',950,1),(4,'player4',971.4814653425385,1),(5,'player5',967.5228795590026,1),(6,'player6',965.7043126964736,17),(7,'Ping-Pong Mester',1018.154045439439,24);
+INSERT INTO `pingpongPlayers` VALUES (1,'ifj. Török Sándor',1064.8988993696114,6),(2,'player2',957.1463117408382,1),(3,'player3',928.0120702751782,2),(4,'player4',971.4814653425385,1),(5,'player5',967.5228795590026,1),(6,'player6',965.7043126964736,17),(7,'Ping-Pong Mester',1145.2340610163571,26);
 /*!40000 ALTER TABLE `pingpongPlayers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -197,6 +231,8 @@ CREATE TABLE `volleyBallGames` (
   `name1` varchar(255) DEFAULT NULL,
   `name2` varchar(255) DEFAULT NULL,
   `p1Win` double DEFAULT NULL,
+  `score1` varchar(255) DEFAULT NULL,
+  `score2` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -228,8 +264,9 @@ CREATE TABLE `volleyballTeams` (
   `name7` varchar(255) DEFAULT NULL,
   `rating` double DEFAULT NULL,
   `games` int DEFAULT NULL,
+  `teamName` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -238,6 +275,7 @@ CREATE TABLE `volleyballTeams` (
 
 LOCK TABLES `volleyballTeams` WRITE;
 /*!40000 ALTER TABLE `volleyballTeams` DISABLE KEYS */;
+INSERT INTO `volleyballTeams` VALUES (1,'p1','p2','p3','p4','p5','p6','p7',1000,0,'csapat1'),(2,'p21','p22','p23','p24','p25','p26','p27',1000,0,'csapat2'),(3,'p31','p32','p33','p34','p35','p36','p37',1000,0,'csapat3');
 /*!40000 ALTER TABLE `volleyballTeams` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -250,4 +288,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-03 10:15:17
+-- Dump completed on 2022-06-14 16:40:22

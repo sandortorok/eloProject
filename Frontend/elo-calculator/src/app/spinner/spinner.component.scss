@@ -1,16 +1,12 @@
 
-::ng-deep html, body{
-  margin:0;
-  padding:0;
-  background:#262626;
-}
+
 
 .ring
 {
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
+  margin: 10% 0;
+  position:relative ;
+  left: 50%;
+  transform: translateX(-50%);
   width:200px;
   height:200px;
   background:transparent;

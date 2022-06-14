@@ -1,0 +1,23 @@
+
+<div class="modal-header">
+    <h4 class="modal-title" style="font-weight: bold">MÉRKŐZÉSEK BETÖLTÉSE</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+    <div class="wrapper">
+        <div ngbDropdown> 
+            <button type="button" class="btn"  
+                [class.btn-outline-success] = "gameSelected"
+                [class.btn-outline-danger] = "!gameSelected"
+                ngbDropdownToggle>{{selGame}}
+            </button>
+            <div class="dropdown-menu" ngbDropdownMenu>
+                <button *ngFor="let name of names" ngbDropdownItem (click)="onSelect(name)" >{{name}}</button>
+            </div>
+        </div>
+        <button class="btn btn-outline-info" (click)="load()">Betöltés</button>
+    </div>
+</div>
+<!-- <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+</div> -->

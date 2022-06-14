@@ -1,10 +1,10 @@
 
 <div class="modal-header">
-    <h4 class="modal-title">CSAPAT VÁLASZTÁSA</h4>
+    <h4 class="modal-title" style="font-weight: bold">GYŐZTES KIVÁLASZTÁSA</h4>
     <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
 </div>
 <div class="modal-body">
-    <div class="btn" ngbDropdown > 
+    <div class="btn" ngbDropdown> 
         <button type="button" class="btn"  
             [class.btn-outline-success] = "playerSelected"  
             [class.btn-outline-danger] = "!playerSelected" 
@@ -16,6 +16,6 @@
         </div>
     </div>
 </div>
-<div class="modal-footer">
+<!-- <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
-</div>
+</div> -->

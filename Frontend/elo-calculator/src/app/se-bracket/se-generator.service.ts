@@ -1,6 +1,19 @@
 import { DataService, Player, Team } from '../services/data.service';
 import { Injectable, Output, EventEmitter } from '@angular/core';
 
+
+export interface Match{
+  Csapatok?: string[],
+  Round?: number,
+  nextRoundID?: number,
+  score0?: number | null,
+  score1?: number | null,
+  Gyoztes?: string,
+  Meccs_id?: number,
+  bottom?: number,
+  bye?: boolean,
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -9,7 +22,6 @@ export class SEGeneratorService {
   }
   
   GeneratedGames:Object[] = [];
-  players: string[] = [];
   exampleTeams:string[] = []
   @Output() generated = new EventEmitter();
 
@@ -53,8 +65,8 @@ export class SEGeneratorService {
 
   }
 
-  generateMatches(input, teams?: boolean) {
-
+  generateMatches(input, isTeam?: boolean) {
+    this.GeneratedGames = []
     let players = input.length;
     let closestBase = this.getClosest(players);
     let Elonyerok = closestBase - players;
@@ -65,9 +77,10 @@ export class SEGeneratorService {
     let RoundNumber = 1;
     let nextRoundID = Meccsek_Száma;
     let matchesAdded = 0; //Hány meccset adtunk eddig hozzá a kövi nextRoundID-hez
+    console.log(players);
     //ELŐNYERŐK
     for (let i = 0; i < Elonyerok; i++) {
-      let newGame = {};
+      let newGame:Match = {};
       
       let teams: string[] = [];
       teams.push(input[teamNumber]);
@@ -164,10 +177,6 @@ export class SEGeneratorService {
       }     
     }
     this.GeneratedGames = games;
-    console.log(games);
-    for (let i = 0; i < teamNumber; i++){
-      this.players.push(input[i])
-    }
   }
   getRandomInt(max) {
     return Math.floor(Math.random() * max);
@@ -185,18 +194,9 @@ export class SEGeneratorService {
     return -1;
   }
   loadExampleTeams(how_many){
+    this.exampleTeams = [];
     for (let i = 0; i < how_many; i++) {
       this.exampleTeams.push(`${i + 1}. Játékos`);
     }
-  }
-  async delay(ms: number) {
-      return new Promise( resolve => setTimeout(resolve, ms) );
-  }
-  resolveAfter2Seconds(x) {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        resolve(x);
-      }, 2000);
-    });
   }
 }

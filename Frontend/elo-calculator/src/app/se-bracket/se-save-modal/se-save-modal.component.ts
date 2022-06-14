@@ -1,0 +1,30 @@
+import { HttpService } from './../../services/http.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+
+@Component({
+  selector: 'app-se-save-modal',
+  templateUrl: './se-save-modal.component.html',
+  styleUrls: ['./se-save-modal.component.scss']
+})
+export class SESaveModal implements OnInit {
+  IN_gameID:string = ""
+  matches;
+  placeholder:string = "Bajnokság neve";
+  constructor(public activeModal: NgbActiveModal, private httpservice: HttpService) {    }
+  save() {
+    if (this.IN_gameID.length < 5) return; 
+    if (this.IN_gameID == "NÉVTELEN") return;
+    this.httpservice.getSEMatchNames()
+      .subscribe(names =>{
+        console.log(names);
+      })
+    this.matches['gameName'] = this.IN_gameID;
+    console.log(this.matches);
+    this.httpservice.saveSEGame(this.matches).subscribe(()=>{});
+    this.IN_gameID = ""
+  }
+  ngOnInit(): void {
+  }
+
+}

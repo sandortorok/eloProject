@@ -17,7 +17,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class HttpService {
 
-  private url:string = 'http://localhost:9001'
+  private url:string = 'http://localhost:3000'
 
   constructor(private http:HttpClient) {   }
 /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -112,5 +112,20 @@ export class HttpService {
       return throwError(new BadInput(error))
     }
     return throwError(new AppError(error))
+  }
+/////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////SEMATCHES////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+  getSEMatch(name){
+    return this.http.get(this.url+ '/sematch/'+name)
+      .pipe(catchError(this.handleError));
+  }
+  getSEMatchNames(){
+    return this.http.get(this.url+ '/sematches/names')
+      .pipe(catchError(this.handleError));
+  }
+  saveSEGame(body){
+    return this.http.post(this.url + '/segame',{body: body, name: body.gameName})
+    .pipe(catchError(this.handleError));
   }
 }

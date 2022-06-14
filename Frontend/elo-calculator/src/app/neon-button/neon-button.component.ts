@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-neon-button',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./neon-button.component.scss']
 })
 export class NeonButtonComponent implements OnInit {
-
+  @Input() text: string = ""
   constructor() { }
 
   ngOnInit(): void {

@@ -1,3 +1,4 @@
+import { SESaveModal } from './se-bracket/se-save-modal/se-save-modal.component';
 import { SEModal } from './se-bracket/se-modal/se-modal.component';
 import { DataService } from './services/data.service';
 import { HttpService } from './services/http.service';
@@ -21,6 +22,7 @@ import { SEBracketComponent } from './se-bracket/se-bracket.component';
 import { DEBracketComponent } from './de-bracket/de-bracket.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { NeonButtonComponent } from './neon-button/neon-button.component';
+import { SELoadModal } from './se-bracket/se-load-modal/se-load-modal.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,9 +37,11 @@ import { NeonButtonComponent } from './neon-button/neon-button.component';
     MatchComponent,
     SEBracketComponent,
     SEModal,
+    SESaveModal,
     DEBracketComponent,
     SpinnerComponent,
     NeonButtonComponent,
+    SELoadModal,
   ],
   imports: [
     BrowserModule,

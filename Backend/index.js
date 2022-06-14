@@ -223,11 +223,57 @@ app.get('/volleyteams', (req, res) => {
         res.send(result);
     })
 })
+/////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////SEMATCHES////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+app.get('/sematches/names', (req, res) => {
+    let sql = `SELECT DISTINCT gameName FROM SEMatches`;
+    let query = db.query(sql, (err, result) => {
+        if(err) throw err;
+        res.send(result);
+    })
+})
+app.post('/segame', (req, res) => {
+    let msg = req.body.body;
+    let gameName = req.body.name
+    for (el of msg){
+        let player1 = el.Csapatok[0];
+        let player2 = el.Csapatok[1];
+        let winner = el.Gyoztes;
+        let match_ID = el.Meccs_id;
+        let nextMatch_ID = el.nextRoundID;
+        let round = el.Round;
+        let bottom = el.bottom;
+        let bye = el.bye;
+        let score0 = el.score0;
+        let score1 = el.score1;
+        let sql = `INSERT INTO SEMatches (gameName, winner, player1, player2, round, bye, score1, score2, bottom, nextMatch_ID, match_ID)
+        VALUES ('${gameName}', '${winner}', '${player1}', '${player2}',${round},${bye},${score0},${score1},${bottom},${nextMatch_ID},${match_ID})`;
+        let query = db.query(sql, (err, result) => {
+            if(err) throw err;
+        })
+    }
+    res.send({msg: 'hey'})
+})
+app.get('/sematch/:name', (req, res) => {
+    let sql = `SELECT * FROM SEMatches WHERE gameName = '${req.params.name}'`;
+    let query = db.query(sql, (err, result) => {
+        if(err) throw err;
+        res.send(result);
+    })
+})
+
+
+
+
+
+
+
 // simple route
 app.get("/", (req, res) => {
     res.json({ hello: "This is my Angular backend :))))" });
 });
 
-server.listen(9001, () => {
+server.listen(3000, () => {
     console.log('server started at localhost:9001')
 })
