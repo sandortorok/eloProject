@@ -21,7 +21,7 @@
         <div *ngIf="matches != undefined && matches.length > 0" class="container" #container>
             <div class="split split-one" [ngStyle]="{'width': (team32) ? '42%' : '100%'}">
                 <div *ngFor="let round of rounds; let i = index" class="round round-{{i+1}}" >
-                    <div class="round-details">Round {{i+1}}<br/><span class="date">KEDD</span></div>
+                    <div class="round-details">{{i+1}}. Forduló <br/><span class="date">KEDD</span></div>
                     <ul *ngFor="let match of round" class="matchup">
                         <li class="team" (click)="onTeamClick($event)"
                             [class.win]="match.Csapatok[0]==match.Gyoztes && match.Gyoztes.length > 0"> 
@@ -34,7 +34,7 @@
             </div> 
             <div *ngIf="team32" class="champion">
                 <div class="semis-l">
-                    <div class="round-details">1. semifinals <br/><span class="date">SZERDA</span></div>		
+                    <div class="round-details">1. elődöntő <br/><span class="date">SZERDA</span></div>		
                     <ul class ="matchup championship">
                         <li class="team" (click)="onTeamClick($event)"
                             [class.win]="semi1.Csapatok[0]==semi1.Gyoztes && semi1.Gyoztes.length > 0"> 
@@ -46,7 +46,7 @@
                 </div>
                 <div class="final">
                     <i class="fa fa-trophy"></i>
-                    <div class="round-details">championship <br/><span class="date">CSÜTÖRTÖK</span></div>		
+                    <div class="round-details">DÖNTŐ <br/><span class="date">CSÜTÖRTÖK</span></div>		
                     <ul class ="matchup championship">
                         <li class="team" (click)="onTeamClick($event)"
                             [class.win]="final.Csapatok[0]==final.Gyoztes && final.Gyoztes.length > 0"> 
@@ -57,7 +57,7 @@
                     </ul>
                 </div>
                 <div class="semis-r">		
-                    <div class="round-details">2. semifinals <br/><span class="date">SZERDA</span></div>		
+                    <div class="round-details">2. elődöntő <br/><span class="date">SZERDA</span></div>		
                     <ul class ="matchup championship">
                         <li class="team" (click)="onTeamClick($event)"
                             [class.win]="semi2.Csapatok[0]==semi2.Gyoztes && semi2.Gyoztes.length > 0"> 
@@ -70,7 +70,7 @@
             </div> 
             <div *ngIf="team32" class="split split-two">
                 <div *ngFor="let round of rounds2.slice().reverse(); let i = index" class="round round-{{rounds2.length - i}}">
-                    <div class="round-details">Round {{rounds2.length - i}}<br/><span class="date">KEDD</span></div>
+                    <div class="round-details">{{rounds2.length - i}}. Forduló<br/><span class="date">KEDD</span></div>
                     <ul *ngFor="let match of round" class="matchup">
                         <li class="team" (click)="onTeamClick($event)"
                             [class.win]="match.Csapatok[0]==match.Gyoztes && match.Gyoztes.length > 0"> 

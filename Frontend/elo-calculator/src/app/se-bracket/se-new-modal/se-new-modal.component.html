@@ -4,8 +4,27 @@
     <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
 </div>
 <div class="modal-body">
-    <div class="input-group">
+    <h4 style="margin-bottom: 5%;">Random játékosnevek</h4>
+    <p style="margin-bottom: 10px">Játékosok száma</p>
+    <div class="wrap">
+        <input type="number" style="width: 50%; display: inline-block;" class="form-control" min="1" max="32" [(ngModel)] = "numInput"/>
+        <button class="btn btn-outline-info" style="display: inline-block;" (click)="generateRandom()">Generálás</button>
     </div>
+</div>
+<div class="modal-footer">
+    <h4 style="margin-bottom: 5%;">Saját játékosnevek (64 max)</h4>
+    <div class="input-group">
+        <input class="form-control" placeholder="Játékos neve" [(ngModel)]="playerInput" (keydown.enter)="addPlayer()">
+        <div class="input-group-append">
+            <button class="btn btn-outline-info" (click)="addPlayer()">Hozzáadás</button>
+        </div>
+        <div class="input-group-append">
+            <button class="btn btn-outline-info" (click)="generateCustom()">Generálás</button>
+        </div>
+    </div>
+    <ol #list class="gradient-list">
+        <li *ngFor="let player of players">{{player}}</li>
+    </ol>
 </div>
 <!-- <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>

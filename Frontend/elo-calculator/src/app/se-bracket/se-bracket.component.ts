@@ -80,7 +80,10 @@ export class SEBracketComponent implements OnInit {
   }
   onNewBracket(){
     const modalRef = this.modalService.open(SENewModal, { centered: true });
-
+    modalRef.componentInstance.generateEvent.subscribe((players)=>{
+      this.matches = []
+      this.bracket.startGenerating('withNames', players=players)
+    })
     // this.emptyArrays()
     // this.bracket.startGenerating('example')
   }

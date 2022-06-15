@@ -23,6 +23,7 @@ export class SESaveModal implements OnInit {
     console.log(this.matches);
     this.httpservice.saveSEGame(this.matches).subscribe(()=>{});
     this.IN_gameID = ""
+    this.activeModal.close()
   }
   ngOnInit(): void {
   }

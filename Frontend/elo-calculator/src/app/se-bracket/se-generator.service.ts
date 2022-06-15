@@ -25,14 +25,20 @@ export class SEGeneratorService {
   exampleTeams:string[] = []
   @Output() generated = new EventEmitter();
 
-  startGenerating(gameType: string = 'example', players?: Player[], teams?: Team[]){
-    let players_length = 20
+  startGenerating(gameType: string = 'example', players?: string[], teams?: Team[]){
+    let players_length = 20;
     if (players == undefined){}
     if (teams == undefined){}
     switch (gameType){
       case 'example': 
-        this.loadExampleTeams(players_length)
-        this.generateMatches(this.exampleTeams)
+        this.loadExampleTeams(players_length);
+        this.generateMatches(this.exampleTeams);
+        setTimeout(() => {
+          this.generated.emit();
+        }, 1000);
+        break;
+      case 'withNames':
+        this.generateMatches(players);
         setTimeout(() => {
           this.generated.emit();
         }, 1000);
@@ -41,7 +47,7 @@ export class SEGeneratorService {
         setTimeout(() => {
           let arr:string[] = [];
           this.data.volleyBallTeams.forEach(team=>{
-            arr.push(team.teamName)
+            arr.push(team.teamName);
           })
           this.generateMatches(arr)
           this.generated.emit();
@@ -51,15 +57,15 @@ export class SEGeneratorService {
         setTimeout(() => {
           let arr:string[] = [];
           this.data.chessPlayers.forEach(player=>{
-            arr.push(player.name)
+            arr.push(player.name);
           })
-          this.generateMatches(arr)
+          this.generateMatches(arr);
           this.generated.emit();
         }, 1000);
         break;
       default:
-        this.loadExampleTeams(players_length)
-        this.generateMatches(this.exampleTeams)
+        this.loadExampleTeams(players_length);
+        this.generateMatches(this.exampleTeams);
         break;
     }
 

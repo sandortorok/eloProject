@@ -19,6 +19,9 @@ export class SEModal {
     onSelect(name: string) {
         this.selPlayer = name;
         this.playerSelected = true;
-        this.updateEvent.emit({winner:name, player1: this.player1, player2: this.player2})
+    }
+    updateWinner(){
+        this.updateEvent.emit({winner:this.selPlayer, player1: this.player1, player2: this.player2})
+        this.activeModal.close()
     }
 }

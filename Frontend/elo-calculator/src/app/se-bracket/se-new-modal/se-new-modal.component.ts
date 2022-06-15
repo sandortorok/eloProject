@@ -1,16 +1,69 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { HttpService } from 'src/app/services/http.service';
 
 @Component({
   selector: 'app-se-new-modal',
   templateUrl: './se-new-modal.component.html',
   styleUrls: ['./se-new-modal.component.scss']
 })
-export class SENewModal implements OnInit {
-  constructor(public activeModal: NgbActiveModal) {    }
+export class SENewModal {
+  playerInput: string = "";
+  players:string[] = [];
+  numInput: number = 1;
+  @Output() generateEvent = new EventEmitter<string[]>();
+  @ViewChild('list') private scrollUL: ElementRef;
 
-  ngOnInit(): void {
+  scrollToBottom(): void {
+    try {
+        this.scrollUL.nativeElement.scrollTop = this.scrollUL.nativeElement.scrollHeight;
+    } catch(err) {
+      console.log(err);
+    }                 
   }
-
+  
+  constructor(public activeModal: NgbActiveModal) {}
+  addPlayer(){
+    if (this.playerInput == "") return;
+    if (this.players.includes(this.playerInput)) return;
+    if (this.players.length == 64) return;
+    this.players.push(this.playerInput);
+    setTimeout(() => {
+      this.scrollToBottom()      
+    }, 10);
+    this.playerInput = "";
+  }
+  generateRandom(){
+    if (this.numInput > 64) return;
+    if (this.numInput < 1) return;
+    let randPlayers:string[] = [];
+    for (let i = 0; i < this.numInput;i++){
+      randPlayers.push(`Játékos ${i+1}`);
+    }
+    this.shuffle(randPlayers)
+    this.generateEvent.emit(randPlayers);
+    this.activeModal.close();
+  }
+  generateCustom(){
+    this.shuffle(this.players)
+    this.generateEvent.emit(this.players);
+    this.activeModal.close();
+  }
+  //COPY PASTE FROM STACK OVERFLOW
+  shuffle(array) {
+    let currentIndex = array.length,  randomIndex;
+  
+    // While there remain elements to shuffle.
+    while (currentIndex != 0) {
+  
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+  
+    return array;
+  }
 }

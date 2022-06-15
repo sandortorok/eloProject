@@ -18,3 +18,7 @@
 .btn-close {
     filter: invert(1) grayscale(100%) brightness(200%);
 }
+.wrap{
+    display: flex;
+    justify-content: space-around;
+}

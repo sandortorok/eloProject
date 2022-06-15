@@ -35,7 +35,7 @@ export class SELoadModal implements OnInit {
       })
     });
     this.loadEvent.emit({matches:matches, name: this.selGame})
-    
+    this.activeModal.close();
   }
   onSelect(n:string){
     this.selGame = n;
