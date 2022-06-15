@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SEModal } from './se-modal/se-modal.component';
 import { SEGeneratorService, Match } from './se-generator.service';
 import { SELoadModal } from './se-load-modal/se-load-modal.component';
+import { SENewModal } from './se-new-modal/se-new-modal.component';
 
 @Component({
   selector: 'app-se-bracket',
@@ -34,9 +35,10 @@ export class SEBracketComponent implements OnInit {
 
   onTeamClick(event) {
     const target = event.target as HTMLLIElement
-    const modalRef = this.modalService.open(SEModal, { centered: true });
     const player1 = target.parentElement?.firstChild?.firstChild?.textContent?.trim()
     const player2 = target.parentElement?.lastChild?.firstChild?.textContent?.trim()
+    if(player1 == "" || player2 == "") return;
+    const modalRef = this.modalService.open(SEModal, { centered: true });
     modalRef.componentInstance.player1 = player1;
     modalRef.componentInstance.player2 = player2;
     modalRef.componentInstance.updateEvent.subscribe(outcomeObj=>{
@@ -76,16 +78,18 @@ export class SEBracketComponent implements OnInit {
       //meg kell várni míg renderel a view
     })
   }
+  onNewBracket(){
+    const modalRef = this.modalService.open(SENewModal, { centered: true });
+
+    // this.emptyArrays()
+    // this.bracket.startGenerating('example')
+  }
   emptyArrays(){
     this.matches = []
     this.players = [];
     this.playerElements = []
     this.rounds = []
     this.rounds2 = []
-  }
-  onNewBracket(){
-    this.emptyArrays()
-    this.bracket.startGenerating('example')
   }
   loadItems(newMatches: Match[]){
     this.emptyArrays()

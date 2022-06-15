@@ -24,7 +24,7 @@ div{
     width: 150px;
     text-align: center;
 }
-div:hover{
+div:hover, div:focus{
     background: #03e9f4;
     color: #050801;
     box-shadow: 0 0 5px #03e9f4,
@@ -32,6 +32,8 @@ div:hover{
                 0 0 50px #03e9f4,
                 0 0 200px #03e9f4;
      -webkit-box-reflect:below 1px linear-gradient(transparent, #0005);
+     outline: none;
+
 }
 div:active{
     background: #019097;
