@@ -90,6 +90,7 @@ main {
 ol.gradient-list {
   color: $black;
   overflow: scroll;
+  overflow-x: hidden;
   height: 20em;
   counter-reset: gradient-counter;
   list-style: none;

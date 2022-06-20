@@ -76,7 +76,8 @@ span {
   background-color: #D89E00;
   // background-image: linear-gradient(to top right, #f86300, #D89E00);
   // background-image: linear-gradient(to bottom right, #051937, #004d7a, #008793, #00bf72, #a8eb12);
-  transition: all 500ms ease-in-out;
+  transition: border-radius 300ms ease-in-out,
+              transform 300ms ease-in-out
 
   
 }

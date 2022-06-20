@@ -35,7 +35,7 @@ services:
         ipv4_address: 172.22.0.3
     restart: unless-stopped
     ports:
-      - 9001:9001
+      - 3333:3333
     stdin_open: true
     tty: true
   frontend:
@@ -50,7 +50,7 @@ services:
       elonet:
         ipv4_address: 172.22.0.4
     ports:
-      - 9000:80
+      - 4444:80
 
 networks:
   elonet:

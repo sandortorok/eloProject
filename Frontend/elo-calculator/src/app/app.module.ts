@@ -45,7 +45,6 @@ import { SENewModal } from './se-bracket/se-new-modal/se-new-modal.component';
     SESaveModal,
     SELoadModal,
     SENewModal,
-
   ],
   imports: [
     BrowserModule,

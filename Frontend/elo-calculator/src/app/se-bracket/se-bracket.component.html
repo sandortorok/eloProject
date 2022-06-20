@@ -71,7 +71,7 @@
             <div *ngIf="team32" class="split split-two">
                 <div *ngFor="let round of rounds2.slice().reverse(); let i = index" class="round round-{{rounds2.length - i}}">
                     <div class="round-details">{{rounds2.length - i}}. Forduló<br/><span class="date">KEDD</span></div>
-                    <ul *ngFor="let match of round" class="matchup">
+                    <ul *ngFor="let match of round" class="reverse matchup">
                         <li class="team" (click)="onTeamClick($event)"
                             [class.win]="match.Csapatok[0]==match.Gyoztes && match.Gyoztes.length > 0"> 
                             {{match.Csapatok[0]}}<span class="score">{{match.score0}}</span></li>
