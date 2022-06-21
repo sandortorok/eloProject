@@ -17,7 +17,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class HttpService {
 
-  private url:string = 'http://tormateo.spdns.org:3333'
+  private url:string = 'http://localhost:3000'
 
   constructor(private http:HttpClient) {   }
 /////////////////////////////////////////////////////////////////////////////////////////////////

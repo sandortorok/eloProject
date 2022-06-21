@@ -83,7 +83,6 @@ export class SEGeneratorService {
     let RoundNumber = 1;
     let nextRoundID = Meccsek_Száma;
     let matchesAdded = 0; //Hány meccset adtunk eddig hozzá a kövi nextRoundID-hez
-    console.log(players);
     //ELŐNYERŐK
     for (let i = 0; i < Elonyerok; i++) {
       let newGame:Match = {};
@@ -183,9 +182,7 @@ export class SEGeneratorService {
       }     
     }
     this.GeneratedGames = games;
-  }
-  getRandomInt(max) {
-    return Math.floor(Math.random() * max);
+    console.log(games);
   }
   getClosest(players) {
     const knownBrackets = [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024]

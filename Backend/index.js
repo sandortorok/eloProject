@@ -6,34 +6,29 @@ const server = require('http').createServer(app)
 
 app.use(cors());
 app.use(express.json())
-var db;
+var pool;
 connectDB();
 function connectDB(){
-    db = mysql.createConnection({
-        host:   'db',
+    pool = mysql.createPool({
+        connectionLimit: 100,
+        host:   'localhost',
         user: 'Sanyi',
         password: 'sakkiraly11',
         database: 'eloRatingDB'
     });
-    db.connect((err)=> {
-        if (err){
-            throw err;
-        }
-        else{
-            console.log('mysql connected');
-        }
-    });
 }
 function reConnectDB(){
-    db.destroy();
+    pool.destroy();
     console.log('destroyed connection');
-    connectDB();
+    setTimeout(() => {
+        connectDB();
+    }, 1000);
     console.log('connected again');
 }
 function runQuery(sql, res){
     let dbResult = "";
     try{
-        db.query(sql, (err, result) => {
+        pool.query(sql, (err, result) => {
             if(err) throw err;
             res.send(result);
             dbResult = result
@@ -222,7 +217,7 @@ app.post('/segame', (req, res) => {
         VALUES ('${gameName}', '${winner}', '${player1}',
             '${player2}', ${round}, ${bye}, ${score0},
             ${score1}, ${bottom}, ${nextMatch_ID}, ${match_ID})`;
-        let query = db.query(sql, (err, result) => {
+        let query = pool.query(sql, (err, result) => {
             if(err) throw err;
         })
     }
@@ -239,6 +234,6 @@ app.get("/", (req, res) => {
     res.json({ hello: "This is my Angular backend :))))" });
 });
 
-server.listen(3333, () => {
-    console.log('server started at http://localhost:3333')
+server.listen(3000, () => {
+    console.log('server started at http://localhost:3000')
 })

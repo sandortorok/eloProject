@@ -89,8 +89,8 @@ main {
 //LIST STYLING
 ol.gradient-list {
   color: $black;
-  overflow: scroll;
   overflow-x: hidden;
+  overflow-y: auto;
   height: 20em;
   counter-reset: gradient-counter;
   list-style: none;
