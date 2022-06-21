@@ -154,26 +154,27 @@ export class DEGeneratorService {
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    Meccsek_Száma = closestBase/2/2;
-    RoundNumber = 1;
     let LoserRoundID = 0;
+    let loserGames:Match[] = [];
+    Meccsek_Száma = closestBase/2/2;
+    RoundNumber = 0;
+
+    RoundNumber++;
     matchesAdded = 0;
     nextRoundID = Meccsek_Száma + games.length;
-    let loserGames:Match[] = []
     //ROUND 1
     for(let i = 0; i < Meccsek_Száma; i++){
-        let newGame = {}
-        newGame['Meccs_id'] = matchID
-        newGame['Loser'] = true;
+      let newGame = {Meccs_id: matchID, Loser: true, bye: false,
+                Gyoztes: "", Round: RoundNumber, score0: null, score1: null, bottom: 0, nextRoundID: nextRoundID}
+        nextRoundID++;
         matchID++
         let teams:string[] = []
-        newGame['bye'] = false
         if(games[LoserRoundID].bye == true){
             newGame['bye'] = true;
             teams.push("")
         }
         else{
-            teams.push(`Loser of Match: ${LoserRoundID}`)
+            teams.push(`Loser of ${LoserRoundID}`)
         }
         LoserRoundID++;
         if(games[LoserRoundID].bye == true){
@@ -181,223 +182,110 @@ export class DEGeneratorService {
             teams.push("")
         }
         else{
-            teams.push(`Loser of Match: ${LoserRoundID}`)
+            teams.push(`Loser of ${LoserRoundID}`)
         }
         LoserRoundID++;
         teamNumber += 2;
         newGame['Csapatok'] = teams
-        newGame['Round'] = RoundNumber
-        newGame['score0'] = null;
-        newGame['score1'] = null;
         if(matchesAdded%2 == 0){ // FELSŐ MECCS
           newGame['bottom'] = 0;
-          newGame['nextRoundID'] = nextRoundID;
-          nextRoundID++
           matchesAdded++; 
         }
         else{ //Alsó meccs
           newGame['bottom'] = 1;
-          newGame['nextRoundID'] = nextRoundID;
-          nextRoundID++;
           matchesAdded = 1;
         }
-        newGame['Gyoztes'] = "";
-        if(teams[0] == "" && teams[1] == ""){ //HA MINDKETTŐ ÜRES
-          
-        }
-        else if(teams[0] == ""){
+        if(teams[0] == "" && teams[1] != ""){
           newGame["Gyoztes"] = teams[1];
         }
-        else if(teams[1] == ""){
+        else if(teams[1] == ""  && teams[0] != ""){
           newGame["Gyoztes"] = teams[0];
         }
         loserGames.push(newGame)
       }
 
-    while(Meccsek_Száma != 1){
-        let prevRound:Match[] = [];
-        prevRound = loserGames.filter(el => {
-          return el['Round'] == RoundNumber;
-        })
-        RoundNumber++;
-        Meccsek_Száma = Meccsek_Száma;
-        matchesAdded = 0;
-        LoserRoundID += Meccsek_Száma-1;//HOGY FORDÍTVA ADJA MOST HOZZÁ
-        // 1 LOSER PER GAME
-        for(let i = 0; i < Meccsek_Száma; i++){
-            let prevHasWinner = false
-            let prevMatch;
-            let prevFullBye = false
-            prevRound.forEach(match=>{
-              if(match.nextRoundID == matchID && match.Gyoztes!.length > 0){
-                prevHasWinner = true;
-                prevMatch = match;
-              }
-              else if(match.nextRoundID == matchID && match.Csapatok![0].length == 0 && match.Csapatok![1].length == 0 && RoundNumber == 2){
-                prevFullBye = true;
-              }
-            })
-            let newGame = {}
-            newGame['Meccs_id'] = matchID
-            matchID++
-            newGame['Loser'] = true;
-            newGame['bye'] = false
-            let teams:string[] = []
-            teams.push(`Loser of Match: ${LoserRoundID}`)
-            LoserRoundID--;
-            newGame['Gyoztes'] = "";
-            if(prevHasWinner){
-              teams.push(prevMatch.Gyoztes!)
-              console.log(prevMatch.Gyoztes);
-            }
-            else if(prevFullBye){
-              newGame['Gyoztes'] = teams[0];
-              teams.push("")
-            }
-            else{
-              teams.push("")
-            }
-            newGame['Csapatok'] = teams
-            newGame['Round'] = RoundNumber
-            newGame['score0'] = null;
-            newGame['score1'] = null;
-            if(matchesAdded%2 == 1){ // FELSŐ MECCS
-                newGame['bottom'] = 0;
-                newGame['nextRoundID'] = nextRoundID;
-                nextRoundID++;
-                matchesAdded++;
-            }
-            else{ //ALSÓ
-                newGame['bottom'] = 1;
-                newGame['nextRoundID'] = nextRoundID;
-                matchesAdded = 1;
-            }
-            newGame['bottom'] = matchesAdded-1;
-            loserGames.push(newGame)
+    while(Meccsek_Száma >= 1){
+      let prevRound:Match[];
+      if(RoundNumber%2 == 1){
+        LoserRoundID += (Meccsek_Száma-1);//HOGY FORDÍTVA ADJA MOST HOZZÁ
+      }
+      else{
+        LoserRoundID += (Meccsek_Száma+1);//MERT FORDÍTVA ADTUK HOZZÁ
+        if(Meccsek_Száma == 1){
+          Meccsek_Száma--;
         }
-        LoserRoundID += (Meccsek_Száma+1); // mert most fordítva adtuk hozzá
-        Meccsek_Száma = Meccsek_Száma / 2;
-        prevRound = [];
-        prevRound = loserGames.filter(el => {
-          return el['Round'] == RoundNumber;
-        })
-        RoundNumber++;
-        matchesAdded = 0;
-        //0 LOSER PER GAME
-        for(let i = 0; i < Meccsek_Száma; i++){
-            let prevHasWinner = false
-            let prevMatch;
-            let prevFullBye = false
-            prevRound.forEach(match=>{
-              if(match.nextRoundID == matchID && match.Gyoztes!.length > 0){
-                prevHasWinner = true;
-                prevMatch = match;
-              }
-              else if(match.nextRoundID == matchID && match.Csapatok![0].length == 0 && match.Csapatok![1].length == 0 && RoundNumber == 2){
-                prevFullBye = true;
-              }
-            })
-            let newGame = {}
-            newGame['Meccs_id'] = matchID
-            matchID++
-            newGame['Loser'] = true;
-            newGame['bye'] = false
-            newGame['Gyoztes'] = "";
-            let teams:string[] = []
-            if(prevHasWinner){
-              teams.push(prevMatch.Gyoztes!)
-              console.log(prevMatch.Gyoztes);
-            }
-            else if(prevFullBye){
-              newGame['Gyoztes'] = teams[0];
-              teams.push("")
-            }
-            else{
-              teams.push("")
-            }
-            teams.push("")
-            newGame['Gyoztes'] = "";
-            newGame['Csapatok'] = teams
-            newGame['Round'] = RoundNumber
-            newGame['score0'] = null;
-            newGame['score1'] = null;
-            if(matchesAdded%2 == 0){ // FELSŐ MECCS
-                newGame['nextRoundID'] = nextRoundID;
-                nextRoundID++;
-                matchesAdded++;
-            }
-            else{
-                newGame['nextRoundID'] = nextRoundID;
-                nextRoundID++;
-                matchesAdded = 1;
-            }
-            newGame['bottom'] = matchesAdded-1;
-            loserGames.push(newGame)
+        else{
+          Meccsek_Száma = Meccsek_Száma / 2;          
         }
-    }
-    RoundNumber++;
-    Meccsek_Száma = Meccsek_Száma;
-    matchesAdded = 0;
-    // 1 LOSER PER GAME
-    for(let i = 0; i < Meccsek_Száma; i++){
+      }
+      prevRound = [];
+      prevRound = loserGames.filter(el => {
+        return el['Round'] == RoundNumber;
+      })
+      RoundNumber++;
+      matchesAdded = 0;
+
+      // 1 LOSER PER GAME
+      for(let i = 0; i < Meccsek_Száma; i++){
+        let prevHasWinner = false
+        let prevMatch;
+        let prevFullBye = false
+        prevRound.forEach(match=>{
+          if(match.nextRoundID == matchID && match.Gyoztes!.length > 0){
+            prevHasWinner = true;
+            prevMatch = match;
+          }
+          else if(match.nextRoundID == matchID && match.Csapatok![0].length == 0 && match.Csapatok![1].length == 0 && RoundNumber == 2){
+            prevFullBye = true;
+          }
+        })
         let newGame = {}
         newGame['Meccs_id'] = matchID
         matchID++
         newGame['Loser'] = true;
         newGame['bye'] = false
         let teams:string[] = []
-        teams.push(`Loser of Match: ${LoserRoundID}`)
-        LoserRoundID++;
-        teams.push("")
+        if(RoundNumber %2 == 0){
+          teams.push(`Loser of ${LoserRoundID}`)
+          LoserRoundID--;
+        }
         newGame['Gyoztes'] = "";
+        if(prevHasWinner){
+          teams.push(prevMatch.Gyoztes!)
+        }
+        else if(prevFullBye){
+          newGame['Gyoztes'] = teams[0];
+        }
+        while(teams.length != 2){
+          teams.push("")
+        }
         newGame['Csapatok'] = teams
         newGame['Round'] = RoundNumber
         newGame['score0'] = null;
         newGame['score1'] = null;
-        if(matchesAdded%2 == 1){ // FELSŐ MECCS
-            newGame['bottom'] = 0;
-            newGame['nextRoundID'] = nextRoundID;
+        newGame['nextRoundID'] = nextRoundID;
+        if(matchesAdded%2 == 1){ // 1 VAN BERAKVA => FELSŐ
             nextRoundID++;
             matchesAdded++;
         }
-        else{ //ALSÓ
-            newGame['bottom'] = 1;
-            newGame['nextRoundID'] = nextRoundID;
+        else{ //0 VAN BERAKVA => ALSÓ
+            if(RoundNumber %2 == 1){
+              nextRoundID++;
+            }
             matchesAdded = 1;
         }
         newGame['bottom'] = matchesAdded-1;
         loserGames.push(newGame)
+      }
     }
-    for(let i = 0; i < Meccsek_Száma; i++){
-      let newGame = {}
-      newGame['Meccs_id'] = matchID
-      matchID++
-      newGame['Loser'] = true;
-      newGame['bye'] = false
-      let teams:string[] = []
-      teams.push(`Winner of Winner's Bracket`)
-      teams.push("Winner of Loser's Bracket")
-      newGame['Gyoztes'] = "";
-      newGame['Csapatok'] = teams
-      newGame['Round'] = RoundNumber
-      newGame['score0'] = null;
-      newGame['score1'] = null;
-      if(matchesAdded%2 == 1){ // FELSŐ MECCS
-          newGame['bottom'] = 0;
-          newGame['nextRoundID'] = nextRoundID;
-          nextRoundID++;
-          matchesAdded++;
-      }
-      else{ //ALSÓ
-          newGame['bottom'] = 1;
-          newGame['nextRoundID'] = nextRoundID;
-          matchesAdded = 1;
-      }
-      newGame['bottom'] = matchesAdded-1;
-      this.GeneratedFinals.push(newGame)
-  }
+
+    let newGame = {Meccs_id: matchID, Loser: false, bye: false, Csapatok: ["Winner of Winner's Bracket", "Winner of Loser's Bracket"],
+          Gyoztes: "", Round: RoundNumber, score0: null, score1: null, bottom: 0, nextRoundID: -1}
+
+    this.GeneratedFinals.push(newGame)
     this.GeneratedLosers = loserGames;
   }
+
   getClosest(players) {
     const knownBrackets = [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024]
     for (let i = 0; i < knownBrackets.length; i++) {

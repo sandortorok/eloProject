@@ -65,15 +65,6 @@ body {
 }
 
 
-.split-one .round {
-    margin: 0 2.5% 0 0;
-}
-
-.split-two .round {
-    margin: 0 0 0 2.5%;
-}
-
-
 .score {
     font-size: 11px;
     text-transform: uppercase;
@@ -93,7 +84,7 @@ body {
     overflow: hidden;
     list-style-type: none;
     cursor: pointer;
-    width: min(90%, 300px);
+    width: 95%;
     box-sizing: border-box;
     transition: all 0.5s ease-in-out;
     opacity: 0.3;
@@ -179,6 +170,7 @@ h1{
     font-family: 'Roboto Condensed', sans-serif;
     color: white;
     text-align: center;
+    margin: 30px 0;
 }
 .round-details {
     font-family: 'Roboto Condensed', sans-serif;
@@ -292,5 +284,12 @@ h1{
     }
     .team{
         font-size: 10px;
+        padding: 0;
+        border-radius: 50px;
+        text-align: center;
+    }
+    .matchup{
+        width: 100%;
+        grid-template-columns: 1px 100%;
     }
 }
