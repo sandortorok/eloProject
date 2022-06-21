@@ -34,7 +34,6 @@ body {
 }
 
 .split {
-    display: block;
     float: left;
     display: -webkit-box;
     display: -moz-box;
@@ -57,7 +56,6 @@ body {
     align-self: center;
     margin-top: -15px;
     text-align: center;
-    padding: 230px 0\9;
 }
 
 .champion i {
@@ -112,7 +110,8 @@ body {
     -webkit-flex-direction: column;
     flex-direction: column;
     width: 95%;
-    width: 30.8333%\9;
+    justify-content: center;
+    align-items: center;
 }
 
 .round-details {
@@ -122,54 +121,64 @@ body {
 .matchup {
     position: relative;
     display: grid;
+    grid-template-columns: 10px min(90%, 300px);
+    width: min(90%, 300px);
     place-items: center;
     margin: 0 auto;
-    width: 100%;
     padding: 10px 0;
     height: 60px;
     -webkit-transition: all 0.2s;
     transition: all 0.2s;
-
+    gap: 2px;
 }
 
 .round-2 .matchup {
     margin: 0;
-    padding: 50px 0;
+    margin: 40px 0;
 }
 
 .round-3 .matchup {
     margin: 0;
-    padding: 130px 0;
+    margin: 120px 0;
 }
 
 .round-4 .matchup {
     margin: 0;
-    padding: 290px 0;
+    margin: 280px 0;
 }
 
 .round-5 .matchup {
     margin: 0;
-    padding: 610px 0;
+    margin: 600px 0;
+}
+.loser-round-1 .matchup{
+    margin: 0;
+    margin: 0 0;
 }
 .loser-round-2 .matchup{
     margin: 0;
-    padding: 10px 0;
+    margin: 0 0;
 }
 .loser-round-3 .matchup{
     margin: 0;
-    padding: 50px 0;
+    margin: 40px 0;
 }
 .loser-round-4 .matchup{
     margin: 0;
-    padding: 50px 0;
+    margin: 40px 0;
 }
 .loser-round-5 .matchup{
     margin: 0;
-    padding: 130px 0;
+    margin: 120px 0;
 }
 .loser-round-6 .matchup{
     margin: 0;
-    padding: 130px 0;
+    margin: 120px 0;
+}
+h1{
+    font-family: 'Roboto Condensed', sans-serif;
+    color: white;
+    text-align: center;
 }
 .round-details {
     font-family: 'Roboto Condensed', sans-serif;
@@ -179,7 +188,11 @@ body {
     text-align: center;
     height: 40px;
 }
-
+.matchNumber{
+    color:white;
+    grid-row: span 2;
+    font-weight: bolder;
+}
 .champion li,
 .round li {
     background-color: #fff;
@@ -188,7 +201,9 @@ body {
 .current {
     opacity: 1;
 }
-
+.bye{
+    opacity:0.1;
+}
 .current .team {
     background-color: #fff;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);

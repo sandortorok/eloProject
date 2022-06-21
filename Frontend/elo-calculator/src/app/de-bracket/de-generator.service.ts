@@ -29,7 +29,7 @@ export class DEGeneratorService {
   @Output() generated = new EventEmitter();
 
   startGenerating(gameType: string = 'example', players?: string[], teams?: Team[]){
-    let players_length = 7;
+    let players_length = 14;
     if (players == undefined){}
     if (teams == undefined){}
     switch (gameType){
@@ -149,16 +149,16 @@ export class DEGeneratorService {
         nextRoundID = -1;
       }
       matchesAdded = 0; //Hány meccset adtunk eddig hozzá a kövi nextRoundID-hez
-      let nextRound:Object[] = [];
-      nextRound = games.filter(el => {
+      let prevRound:Object[] = [];
+      prevRound = games.filter(el => {
         return el['Round'] == RoundNumber;
       })
       RoundNumber++;
       for (let i = 0; i < Meccsek_Száma; i += 1) {
         let meccs1_ID = i * 2;
         let meccs2_ID = meccs1_ID + 1;
-        let meccs1 = nextRound[meccs1_ID];
-        let meccs2 = nextRound[meccs2_ID];
+        let meccs1 = prevRound[meccs1_ID];
+        let meccs2 = prevRound[meccs2_ID];
         let teams: string[] = [];
         teams.push(meccs1['Gyoztes']);
         teams.push(meccs2['Gyoztes']);
@@ -251,11 +251,27 @@ export class DEGeneratorService {
       }
 
     while(Meccsek_Száma != 1){
+        let prevRound:Match[] = [];
+        prevRound = loserGames.filter(el => {
+          return el['Round'] == RoundNumber;
+        })
         RoundNumber++;
         Meccsek_Száma = Meccsek_Száma;
         matchesAdded = 0;
         // 1 LOSER PER GAME
         for(let i = 0; i < Meccsek_Száma; i++){
+            let prevHasWinner = false
+            let prevMatch;
+            let prevFullBye = false
+            prevRound.forEach(match=>{
+              if(match.nextRoundID == matchID && match.Gyoztes!.length > 0){
+                prevHasWinner = true;
+                prevMatch = match;
+              }
+              else if(match.nextRoundID == matchID && match.Csapatok![0].length == 0 && match.Csapatok![1].length == 0 && RoundNumber == 2){
+                prevFullBye = true;
+              }
+            })
             let newGame = {}
             newGame['Meccs_id'] = matchID
             matchID++
@@ -264,8 +280,18 @@ export class DEGeneratorService {
             let teams:string[] = []
             teams.push(`Loser of Match: ${LoserRoundID}`)
             LoserRoundID++;
-            teams.push("")
             newGame['Gyoztes'] = "";
+            if(prevHasWinner){
+              teams.push(prevMatch.Gyoztes!)
+              console.log(prevMatch.Gyoztes);
+            }
+            else if(prevFullBye){
+              newGame['Gyoztes'] = teams[0];
+              teams.push("")
+            }
+            else{
+              teams.push("")
+            }
             newGame['Csapatok'] = teams
             newGame['Round'] = RoundNumber
             newGame['score0'] = null;

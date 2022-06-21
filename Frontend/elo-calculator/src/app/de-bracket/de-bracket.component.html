@@ -19,11 +19,12 @@
         </div>
         <app-spinner *ngIf="matches != undefined && matches.length == 0"></app-spinner>
         <div *ngIf="matches != undefined && matches.length > 0" class="container" #container>
-            <div class="split split-one" style="width: 100%; ">
+            <h1>WINNERS BRACKET</h1>
+            <div class="split split-one" style="width: 100%; border: 2px solid white; padding: 10px; border-radius: 50px">
                 <div *ngFor="let round of rounds; let i = index" class="round round-{{i+1}}" >
                     <div class="round-details">{{i+1}}. Forduló <br/><span class="date">KEDD</span></div>
-                    <ul *ngFor="let match of round" class="matchup">
-                        <span style="color:white;">{{match.Meccs_id}}</span>
+                    <ul *ngFor="let match of round" class="matchup" id="match {{match.Meccs_id}}">
+                        <span class="matchNumber">{{match.Meccs_id}}</span>
                         <li class="team"
                         [class.win]="match.Csapatok[0]==match.Gyoztes && match.Gyoztes.length > 0"> 
                         {{match.Csapatok[0]}}<span class="score">{{match.score0}}</span></li>
@@ -33,10 +34,13 @@
                     </ul>
                 </div>	<!-- END ROUND ONE -->
             </div>
-            <div class="split split-one" style="width: 100%">
+            <h1>LOSERS BRACKET</h1>
+            <div class="split split-one" style="width: 100%; border: 2px solid white; padding: 10px; border-radius: 50px">
                 <div *ngFor="let round of loserRounds; let i = index" class="round loser-round-{{i+1}}" >
                     <div class="round-details">{{i+1}}. Forduló <br/><span class="date">KEDD</span></div>
-                    <ul *ngFor="let match of round" class="matchup">
+                    <ul *ngFor="let match of round" class="matchup" id="match {{match.Meccs_id}}" 
+                        [class.bye]="match.Csapatok[0].length <= 0 && match.Csapatok[1].length <=0 && i == 0">
+                        <span class="matchNumber">{{match.Meccs_id}}</span>
                         <li class="team"
                             [class.win]="match.Csapatok[0]==match.Gyoztes && match.Gyoztes.length > 0"> 
                             {{match.Csapatok[0]}}<span class="score">{{match.score0}}</span></li>
