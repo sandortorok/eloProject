@@ -23,6 +23,7 @@ div{
     cursor: pointer;
     width: 150px;
     text-align: center;
+    user-select: none;
 }
 div:hover{
     background: #03e9f4;

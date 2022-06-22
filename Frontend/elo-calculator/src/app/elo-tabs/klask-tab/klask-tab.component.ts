@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DataService, Player } from '../services/data.service';
-import { HttpService } from '../services/http.service';
+import { DataService, Player } from '../../services/data.service';
+import { HttpService } from '../../services/http.service';
 
 @Component({
   selector: 'app-klask-tab',

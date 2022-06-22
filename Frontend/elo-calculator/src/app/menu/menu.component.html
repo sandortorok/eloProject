@@ -13,8 +13,10 @@
     <li [ngbNavItem] = "0">
         <a ngbNavLink>HOME</a>
         <ng-template ngbNavContent>
+            <h1 style="text-transform: uppercase;">{{gamePlayed}}</h1>
             <div style="display: flex; justify-content:center; align-items: center; margin: 0; height: 300px; text-align: start; flex-wrap: wrap;">
                 <app-hex icon="fa-users" text = "Group Bracket" (click)="bracketnav.select(1)"></app-hex>
+                <app-hex icon="fa-user" text = "Elo Rating" (click)="bracketnav.select(5)"></app-hex>
                 <app-hex icon="fa-angle-right" text = "Single Elimination" (click)="bracketnav.select(2)"></app-hex>
                 <app-hex icon="fa-angle-double-right" text = "Double Elimination" (click)="bracketnav.select(3)"></app-hex>
                 <app-hex icon="fa-rotate-right" text = "Round Robin" (click)="bracketnav.select(4)"></app-hex>
@@ -38,6 +40,14 @@
     <li [ngbNavItem] = "4">
         <a ngbNavLink>ROUND ROBIN</a>
         <ng-template ngbNavContent>ROUND ROBIN</ng-template>
+    </li>
+    <li [ngbNavItem] = "5">
+        <a ngbNavLink>Elo Rating</a>
+        <ng-template ngbNavContent>
+            <app-chess-tab *ngIf="gamePlayed == 'sakk'"></app-chess-tab>
+            <app-klask-tab *ngIf="gamePlayed == 'klask'"></app-klask-tab>
+            <app-pingpong-tab *ngIf="gamePlayed == 'ping-pong'"></app-pingpong-tab>
+        </ng-template>
     </li>
 </ul>
   

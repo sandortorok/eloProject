@@ -27,10 +27,11 @@ h1{
   filter: brightness(60%);
 }
 
-span {
+.icon span {
   font: 600 25px 'Roboto', sans-serif;
   order: 2;
   display: block;
+  user-select: none;  
 }
 .icon1{
   // background-image: radial-gradient(circle, #a7e99f 0%, #298F0D 100%);
@@ -105,7 +106,7 @@ span {
   position: relative;
   border: 0;
   background-color: rgba(76, 175, 80, 0); 
-  border-radius: 25px; 
+  border-radius: 40px; 
   overflow: hidden;
   margin:0 auto;
   margin-bottom: 1rem;

@@ -1,14 +1,14 @@
+import { HttpService } from './../../services/http.service';
+import { DataService, Player } from './../../services/data.service';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Player, DataService } from '../services/data.service';
-import { HttpService } from '../services/http.service';
 
 @Component({
-  selector: 'app-pingpong-tab',
-  templateUrl: './pingpong-tab.component.html',
-  styleUrls: ['./pingpong-tab.component.scss']
+  selector: 'app-chess-tab',
+  templateUrl: './chess-tab.component.html',
+  styleUrls: ['./chess-tab.component.scss']
 })
-export class PingpongTabComponent implements OnInit {
+export class ChessTabComponent implements OnInit {
   players:Player[] = [];
   playing:string[] = [];
   
@@ -25,12 +25,19 @@ export class PingpongTabComponent implements OnInit {
 
   p1Gain = 0;
   p2Gain = 0;
-  constructor(private dataservice: DataService, private httpservice: HttpService,  private modalService: NgbModal) {
-    this.players = dataservice.pingpongPlayers;
+
+  addedPlayer=""
+  deletedPlayer="Törölt Játékos"
+  delSelected:boolean = false
+  constructor(private dataservice: DataService, private httpservice: HttpService, private modalService: NgbModal) {
+    this.players = dataservice.chessPlayers;
+    console.log(this.players.length);
     this.playing[2] = "Döntetlen"
   }
-
+  
   ngOnInit(): void {
+    console.log(this.players.length);
+
   }
   onP1Select(value){
     this.selPlayer1 = value
@@ -92,16 +99,16 @@ export class PingpongTabComponent implements OnInit {
     this.players[idx2].rating = data!['newP2'];
     this.p2rating = data!['newP2'];
 
-    this.httpservice.updatePingPongPlayer('rating', {name: this.players[idx1].name, rating: this.players[idx1].rating})
+    this.httpservice.updateChessPlayer('rating', {name: this.players[idx1].name, rating: this.players[idx1].rating})
       .subscribe(res=>{})
 
-    this.httpservice.updatePingPongPlayer('rating', {name: this.players[idx2].name, rating: this.players[idx2].rating})
+    this.httpservice.updateChessPlayer('rating', {name: this.players[idx2].name, rating: this.players[idx2].rating})
       .subscribe(res=>{})
 
-    this.httpservice.updatePingPongPlayer('games', {name: this.players[idx1].name, games: this.players[idx1].games+=1})
+    this.httpservice.updateChessPlayer('games', {name: this.players[idx1].name, games: this.players[idx1].games+=1})
       .subscribe(res=>{})
 
-    this.httpservice.updatePingPongPlayer('games', {name: this.players[idx2].name, games: this.players[idx2].games+=1})
+    this.httpservice.updateChessPlayer('games', {name: this.players[idx2].name, games: this.players[idx2].games+=1})
       .subscribe(res=>{})
 
     let gameobj = {}
@@ -112,7 +119,7 @@ export class PingpongTabComponent implements OnInit {
     gameobj['p1Gain'] = this.p1Gain;
     gameobj['p2Gain'] = this.p2Gain;
 
-    this.httpservice.addPingPongGame(gameobj)
+    this.httpservice.addChessGame(gameobj)
       .subscribe(res=>{})
 
     this.p1Gain = 0;
@@ -147,8 +154,48 @@ export class PingpongTabComponent implements OnInit {
     data['newP1'] = result['1'];
     data['newP2'] = result['2'];
     return data;
-  }
+  }  
   openModal(content){
     this.modalService.open(content, {size: 'xl'});
+  }
+  addPlayer(){
+    let playerExists = false
+    this.players.forEach(player=>{
+      if(player.name == this.addedPlayer){
+        playerExists = true
+      }
+    })
+    if(playerExists) return;
+    this.players.push({name: this.addedPlayer, rating: 1000, games: 0})
+    this.httpservice.createChessPlayer(this.addedPlayer)
+      .subscribe(data=>{})
+    this.addedPlayer=""
+  }
+  onDelSelect(name){
+    this.deletedPlayer = name
+    this.delSelected = true
+  }
+  deletePlayer(){
+    let idx = this.indexOfPlayer(this.deletedPlayer)
+    this.players[idx]
+    if (idx > -1) {
+      this.players.splice(idx, 1);
+    }
+    this.httpservice.deleteChessPlayer(this.deletedPlayer)
+      .subscribe(res=>{
+        console.log(res);
+      })
+    this.deletedPlayer = "Törölt Játékos"
+    this.delSelected = false
+    this.player1Selected = false;
+    this.selPlayer1 = "1. Játékos";
+    this.p1Gain = 0;
+    this.p1rating = 0
+    this.player2Selected = false;
+    this.selPlayer2 = "2. Játékos";
+    this.p2Gain = 0;
+    this.p2rating = 0;
+    this.playing = []
+    this.playing[2] = "Döntetlen"
   }
 }
