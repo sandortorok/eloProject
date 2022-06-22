@@ -24,6 +24,8 @@ import { SpinnerComponent } from './spinner/spinner.component';
 import { NeonButtonComponent } from './neon-button/neon-button.component';
 import { SELoadModal } from './se-bracket/se-load-modal/se-load-modal.component';
 import { SENewModal } from './se-bracket/se-new-modal/se-new-modal.component';
+import { MenuComponent } from './menu/menu.component';
+import { HexComponent } from './menu/hex/hex.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,8 @@ import { SENewModal } from './se-bracket/se-new-modal/se-new-modal.component';
     SELoadModal,
     SENewModal,
     DEBracketComponent,
+    MenuComponent,
+    HexComponent,
   ],
   imports: [
     BrowserModule,

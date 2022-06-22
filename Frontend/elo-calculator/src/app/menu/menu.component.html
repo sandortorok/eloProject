@@ -1,0 +1,45 @@
+<!-- <link type="text/css" href="/assets/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
+<link type="text/css" href="/assets/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet">
+
+
+
+
+
+
+
+
+
+<ul ngbNav #bracketnav="ngbNav" style="display: none;">
+    <li [ngbNavItem] = "0">
+        <a ngbNavLink>HOME</a>
+        <ng-template ngbNavContent>
+            <div style="display: flex; justify-content:center; align-items: center; margin: 0; height: 300px; text-align: start; flex-wrap: wrap;">
+                <app-hex icon="fa-users" text = "Group Bracket" (click)="bracketnav.select(1)"></app-hex>
+                <app-hex icon="fa-angle-right" text = "Single Elimination" (click)="bracketnav.select(2)"></app-hex>
+                <app-hex icon="fa-angle-double-right" text = "Double Elimination" (click)="bracketnav.select(3)"></app-hex>
+                <app-hex icon="fa-rotate-right" text = "Round Robin" (click)="bracketnav.select(4)"></app-hex>
+            </div>
+        </ng-template>
+    </li>
+    <li [ngbNavItem] = "1" >
+        <a ngbNavLink>Group Bracket</a>
+        <ng-template ngbNavContent><app-bracket></app-bracket></ng-template>
+    </li>
+    <li [ngbNavItem] = "2" >
+        <a ngbNavLink>Single Elimination</a>
+        <ng-template ngbNavContent><app-se-bracket></app-se-bracket></ng-template>
+    </li>
+
+    <li [ngbNavItem] = "3" >
+        <a ngbNavLink>Double Elimination</a>
+        <ng-template ngbNavContent><app-de-bracket></app-de-bracket></ng-template>
+    </li>
+
+    <li [ngbNavItem] = "4">
+        <a ngbNavLink>ROUND ROBIN</a>
+        <ng-template ngbNavContent>ROUND ROBIN</ng-template>
+    </li>
+</ul>
+  
+
+<div [ngbNavOutlet]="bracketnav" class="items"></div>

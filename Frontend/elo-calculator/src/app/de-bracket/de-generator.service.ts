@@ -29,7 +29,7 @@ export class DEGeneratorService {
   @Output() generated = new EventEmitter();
 
   startGenerating(gameType: string = 'example', players?: string[], teams?: Team[]){
-    let players_length = 14;
+    let players_length = 6;
     if (players == undefined){}
     if (teams == undefined){}
     switch (gameType){
@@ -102,7 +102,9 @@ export class DEGeneratorService {
       matchesAdded = 0; //Hány meccset adtunk eddig hozzá a kövi nextRoundID-hez
       RoundNumber++;
       for (let i = 0; i < Meccsek_Száma; i++) {
-        let newGame:Match = {};
+        let newGame = {Meccs_id: matchID, Loser: false, bye: false,
+          Gyoztes: "", Round: RoundNumber, score1: null, nextRoundID: nextRoundID}
+
         let teams: string[] = [];
         if(matchesAdded != 2){
           newGame['nextRoundID'] = nextRoundID;
@@ -114,9 +116,7 @@ export class DEGeneratorService {
           matchesAdded = 1;
         }
         newGame['bottom'] = matchesAdded-1;
-        newGame['Gyoztes'] = "";
         newGame['score0'] = null;
-        newGame['bye'] = false;
   
         if (i < Elonyerok && RoundNumber == 1){ //HA ELŐNYERŐ
           newGame['score0'] = 1;
@@ -140,11 +140,8 @@ export class DEGeneratorService {
           teams.push(meccs1['Gyoztes']);
           teams.push(meccs2['Gyoztes']);
         }
-        newGame['score1'] = null;
-        newGame['Meccs_id'] = matchID;
         matchID++;
         newGame['Csapatok'] = teams;
-        newGame['Round'] = RoundNumber;
         games.push(newGame);
       }
     }
@@ -158,52 +155,52 @@ export class DEGeneratorService {
     let loserGames:Match[] = [];
     Meccsek_Száma = closestBase/2/2;
     RoundNumber = 0;
-
     RoundNumber++;
     matchesAdded = 0;
     nextRoundID = Meccsek_Száma + games.length;
     //ROUND 1
     for(let i = 0; i < Meccsek_Száma; i++){
       let newGame = {Meccs_id: matchID, Loser: true, bye: false,
-                Gyoztes: "", Round: RoundNumber, score0: null, score1: null, bottom: 0, nextRoundID: nextRoundID}
-        nextRoundID++;
-        matchID++
-        let teams:string[] = []
-        if(games[LoserRoundID].bye == true){
-            newGame['bye'] = true;
-            teams.push("")
-        }
-        else{
-            teams.push(`Loser of ${LoserRoundID}`)
-        }
-        LoserRoundID++;
-        if(games[LoserRoundID].bye == true){
-            newGame['bye'] = true;
-            teams.push("")
-        }
-        else{
-            teams.push(`Loser of ${LoserRoundID}`)
-        }
-        LoserRoundID++;
-        teamNumber += 2;
-        newGame['Csapatok'] = teams
-        if(matchesAdded%2 == 0){ // FELSŐ MECCS
-          newGame['bottom'] = 0;
-          matchesAdded++; 
-        }
-        else{ //Alsó meccs
-          newGame['bottom'] = 1;
-          matchesAdded = 1;
-        }
-        if(teams[0] == "" && teams[1] != ""){
-          newGame["Gyoztes"] = teams[1];
-        }
-        else if(teams[1] == ""  && teams[0] != ""){
-          newGame["Gyoztes"] = teams[0];
-        }
-        loserGames.push(newGame)
+          Gyoztes: "", Round: RoundNumber, score0: null, score1: null, bottom: 0, nextRoundID: nextRoundID}
+      nextRoundID++;
+      matchID++
+      let teams:string[] = []
+      if(games[LoserRoundID].bye == true){
+          newGame['bye'] = true;
+          teams.push("")
       }
+      else{
+          teams.push(`Loser of ${LoserRoundID}`)
+      }
+      LoserRoundID++;
+      if(games[LoserRoundID].bye == true){
+          newGame['bye'] = true;
+          teams.push("")
+      }
+      else{
+          teams.push(`Loser of ${LoserRoundID}`)
+      }
+      LoserRoundID++;
+      teamNumber += 2;
+      newGame['Csapatok'] = teams
+      if(matchesAdded%2 == 0){ // FELSŐ MECCS
+        newGame['bottom'] = 0;
+        matchesAdded++; 
+      }
+      else{ //Alsó meccs
+        newGame['bottom'] = 1;
+        matchesAdded = 1;
+      }
+      if(teams[0] == "" && teams[1] != ""){
+        newGame["Gyoztes"] = teams[1];
+      }
+      else if(teams[1] == ""  && teams[0] != ""){
+        newGame["Gyoztes"] = teams[0];
+      }
+      loserGames.push(newGame)
+    }
 
+    let oneGameCounter = 0;
     while(Meccsek_Száma >= 1){
       let prevRound:Match[];
       if(RoundNumber%2 == 1){
@@ -211,12 +208,16 @@ export class DEGeneratorService {
       }
       else{
         LoserRoundID += (Meccsek_Száma+1);//MERT FORDÍTVA ADTUK HOZZÁ
-        if(Meccsek_Száma == 1){
-          Meccsek_Száma--;
+        if(Meccsek_Száma != 1){
+          Meccsek_Száma = Meccsek_Száma / 2;
         }
-        else{
-          Meccsek_Száma = Meccsek_Száma / 2;          
-        }
+        
+      }
+      if(Meccsek_Száma == 1){
+        oneGameCounter++;
+      }
+      if(oneGameCounter == 3){
+        Meccsek_Száma=0
       }
       prevRound = [];
       prevRound = loserGames.filter(el => {
@@ -225,7 +226,6 @@ export class DEGeneratorService {
       RoundNumber++;
       matchesAdded = 0;
 
-      // 1 LOSER PER GAME
       for(let i = 0; i < Meccsek_Száma; i++){
         let prevHasWinner = false
         let prevMatch;
@@ -239,11 +239,9 @@ export class DEGeneratorService {
             prevFullBye = true;
           }
         })
-        let newGame = {}
-        newGame['Meccs_id'] = matchID
+        let newGame = {Meccs_id: matchID, Loser: true, bye: false,
+          Gyoztes: "", Round: RoundNumber, score0: null, score1: null, bottom: 0, nextRoundID: nextRoundID}
         matchID++
-        newGame['Loser'] = true;
-        newGame['bye'] = false
         let teams:string[] = []
         if(RoundNumber %2 == 0){
           teams.push(`Loser of ${LoserRoundID}`)
@@ -260,10 +258,6 @@ export class DEGeneratorService {
           teams.push("")
         }
         newGame['Csapatok'] = teams
-        newGame['Round'] = RoundNumber
-        newGame['score0'] = null;
-        newGame['score1'] = null;
-        newGame['nextRoundID'] = nextRoundID;
         if(matchesAdded%2 == 1){ // 1 VAN BERAKVA => FELSŐ
             nextRoundID++;
             matchesAdded++;
@@ -277,6 +271,7 @@ export class DEGeneratorService {
         newGame['bottom'] = matchesAdded-1;
         loserGames.push(newGame)
       }
+
     }
 
     let newGame = {Meccs_id: matchID, Loser: false, bye: false, Csapatok: ["Winner of Winner's Bracket", "Winner of Loser's Bracket"],

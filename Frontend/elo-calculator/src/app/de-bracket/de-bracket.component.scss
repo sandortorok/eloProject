@@ -80,13 +80,12 @@ body {
     margin: 3px 0;
     height: 25px;
     line-height: 25px;
-    white-space: nowrap;
     overflow: hidden;
     list-style-type: none;
     cursor: pointer;
     width: 95%;
     box-sizing: border-box;
-    transition: all 0.5s ease-in-out;
+    transition: all 0.3s ease-in-out;
     opacity: 0.3;
 }
 
@@ -118,9 +117,11 @@ body {
     margin: 0 auto;
     padding: 10px 0;
     height: 60px;
-    -webkit-transition: all 0.2s;
-    transition: all 0.2s;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
     gap: 2px;
+    padding: 10px;
+    border-radius: 50px;
 }
 
 .round-2 .matchup {
@@ -166,10 +167,19 @@ body {
     margin: 0;
     margin: 120px 0;
 }
+.loser-round-7 .matchup{
+    margin: 0;
+    margin: 280px 0;
+}
+.loser-round-8 .matchup{
+    margin: 0;
+    margin: 280px 0;
+}
 h1{
     font-family: 'Roboto Condensed', sans-serif;
     color: white;
     text-align: center;
+    font-size: max(3vw, 30px);
     margin: 30px 0;
 }
 .round-details {
@@ -288,8 +298,8 @@ h1{
         border-radius: 50px;
         text-align: center;
     }
-    .matchup{
+    .loser-matchup{
         width: 100%;
-        grid-template-columns: 1px 100%;
+        grid-template-columns: 100%;
     }
 }

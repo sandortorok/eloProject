@@ -34,7 +34,7 @@ export class DEBracketComponent implements OnInit {
   loadItems(newMatches: Match[]){
     this.emptyArrays()
     this.matches = newMatches
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 10; i++) {
       let newRound = newMatches.filter(el => { return el.Round == (i + 1) });
       if (newRound.length > 0) {
         this.rounds.push(newRound)
@@ -43,7 +43,7 @@ export class DEBracketComponent implements OnInit {
   }
   loadLosers(newMatches: Match[]){
     this.loserMatches = newMatches;
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 10; i++) {
       let newRound = newMatches.filter(el => { return el.Round == (i + 1) });
       if (newRound.length > 0) {
         this.loserRounds.push(newRound)
