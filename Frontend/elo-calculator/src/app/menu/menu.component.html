@@ -9,11 +9,15 @@
 
 
 
+<div class="arrow-container">
+    <div class="arrow-2" (click)="bracketnav.activeId != 0 ? bracketnav.select(0): mainNav.select(0)">
+      <i class="fa fa-angle-left"></i>
+    </div>
+</div>
 <ul ngbNav #bracketnav="ngbNav" style="display: none;">
     <li [ngbNavItem] = "0">
         <a ngbNavLink>HOME</a>
         <ng-template ngbNavContent>
-            <h1 style="text-transform: uppercase;">{{gamePlayed}}</h1>
             <div style="display: flex; justify-content:center; align-items: center; margin: 0; height: 300px; text-align: start; flex-wrap: wrap;">
                 <app-hex icon="fa-users" text = "Group Bracket" (click)="bracketnav.select(1)"></app-hex>
                 <app-hex icon="fa-user" text = "Elo Rating" (click)="bracketnav.select(5)"></app-hex>

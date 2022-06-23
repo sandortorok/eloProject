@@ -128,4 +128,19 @@ export class HttpService {
     return this.http.post(this.url + '/segame',{body: body, name: body.gameName})
     .pipe(catchError(this.handleError));
   }
+/////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////DEMATCHES////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+  getDEMatch(name){
+    return this.http.get(this.url+ '/dematch/'+name)
+      .pipe(catchError(this.handleError));
+  }
+  getDEMatchNames(){
+    return this.http.get(this.url+ '/dematches/names')
+      .pipe(catchError(this.handleError));
+  }
+  saveDEGame(body){
+    return this.http.post(this.url + '/degame',{body: body, name: body.gameName})
+    .pipe(catchError(this.handleError));
+  }
 }

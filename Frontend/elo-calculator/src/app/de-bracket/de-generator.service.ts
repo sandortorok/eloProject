@@ -13,6 +13,7 @@ export interface Match{
   bottom?: number,
   bye?: boolean,
   loser?: boolean;
+  final?: boolean;
 }
 
 @Injectable({
@@ -102,7 +103,7 @@ export class DEGeneratorService {
       matchesAdded = 0; //Hány meccset adtunk eddig hozzá a kövi nextRoundID-hez
       RoundNumber++;
       for (let i = 0; i < Meccsek_Száma; i++) {
-        let newGame = {Meccs_id: matchID, Loser: false, bye: false,
+        let newGame = {Meccs_id: matchID, loser: false, bye: false, final:false,
           Gyoztes: "", Round: RoundNumber, score1: null, nextRoundID: nextRoundID}
 
         let teams: string[] = [];
@@ -160,7 +161,7 @@ export class DEGeneratorService {
     nextRoundID = Meccsek_Száma + games.length;
     //ROUND 1
     for(let i = 0; i < Meccsek_Száma; i++){
-      let newGame = {Meccs_id: matchID, Loser: true, bye: false,
+      let newGame = {Meccs_id: matchID, loser: true, bye: false, final: false,
           Gyoztes: "", Round: RoundNumber, score0: null, score1: null, bottom: 0, nextRoundID: nextRoundID}
       nextRoundID++;
       matchID++
@@ -239,7 +240,7 @@ export class DEGeneratorService {
             prevFullBye = true;
           }
         })
-        let newGame = {Meccs_id: matchID, Loser: true, bye: false,
+        let newGame = {Meccs_id: matchID, loser: true, bye: false, final: false,
           Gyoztes: "", Round: RoundNumber, score0: null, score1: null, bottom: 0, nextRoundID: nextRoundID}
         matchID++
         let teams:string[] = []
@@ -274,7 +275,7 @@ export class DEGeneratorService {
 
     }
 
-    let newGame = {Meccs_id: matchID, Loser: false, bye: false, Csapatok: ["Winner of Winner's Bracket", "Winner of Loser's Bracket"],
+    let newGame = {Meccs_id: matchID, loser: false, final: true, bye: false, Csapatok: ["Winner of Winner's Bracket", "Winner of Loser's Bracket"],
           Gyoztes: "", Round: RoundNumber, score0: null, score1: null, bottom: 0, nextRoundID: -1}
 
     this.GeneratedFinals.push(newGame)

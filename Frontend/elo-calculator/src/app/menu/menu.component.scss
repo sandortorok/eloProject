@@ -1,0 +1,58 @@
+/* icon: https://fortawesome.github.io/Font-Awesome/icons/ */
+/* Animation: https://daneden.github.io/animate.css/ */
+$border: #222;
+$background: #003688;
+.arrow-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    bottom: 25px;
+}
+
+.arrow-2 {
+    width: 60px;
+    height: 60px;
+    background: $background;
+    border-radius: 50%;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1;
+    display: table;
+    cursor: pointer;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    &:hover{
+        background-color: #ff0037;
+    }
+    &:active{
+        filter:brightness(70%)
+    }
+}
+
+.arrow-2:before {
+    width: 52px;
+    height: 52px;
+    content: "";
+    border: 2px solid $border;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+}
+
+.arrow-2 i.fa {
+    font-size: 30px;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    color: $border;
+}
+
+@media screen and (max-width: 500px) {
+    .arrow-container {
+        top: 210px;
+    }
+}

@@ -227,7 +227,44 @@ app.get('/sematch/:name', (req, res) => {
     let sql = `SELECT * FROM SEMatches WHERE gameName = '${req.params.name}'`;
     runQuery(sql, res);
 })
+/////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////DEMATCHES////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+app.get('/dematches/names', (req, res) => {
+    let sql = `SELECT DISTINCT gameName FROM DEMatches`;
+    runQuery(sql, res);
+})
 
+app.get('/dematch/:name', (req, res) => {
+    let sql = `SELECT * FROM DEMatches WHERE gameName = '${req.params.name}'`;
+    runQuery(sql, res);
+})
+app.post('/degame', (req, res) => {
+    let msg = req.body.body;
+    let gameName = req.body.name
+    for (el of msg){
+        let player1 = el.Csapatok[0];
+        let player2 = el.Csapatok[1];
+        let winner = el.Gyoztes;
+        let loser = el.loser;
+        let match_ID = el.Meccs_id;
+        let nextMatch_ID = el.nextRoundID;
+        let round = el.Round;
+        let bottom = el.bottom;
+        let final = el.final;
+        let bye = el.bye;
+        let score0 = el.score0;
+        let score1 = el.score1;
+        let sql = `INSERT INTO DEMatches (gameName, winner, loser, final, player1, player2, round, bye, score1, score2, bottom, nextMatch_ID, match_ID)
+        VALUES ('${gameName}', "${winner}",${loser}, ${final},"${player1}",
+            "${player2}", ${round}, ${bye}, ${score0},
+            ${score1}, ${bottom}, ${nextMatch_ID}, ${match_ID})`;
+        let query = pool.query(sql, (err, result) => {
+            if(err) throw err;
+        })
+    }
+    res.send({msg: 'hey'})
+})
 
 // simple route
 app.get("/", (req, res) => {

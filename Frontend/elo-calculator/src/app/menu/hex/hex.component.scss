@@ -1,4 +1,4 @@
-$darkblue: #1d2838;
+$darkblue: #003688;
 
 a {
   color: inherit;
@@ -44,6 +44,7 @@ a:focus {
   -ms-transform: rotate(30deg);
   -o-transform: rotate(30deg);
   transform: rotate(30deg);
+  margin: 10px auto;
 }
 
 .hexagon-item:first-child {

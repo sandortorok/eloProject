@@ -11,6 +11,7 @@ export class SESaveModal implements OnInit {
   IN_gameID:string = ""
   matches;
   placeholder:string = "Bajnokság neve";
+  saveMode:string = "single-elimination";
   constructor(public activeModal: NgbActiveModal, private httpservice: HttpService) {    }
   save() {
     if (this.IN_gameID.length < 5) return; 
@@ -18,10 +19,22 @@ export class SESaveModal implements OnInit {
     this.httpservice.getSEMatchNames()
       .subscribe(names =>{
         console.log(names);
-      })
+    })
     this.matches['gameName'] = this.IN_gameID;
-    console.log(this.matches);
     this.httpservice.saveSEGame(this.matches).subscribe(()=>{});
+    this.IN_gameID = ""
+    this.activeModal.close()
+  }
+  saveDE(){
+    if (this.IN_gameID.length < 5) return; 
+    if (this.IN_gameID == "NÉVTELEN") return;
+    if (this.matches == undefined) return;
+    this.httpservice.getDEMatchNames()
+      .subscribe(names =>{
+        console.log(names);
+        this.matches['gameName'] = this.IN_gameID;
+        this.httpservice.saveDEGame(this.matches).subscribe(()=>{});
+    })
     this.IN_gameID = ""
     this.activeModal.close()
   }

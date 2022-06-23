@@ -15,7 +15,7 @@
                 <button *ngFor="let name of names" ngbDropdownItem (click)="onSelect(name)" >{{name}}</button>
             </div>
         </div>
-        <button class="btn btn-outline-info" (click)="load()">Betöltés</button>
+        <button class="btn btn-outline-info" (click)="loadMode == 'single-elimination' ? load() : loadDE()">Betöltés</button>
     </div>
 </div>
 <!-- <div class="modal-footer">

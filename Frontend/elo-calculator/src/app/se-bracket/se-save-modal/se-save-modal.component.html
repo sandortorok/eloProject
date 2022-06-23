@@ -5,9 +5,10 @@
 </div>
 <div class="modal-body">
     <div class="input-group">
-        <input class="form-control" [placeholder]="placeholder" [(ngModel)]="IN_gameID" (keydown.enter)="save()">
+        <input class="form-control" [placeholder]="placeholder" [(ngModel)]="IN_gameID" 
+                                         (keydown.enter)="saveMode == 'single-elimination' ? save() : saveDE()">
         <div class="input-group-append">
-            <button class="btn btn-outline-info" (click)="save()">Mentés</button>
+            <button class="btn btn-outline-info" (click)="saveMode == 'single-elimination' ? save() : saveDE()">Mentés</button>
         </div>
     </div>
 </div>

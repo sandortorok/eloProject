@@ -1,5 +1,9 @@
+import { SESaveModal } from './../se-bracket/se-save-modal/se-save-modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DEGeneratorService, Match } from './de-generator.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { SENewModal } from '../se-bracket/se-new-modal/se-new-modal.component';
+import { SELoadModal } from '../se-bracket/se-load-modal/se-load-modal.component';
 
 @Component({
   selector: 'app-de-bracket',
@@ -15,16 +19,18 @@ export class DEBracketComponent implements OnInit {
 
   loserMatches: Match[];
   loserRounds: Array<any> = [];
-  constructor(private bracket: DEGeneratorService) {}
+
+  finalMatches: Match[];
+  constructor(private bracket: DEGeneratorService, private modalService: NgbModal) {}
   ngOnInit(): void {
     this.bracket.generated.subscribe(()=>{
       this.loadItems(this.bracket.GeneratedGames)
       this.loadLosers(this.bracket.GeneratedLosers)
+      this.loadFinals(this.bracket.GeneratedFinals)
       console.log(this.matches);
       console.log(this.loserMatches);
+      console.log(this.finalMatches);
     })
-    this.emptyArrays()
-    this.bracket.startGenerating('example')
   }
   emptyArrays(){
     this.matches = []
@@ -56,6 +62,9 @@ export class DEBracketComponent implements OnInit {
       }
     });
   }
+  loadFinals(newMatches: Match[]){
+    this.finalMatches = newMatches;
+  }
   giveCurrentClass() {
     let matchups = this.container.nativeElement.querySelectorAll('ul');
     matchups.forEach(m => {
@@ -70,7 +79,6 @@ export class DEBracketComponent implements OnInit {
   giveHoverEffect() {
     let teamElements = this.container.nativeElement.querySelectorAll('li.team');
     let a = this.container.nativeElement.querySelectorAll("[id='match 0']")
-    console.log(a);
 
     teamElements.forEach(el => {
       if (el.onmouseover != null) el.onmouseover = null;
@@ -137,5 +145,46 @@ export class DEBracketComponent implements OnInit {
         }
       })
     });
+  }
+  onNewBracket(){
+    const modalRef = this.modalService.open(SENewModal, { centered: true });
+    modalRef.componentInstance.generateEvent.subscribe((players)=>{
+      this.emptyArrays()
+      this.bracket.startGenerating('withNames', players=players)
+    })
+  }
+  onSave(){
+    if(this.matches == undefined) return;
+    if(this.matches.length < 1) return;
+    const modalRef = this.modalService.open(SESaveModal, { centered: true });
+    let allGames: Match[] = [];
+    this.matches.forEach(m=>{
+      allGames.push(m);
+    })
+    this.loserMatches.forEach(m=>{
+      allGames.push(m);
+    })
+    this.finalMatches.forEach(m=>{
+      allGames.push(m);
+    })
+    modalRef.componentInstance.matches = allGames;
+    modalRef.componentInstance.saveMode = 'double-elimination';
+    if(this.gameName != 'NÉVTELEN') modalRef.componentInstance.IN_gameID = this.gameName;
+  }
+  onLoad(){
+    const modalRef = this.modalService.open(SELoadModal, { centered: true });
+    modalRef.componentInstance.matches = this.matches;
+    modalRef.componentInstance.loadMode = 'double-elimination';
+    modalRef.componentInstance.loadEvent.subscribe((loadData)=>{
+      this.gameName = loadData.name
+      this.matches = []
+      //kell idő amíg felfogja hogy a newMatches nem üres.......
+      setTimeout(() => {
+        this.loadItems(loadData.matches.filter(el=>{return el.loser == 0 && el.final == 0}))
+        this.loadLosers(loadData.matches.filter(el=>{return el.loser == 1 && el.final == 0}))
+        this.loadFinals(loadData.matches.filter(el=>{return el.loser == 0 && el.final == 1}))
+      }, 1000);
+      //meg kell várni míg renderel a view
+    })
   }
 }

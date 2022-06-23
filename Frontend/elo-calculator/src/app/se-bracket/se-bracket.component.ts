@@ -63,7 +63,6 @@ export class SEBracketComponent implements OnInit {
     const modalRef = this.modalService.open(SESaveModal, { centered: true });
     modalRef.componentInstance.matches = this.matches;
     if(this.gameName != 'NÉVTELEN') modalRef.componentInstance.IN_gameID = this.gameName;
-
   }
   onLoad(){
     const modalRef = this.modalService.open(SELoadModal, { centered: true });
