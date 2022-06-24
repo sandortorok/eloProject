@@ -24,6 +24,44 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/ `eloRatingDB` /*!40100 DEFAULT CHARACTE
 USE `eloRatingDB`;
 
 --
+-- Table structure for table `DEMatches`
+--
+
+DROP TABLE IF EXISTS `DEMatches`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8 */;
+CREATE TABLE `DEMatches` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `gameName` varchar(100) DEFAULT NULL,
+  `winner` varchar(100) DEFAULT NULL,
+  `loser` tinyint(1) DEFAULT NULL,
+  `player1` varchar(100) DEFAULT NULL,
+  `player2` varchar(100) DEFAULT NULL,
+  `round` int DEFAULT NULL,
+  `bye` tinyint(1) DEFAULT NULL,
+  `score1` int DEFAULT NULL,
+  `score2` int DEFAULT NULL,
+  `gameType` varchar(100) DEFAULT NULL,
+  `bottom` tinyint(1) DEFAULT NULL,
+  `nextMatch_ID` int DEFAULT NULL,
+  `nextLoseMatch_ID` int DEFAULT NULL,
+  `match_ID` int DEFAULT NULL,
+  `final` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `DEMatches`
+--
+
+LOCK TABLES `DEMatches` WRITE;
+/*!40000 ALTER TABLE `DEMatches` DISABLE KEYS */;
+INSERT INTO `DEMatches` VALUES (69,'123456789','Játékos 2',0,'Játékos 2','',1,1,1,NULL,NULL,0,8,NULL,0,0),(70,'123456789','Játékos 1',0,'Játékos 1','',1,1,1,NULL,NULL,1,8,NULL,1,0),(71,'123456789','Játékos 5',0,'Játékos 5','',1,1,1,NULL,NULL,0,9,NULL,2,0),(72,'123456789','Játékos 9',0,'Játékos 9','',1,1,1,NULL,NULL,1,9,NULL,3,0),(73,'123456789','Játékos 10',0,'Játékos 10','',1,1,1,NULL,NULL,0,10,NULL,4,0),(74,'123456789','Játékos 7',0,'Játékos 7','',1,1,1,NULL,NULL,1,10,NULL,5,0),(75,'123456789','',0,'Játékos 4','Játékos 6',1,0,NULL,NULL,NULL,0,11,NULL,6,0),(76,'123456789','',0,'Játékos 8','Játékos 3',1,0,NULL,NULL,NULL,1,11,NULL,7,0),(77,'123456789','',0,'Játékos 2','Játékos 1',2,0,NULL,NULL,NULL,0,12,NULL,8,0),(78,'123456789','',0,'Játékos 5','Játékos 9',2,0,NULL,NULL,NULL,1,12,NULL,9,0),(79,'123456789','',0,'Játékos 10','Játékos 7',2,0,NULL,NULL,NULL,0,13,NULL,10,0),(80,'123456789','',0,'','',2,0,NULL,NULL,NULL,1,13,NULL,11,0),(81,'123456789','',0,'','',3,0,NULL,NULL,NULL,0,14,NULL,12,0),(82,'123456789','',0,'','',3,0,NULL,NULL,NULL,1,14,NULL,13,0),(83,'123456789','',0,'','',4,0,NULL,NULL,NULL,0,-1,NULL,14,0),(84,'123456789','',1,'','',1,1,NULL,NULL,NULL,0,19,NULL,15,0),(85,'123456789','',1,'','',1,1,NULL,NULL,NULL,1,20,NULL,16,0),(86,'123456789','',1,'','',1,1,NULL,NULL,NULL,1,21,NULL,17,0),(87,'123456789','',1,'Loser of 6','Loser of 7',1,0,NULL,NULL,NULL,1,22,NULL,18,0),(88,'123456789','Loser of 11',1,'Loser of 11','',2,0,NULL,NULL,NULL,0,23,NULL,19,0),(89,'123456789','Loser of 10',1,'Loser of 10','',2,0,NULL,NULL,NULL,1,23,NULL,20,0),(90,'123456789','Loser of 9',1,'Loser of 9','',2,0,NULL,NULL,NULL,0,24,NULL,21,0),(91,'123456789','',1,'Loser of 8','',2,0,NULL,NULL,NULL,1,24,NULL,22,0),(92,'123456789','',1,'Loser of 10','',3,0,NULL,NULL,NULL,0,25,NULL,23,0),(93,'123456789','',1,'Loser of 9','',3,0,NULL,NULL,NULL,1,26,NULL,24,0),(94,'123456789','',1,'Loser of 13','',4,0,NULL,NULL,NULL,0,27,NULL,25,0),(95,'123456789','',1,'Loser of 12','',4,0,NULL,NULL,NULL,1,27,NULL,26,0),(96,'123456789','',1,'','',5,0,NULL,NULL,NULL,0,28,NULL,27,0),(97,'123456789','',1,'Loser of 14','',6,0,NULL,NULL,NULL,0,29,NULL,28,0),(98,'123456789','',0,'Winner of Winner\'s Bracket','Winner of Loser\'s Bracket',7,0,NULL,NULL,NULL,0,-1,NULL,29,1);
+/*!40000 ALTER TABLE `DEMatches` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `SEMatches`
 --
 
@@ -45,7 +83,7 @@ CREATE TABLE `SEMatches` (
   `nextMatch_ID` int DEFAULT NULL,
   `match_ID` int DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -54,6 +92,7 @@ CREATE TABLE `SEMatches` (
 
 LOCK TABLES `SEMatches` WRITE;
 /*!40000 ALTER TABLE `SEMatches` DISABLE KEYS */;
+INSERT INTO `SEMatches` VALUES (1,'64 random játékos','','Játékos 42','Játékos 63',1,0,NULL,NULL,NULL,0,32,0),(2,'64 random játékos','','Játékos 6','Játékos 50',1,0,NULL,NULL,NULL,1,32,1),(3,'64 random játékos','','Játékos 4','Játékos 32',1,0,NULL,NULL,NULL,0,33,2),(4,'64 random játékos','','Játékos 44','Játékos 64',1,0,NULL,NULL,NULL,1,33,3),(5,'64 random játékos','','Játékos 56','Játékos 40',1,0,NULL,NULL,NULL,0,34,4),(6,'64 random játékos','','Játékos 52','Játékos 55',1,0,NULL,NULL,NULL,1,34,5),(7,'64 random játékos','','Játékos 37','Játékos 9',1,0,NULL,NULL,NULL,0,35,6),(8,'64 random játékos','','Játékos 14','Játékos 22',1,0,NULL,NULL,NULL,1,35,7),(9,'64 random játékos','','Játékos 57','Játékos 10',1,0,NULL,NULL,NULL,0,36,8),(10,'64 random játékos','','Játékos 49','Játékos 13',1,0,NULL,NULL,NULL,1,36,9),(11,'64 random játékos','','Játékos 38','Játékos 18',1,0,NULL,NULL,NULL,0,37,10),(12,'64 random játékos','','Játékos 26','Játékos 7',1,0,NULL,NULL,NULL,1,37,11),(13,'64 random játékos','','Játékos 15','Játékos 29',1,0,NULL,NULL,NULL,0,38,12),(14,'64 random játékos','','Játékos 17','Játékos 39',1,0,NULL,NULL,NULL,1,38,13),(15,'64 random játékos','','Játékos 25','Játékos 23',1,0,NULL,NULL,NULL,0,39,14),(16,'64 random játékos','','Játékos 45','Játékos 34',1,0,NULL,NULL,NULL,1,39,15),(17,'64 random játékos','','Játékos 11','Játékos 43',1,0,NULL,NULL,NULL,0,40,16),(18,'64 random játékos','','Játékos 35','Játékos 12',1,0,NULL,NULL,NULL,1,40,17),(19,'64 random játékos','','Játékos 51','Játékos 5',1,0,NULL,NULL,NULL,0,41,18),(20,'64 random játékos','','Játékos 19','Játékos 48',1,0,NULL,NULL,NULL,1,41,19),(21,'64 random játékos','','Játékos 28','Játékos 2',1,0,NULL,NULL,NULL,0,42,20),(22,'64 random játékos','','Játékos 41','Játékos 59',1,0,NULL,NULL,NULL,1,42,21),(23,'64 random játékos','','Játékos 61','Játékos 33',1,0,NULL,NULL,NULL,0,43,22),(24,'64 random játékos','','Játékos 27','Játékos 24',1,0,NULL,NULL,NULL,1,43,23),(25,'64 random játékos','','Játékos 47','Játékos 31',1,0,NULL,NULL,NULL,0,44,24),(26,'64 random játékos','','Játékos 62','Játékos 20',1,0,NULL,NULL,NULL,1,44,25),(27,'64 random játékos','','Játékos 53','Játékos 46',1,0,NULL,NULL,NULL,0,45,26),(28,'64 random játékos','','Játékos 36','Játékos 8',1,0,NULL,NULL,NULL,1,45,27),(29,'64 random játékos','','Játékos 3','Játékos 21',1,0,NULL,NULL,NULL,0,46,28),(30,'64 random játékos','','Játékos 54','Játékos 30',1,0,NULL,NULL,NULL,1,46,29),(31,'64 random játékos','','Játékos 16','Játékos 60',1,0,NULL,NULL,NULL,0,47,30),(32,'64 random játékos','','Játékos 58','Játékos 1',1,0,NULL,NULL,NULL,1,47,31),(33,'64 random játékos','','','',2,0,NULL,NULL,NULL,0,48,32),(34,'64 random játékos','','','',2,0,NULL,NULL,NULL,1,48,33),(35,'64 random játékos','','','',2,0,NULL,NULL,NULL,0,49,34),(36,'64 random játékos','','','',2,0,NULL,NULL,NULL,1,49,35),(37,'64 random játékos','','','',2,0,NULL,NULL,NULL,0,50,36),(38,'64 random játékos','','','',2,0,NULL,NULL,NULL,1,50,37),(39,'64 random játékos','','','',2,0,NULL,NULL,NULL,0,51,38),(40,'64 random játékos','','','',2,0,NULL,NULL,NULL,1,51,39),(41,'64 random játékos','','','',2,0,NULL,NULL,NULL,0,52,40),(42,'64 random játékos','','','',2,0,NULL,NULL,NULL,1,52,41),(43,'64 random játékos','','','',2,0,NULL,NULL,NULL,0,53,42),(44,'64 random játékos','','','',2,0,NULL,NULL,NULL,1,53,43),(45,'64 random játékos','','','',2,0,NULL,NULL,NULL,0,54,44),(46,'64 random játékos','','','',2,0,NULL,NULL,NULL,1,54,45),(47,'64 random játékos','','','',2,0,NULL,NULL,NULL,0,55,46),(48,'64 random játékos','','','',2,0,NULL,NULL,NULL,1,55,47),(49,'64 random játékos','','','',3,0,NULL,NULL,NULL,0,56,48),(50,'64 random játékos','','','',3,0,NULL,NULL,NULL,1,56,49),(51,'64 random játékos','','','',3,0,NULL,NULL,NULL,0,57,50),(52,'64 random játékos','','','',3,0,NULL,NULL,NULL,1,57,51),(53,'64 random játékos','','','',3,0,NULL,NULL,NULL,0,58,52),(54,'64 random játékos','','','',3,0,NULL,NULL,NULL,1,58,53),(55,'64 random játékos','','','',3,0,NULL,NULL,NULL,0,59,54),(56,'64 random játékos','','','',3,0,NULL,NULL,NULL,1,59,55),(57,'64 random játékos','','','',4,0,NULL,NULL,NULL,0,60,56),(58,'64 random játékos','','','',4,0,NULL,NULL,NULL,1,60,57),(59,'64 random játékos','','','',4,0,NULL,NULL,NULL,0,61,58),(60,'64 random játékos','','','',4,0,NULL,NULL,NULL,1,61,59),(61,'64 random játékos','','','',5,0,NULL,NULL,NULL,0,62,60),(62,'64 random játékos','','','',5,0,NULL,NULL,NULL,1,62,61),(63,'64 random játékos','','','',6,0,NULL,NULL,NULL,0,-1,62);
 /*!40000 ALTER TABLE `SEMatches` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -288,4 +327,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-14 16:40:22
+-- Dump completed on 2022-06-23 18:31:39

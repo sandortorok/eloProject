@@ -24,8 +24,6 @@ export class DEGeneratorService {
   }
   
   GeneratedGames:Match[] = [];
-  GeneratedLosers:Match[] = [];
-  GeneratedFinals:Match[] = [];
   exampleTeams:string[] = []
   @Output() generated = new EventEmitter();
 
@@ -229,12 +227,12 @@ export class DEGeneratorService {
 
       for(let i = 0; i < Meccsek_Száma; i++){
         let prevHasWinner = false
-        let prevMatch;
+        let prevMatches:Match[] = [];
         let prevFullBye = false
         prevRound.forEach(match=>{
           if(match.nextRoundID == matchID && match.Gyoztes!.length > 0){
             prevHasWinner = true;
-            prevMatch = match;
+            prevMatches.push(match);
           }
           else if(match.nextRoundID == matchID && match.Csapatok![0].length == 0 && match.Csapatok![1].length == 0 && RoundNumber == 2){
             prevFullBye = true;
@@ -250,7 +248,10 @@ export class DEGeneratorService {
         }
         newGame['Gyoztes'] = "";
         if(prevHasWinner){
-          teams.push(prevMatch.Gyoztes!)
+          prevMatches.forEach(m=>{
+            console.log('pushed', m);
+            teams.push(m.Gyoztes!);
+          })
         }
         else if(prevFullBye){
           newGame['Gyoztes'] = teams[0];
@@ -274,12 +275,23 @@ export class DEGeneratorService {
       }
 
     }
-
+    let lastMatchofWinners:Match;
+    this.GeneratedGames.forEach(m=>{
+      if (!lastMatchofWinners){
+        lastMatchofWinners = m;
+      }
+      else if(lastMatchofWinners.Meccs_id! < m.Meccs_id!){
+        lastMatchofWinners = m;
+      }
+    })
+    lastMatchofWinners!.nextRoundID = (nextRoundID)
     let newGame = {Meccs_id: matchID, loser: false, final: true, bye: false, Csapatok: ["Winner of Winner's Bracket", "Winner of Loser's Bracket"],
           Gyoztes: "", Round: RoundNumber, score0: null, score1: null, bottom: 0, nextRoundID: -1}
 
-    this.GeneratedFinals.push(newGame)
-    this.GeneratedLosers = loserGames;
+    loserGames.forEach(m=>{
+      this.GeneratedGames.push(m);
+    })
+    this.GeneratedGames.push(newGame);
   }
 
   getClosest(players) {

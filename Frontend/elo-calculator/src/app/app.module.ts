@@ -26,6 +26,8 @@ import { SELoadModal } from './se-bracket/se-load-modal/se-load-modal.component'
 import { SENewModal } from './se-bracket/se-new-modal/se-new-modal.component';
 import { MenuComponent } from './menu/menu.component';
 import { HexComponent } from './menu/hex/hex.component';
+import { DEWinModal } from './de-bracket/de-win-modal/de-win-modal.component';
+import { RoundsPipe } from './pipes/rounds.pipe';
 
 @NgModule({
   declarations: [
@@ -47,8 +49,10 @@ import { HexComponent } from './menu/hex/hex.component';
     SELoadModal,
     SENewModal,
     DEBracketComponent,
+    DEWinModal,
     MenuComponent,
     HexComponent,
+    RoundsPipe,
   ],
   imports: [
     BrowserModule,

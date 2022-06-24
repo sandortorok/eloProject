@@ -1,0 +1,25 @@
+
+<div class="modal-header">
+    <h4 class="modal-title" style="font-weight: bold">GYŐZTES KIVÁLASZTÁSA</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+    <div class="wrap">
+        <div class="btn" ngbDropdown> 
+            <button type="button" class="btn"  
+                [class.btn-outline-success] = "playerSelected"  
+                [class.btn-outline-danger] = "!playerSelected" 
+                ngbDropdownToggle>{{selPlayer}}
+            </button>
+            <div class="dropdown-menu" ngbDropdownMenu>
+                <button ngbDropdownItem (click)="onSelect(match.Csapatok![0])" >{{match.Csapatok![0]}}</button>
+                <button ngbDropdownItem (click)="onSelect(match.Csapatok![1])" >{{match.Csapatok![1]}}</button>
+            </div>
+        </div>
+        <button class="btn btn-outline-info" style="display: inline-block;" (click)="updateWinner()">Generálás</button>
+    </div>
+
+</div>
+<!-- <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+</div> -->

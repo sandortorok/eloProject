@@ -4,6 +4,7 @@ import { DEGeneratorService, Match } from './de-generator.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SENewModal } from '../se-bracket/se-new-modal/se-new-modal.component';
 import { SELoadModal } from '../se-bracket/se-load-modal/se-load-modal.component';
+import { DEWinModal } from './de-win-modal/de-win-modal.component';
 
 @Component({
   selector: 'app-de-bracket',
@@ -12,58 +13,25 @@ import { SELoadModal } from '../se-bracket/se-load-modal/se-load-modal.component
 })
 export class DEBracketComponent implements OnInit {
   @ViewChild('container') container;
-  matches:Match[];
-  players:any[] = [];
-  rounds: Array<any> = [];
   gameName:string = "NÉVTELEN";
+  matches:Match[];
 
-  loserMatches: Match[];
-  loserRounds: Array<any> = [];
-
-  finalMatches: Match[];
   constructor(private bracket: DEGeneratorService, private modalService: NgbModal) {}
   ngOnInit(): void {
     this.bracket.generated.subscribe(()=>{
-      this.loadItems(this.bracket.GeneratedGames)
-      this.loadLosers(this.bracket.GeneratedLosers)
-      this.loadFinals(this.bracket.GeneratedFinals)
+      this.matches = [];
+      this.matches = this.bracket.GeneratedGames
       console.log(this.matches);
-      console.log(this.loserMatches);
-      console.log(this.finalMatches);
+      this.giveEffects();
     })
   }
-  emptyArrays(){
-    this.matches = []
-    this.rounds = []
-    this.loserMatches = [];
-  }
-  loadItems(newMatches: Match[]){
-    this.emptyArrays()
-    this.matches = newMatches
-    for (let i = 0; i < 10; i++) {
-      let newRound = newMatches.filter(el => { return el.Round == (i + 1) });
-      if (newRound.length > 0) {
-        this.rounds.push(newRound)
-      }
-    }
-  }
-  loadLosers(newMatches: Match[]){
-    this.loserMatches = newMatches;
-    for (let i = 0; i < 10; i++) {
-      let newRound = newMatches.filter(el => { return el.Round == (i + 1) });
-      if (newRound.length > 0) {
-        this.loserRounds.push(newRound)
-      }
-    }
+  giveEffects(){
     setTimeout(() => {
       if (this.container != undefined){
         this.giveHoverEffect();
         this.giveCurrentClass();
       }
     });
-  }
-  loadFinals(newMatches: Match[]){
-    this.finalMatches = newMatches;
   }
   giveCurrentClass() {
     let matchups = this.container.nativeElement.querySelectorAll('ul');
@@ -95,16 +63,6 @@ export class DEBracketComponent implements OnInit {
         players.push(p2);
       }
     })
-    this.loserMatches.forEach(match=>{
-      let p1 = match.Csapatok![0];
-      let p2 = match.Csapatok![1];
-      if(p1 != "" && !players.includes(p1)){
-        players.push(p1);
-      }
-      if(p2 != "" && !players.includes(p2)){
-        players.push(p2);
-      }
-    })
     this.addHoverToPlayers(players, teamElements);
   }
   addHoverToPlayers(players, teamElements){
@@ -116,7 +74,8 @@ export class DEBracketComponent implements OnInit {
         }
       });
       let match;
-      if (playerName.includes('Loser')){
+      if (playerName.includes('Loser of')){
+        console.log(playerName);
         let id = parseInt(playerName.match(/(\d+)/)![0]); //STRINGBEN LÉVŐ SZÁM (MATCHID)
         match = this.container.nativeElement.querySelector(`[id='match ${id}']`)
       }
@@ -149,7 +108,7 @@ export class DEBracketComponent implements OnInit {
   onNewBracket(){
     const modalRef = this.modalService.open(SENewModal, { centered: true });
     modalRef.componentInstance.generateEvent.subscribe((players)=>{
-      this.emptyArrays()
+      this.matches = [];
       this.bracket.startGenerating('withNames', players=players)
     })
   }
@@ -161,12 +120,6 @@ export class DEBracketComponent implements OnInit {
     this.matches.forEach(m=>{
       allGames.push(m);
     })
-    this.loserMatches.forEach(m=>{
-      allGames.push(m);
-    })
-    this.finalMatches.forEach(m=>{
-      allGames.push(m);
-    })
     modalRef.componentInstance.matches = allGames;
     modalRef.componentInstance.saveMode = 'double-elimination';
     if(this.gameName != 'NÉVTELEN') modalRef.componentInstance.IN_gameID = this.gameName;
@@ -176,15 +129,53 @@ export class DEBracketComponent implements OnInit {
     modalRef.componentInstance.matches = this.matches;
     modalRef.componentInstance.loadMode = 'double-elimination';
     modalRef.componentInstance.loadEvent.subscribe((loadData)=>{
+      console.log(loadData);
       this.gameName = loadData.name
-      this.matches = []
+      this.matches = [];
       //kell idő amíg felfogja hogy a newMatches nem üres.......
       setTimeout(() => {
-        this.loadItems(loadData.matches.filter(el=>{return el.loser == 0 && el.final == 0}))
-        this.loadLosers(loadData.matches.filter(el=>{return el.loser == 1 && el.final == 0}))
-        this.loadFinals(loadData.matches.filter(el=>{return el.loser == 0 && el.final == 1}))
+        this.matches = loadData.matches
+        this.giveEffects();
       }, 1000);
       //meg kell várni míg renderel a view
+    })
+  }
+  onTeamClick(event){
+    event.target.parentNode.id;
+    let matchID = event.target.parentNode.id.match(/(\d+)/)![0];
+    let thisMatch = this.matches.filter(m =>{ return m.Meccs_id == matchID})[0];
+    if (!thisMatch) return;
+    if (thisMatch.Csapatok![0] == "" || thisMatch.Csapatok![1] == "") return;
+    if (thisMatch.Csapatok![0].includes('Loser of') || thisMatch.Csapatok![1].includes('Loser of')) return;
+
+    const modalRef = this.modalService.open(DEWinModal, { centered: true });
+    modalRef.componentInstance.match = thisMatch;
+    modalRef.componentInstance.updateEvent.subscribe((updatedMatch:Match)=>{
+      thisMatch = updatedMatch;
+      let vesztes: string;
+      if(thisMatch.Csapatok![0] == thisMatch.Gyoztes){
+        vesztes = thisMatch.Csapatok![1];
+      }
+      else { vesztes = thisMatch.Csapatok![0] }
+      this.matches.forEach(match=>{
+          if(match.Csapatok![0] == `Loser of ${thisMatch.Meccs_id}`){
+            match.Csapatok![0] = vesztes
+          }
+          if(match.Csapatok![1] == `Loser of ${thisMatch.Meccs_id}`){
+            match.Csapatok![1] = vesztes
+          }
+          if(match.Gyoztes == `Loser of ${thisMatch.Meccs_id}`){
+            match.Gyoztes = vesztes
+          }
+        
+      })
+      let nextID = thisMatch.nextRoundID!
+      if (nextID >= 0){
+        let nextMatch;
+        nextMatch = this.matches.filter(m=>{return m.Meccs_id == nextID})[0]
+        nextMatch.Csapatok![thisMatch.bottom!] = thisMatch.Gyoztes!; //Kövi meccs feltöltése
+      }
+      this.giveEffects();
     })
   }
 }
