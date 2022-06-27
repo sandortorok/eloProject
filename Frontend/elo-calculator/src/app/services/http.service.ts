@@ -140,7 +140,22 @@ export class HttpService {
       .pipe(catchError(this.handleError));
   }
   saveDEGame(body){
-    return this.http.post(this.url + '/degame',{body: body, name: body.gameName})
+    return this.http.post(this.url + '/degame',body)
+    .pipe(catchError(this.handleError));
+  }
+/////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////CACHE//////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+  getCache(){
+    return this.http.get(this.url+ '/cache')
+      .pipe(catchError(this.handleError));
+  }
+  getCacheFromGame(gameType){
+    return this.http.get(this.url+ '/cache/'+gameType)
+      .pipe(catchError(this.handleError));
+  }
+  saveCache(body){
+    return this.http.post(this.url + '/savecache',body)
     .pipe(catchError(this.handleError));
   }
 }

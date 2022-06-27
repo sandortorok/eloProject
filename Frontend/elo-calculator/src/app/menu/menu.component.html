@@ -27,7 +27,7 @@
 
     <li [ngbNavItem] = "3" >
         <a ngbNavLink>Double Elimination</a>
-        <ng-template ngbNavContent><app-de-bracket></app-de-bracket></ng-template>
+        <ng-template ngbNavContent><app-de-bracket gameType="{{gamePlayed}}"></app-de-bracket></ng-template>
     </li>
 
     <li [ngbNavItem] = "4">

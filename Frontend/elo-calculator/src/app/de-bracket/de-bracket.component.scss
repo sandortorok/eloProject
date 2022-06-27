@@ -78,10 +78,6 @@ body {
 .round {
     display: block;
     float: left;
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
     display: flex;
     flex-direction: column;
     width: 95%;
@@ -275,7 +271,12 @@ h1{
 
 
 @media print {
-
+    ::ng-deep .myheader>*{
+        display:none
+    }
+    ::ng-deep .arrow-container{
+        display:none
+    }
     .btn-wrapper {
       display: none;
     }

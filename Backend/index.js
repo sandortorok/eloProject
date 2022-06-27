@@ -241,7 +241,11 @@ app.get('/dematch/:name', (req, res) => {
 })
 app.post('/degame', (req, res) => {
     let msg = req.body.body;
-    let gameName = req.body.name
+    let gameName = req.body.name;
+    let gameType = req.body.type;
+
+    let sql = 'REPLACE INTO DEMatches (gameName, winner, loser, final, player1, player2, round, bye, score1, score2, bottom, nextMatch_ID, match_ID, gameType) VALUES '
+    let first = true;
     for (el of msg){
         let player1 = el.Csapatok[0];
         let player2 = el.Csapatok[1];
@@ -255,15 +259,44 @@ app.post('/degame', (req, res) => {
         let bye = el.bye;
         let score0 = el.score0;
         let score1 = el.score1;
-        let sql = `INSERT INTO DEMatches (gameName, winner, loser, final, player1, player2, round, bye, score1, score2, bottom, nextMatch_ID, match_ID)
-        VALUES ('${gameName}', "${winner}",${loser}, ${final},"${player1}",
+        if(first){
+            first = false;
+        }
+        else{
+            sql += ','
+        }
+        sql += `('${gameName}', "${winner}",${loser}, ${final},"${player1}",
             "${player2}", ${round}, ${bye}, ${score0},
-            ${score1}, ${bottom}, ${nextMatch_ID}, ${match_ID})`;
+            ${score1}, ${bottom}, ${nextMatch_ID}, ${match_ID}, '${gameType}')`;
+    }
+    if(!first){
         let query = pool.query(sql, (err, result) => {
             if(err) throw err;
         })
     }
     res.send({msg: 'hey'})
+})
+/////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////CACHE////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+app.get('/cache', (req, res) => {
+    let sql = `SELECT * FROM cache ORDER BY lastSaved DESC`;
+    runQuery(sql, res);
+})
+
+app.get('/cache/:type', (req, res) => {
+    let sql = `SELECT * FROM cache WHERE gameType = '${req.params.type}' ORDER BY lastSaved DESC`;
+    runQuery(sql, res);
+})
+
+app.post('/savecache', (req, res) => {
+    let msg = req.body;
+    let gameName = msg.gameName;
+    let gameType = msg.gameType;
+    let bracketType = msg.bracketType;
+    let sql = `REPLACE INTO cache (gameName, gameType, bracketType, lastSaved) values ('${gameName}', '${gameType}', '${bracketType}', NOW())`;
+    runQuery(sql, res)
 })
 
 // simple route

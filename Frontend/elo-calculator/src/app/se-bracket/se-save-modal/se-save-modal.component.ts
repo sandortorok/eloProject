@@ -8,7 +8,10 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./se-save-modal.component.scss']
 })
 export class SESaveModal implements OnInit {
-  IN_gameID:string = ""
+  IN_gameID:string;
+  gameType:string;
+  @Output() saveEvent = new EventEmitter<string>();
+
   matches;
   placeholder:string = "Bajnokság neve";
   saveMode:string = "single-elimination";
@@ -16,13 +19,12 @@ export class SESaveModal implements OnInit {
   save() {
     if (this.IN_gameID.length < 5) return; 
     if (this.IN_gameID == "NÉVTELEN") return;
+    if (this.matches == undefined) return;
     this.httpservice.getSEMatchNames()
       .subscribe(names =>{
-        console.log(names);
     })
     this.matches['gameName'] = this.IN_gameID;
     this.httpservice.saveSEGame(this.matches).subscribe(()=>{});
-    this.IN_gameID = ""
     this.activeModal.close()
   }
   saveDE(){
@@ -32,11 +34,11 @@ export class SESaveModal implements OnInit {
     this.httpservice.getDEMatchNames()
       .subscribe(names =>{
         console.log(names);
-        this.matches['gameName'] = this.IN_gameID;
-        this.httpservice.saveDEGame(this.matches).subscribe(()=>{});
+        this.httpservice.saveDEGame({body: this.matches, name: this.IN_gameID, type: this.gameType}).subscribe(()=>{
+          this.saveEvent.emit(this.IN_gameID);
+          this.activeModal.close()
+        });
     })
-    this.IN_gameID = ""
-    this.activeModal.close()
   }
   ngOnInit(): void {
   }

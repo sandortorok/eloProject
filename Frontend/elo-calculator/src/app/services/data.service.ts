@@ -1,6 +1,14 @@
 import { HttpService } from './http.service';
 import { Injectable } from '@angular/core';
 
+
+
+export interface CacheElement {
+  gameName: string;
+  gameType: string;
+  bracketType:string;
+  lastSaved: string;
+}
 export interface Player {
   name: string;
   rating: number;

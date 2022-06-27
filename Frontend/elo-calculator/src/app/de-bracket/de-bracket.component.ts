@@ -1,10 +1,12 @@
 import { SESaveModal } from './../se-bracket/se-save-modal/se-save-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DEGeneratorService, Match } from './de-generator.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { SENewModal } from '../se-bracket/se-new-modal/se-new-modal.component';
 import { SELoadModal } from '../se-bracket/se-load-modal/se-load-modal.component';
 import { DEWinModal } from './de-win-modal/de-win-modal.component';
+import { HttpService } from '../services/http.service';
+import { CacheElement } from '../services/data.service';
 
 @Component({
   selector: 'app-de-bracket',
@@ -14,15 +16,36 @@ import { DEWinModal } from './de-win-modal/de-win-modal.component';
 export class DEBracketComponent implements OnInit {
   @ViewChild('container') container;
   gameName:string = "NÉVTELEN";
+  @Input() gameType:string;
   matches:Match[];
-
-  constructor(private bracket: DEGeneratorService, private modalService: NgbModal) {}
+  isOpen = true; //mivel fel maradt iratkozva a bracket.generated-re ezért kellett ezt bevezetni
+  constructor(private bracket: DEGeneratorService, private modalService: NgbModal, private httpservice: HttpService) {}
   ngOnInit(): void {
-    this.bracket.generated.subscribe(()=>{
+    this.httpservice.getCacheFromGame(this.gameType).subscribe(res=>{
+      console.log(this.gameType);
+
+      let myarray:Array<CacheElement> = Object.values(res);
+      if(myarray.length <= 0) return;
       this.matches = [];
-      this.matches = this.bracket.GeneratedGames
-      console.log(this.matches);
-      this.giveEffects();
+      myarray.forEach(cacheEl=>{
+        if(cacheEl.bracketType == 'double-elimination'){
+          this.gameName = cacheEl.gameName;
+        }
+      })
+      this.httpservice.getDEMatch(this.gameName).subscribe(data=>{
+        this.loadMatchesFromDataObject(data);
+        this.giveEffects();
+      })
+    })
+    this.bracket.generated.subscribe(()=>{
+      if(this.isOpen){
+        this.matches = [];
+        this.matches = this.bracket.GeneratedGames
+        this.gameName = Math.random().toString(36).slice(2, 7);
+        this.httpservice.saveDEGame({body: this.matches, name: this.gameName, type: this.gameType}).subscribe({})
+        this.saveCache();
+        this.giveEffects();
+      }
     })
   }
   giveEffects(){
@@ -46,8 +69,6 @@ export class DEBracketComponent implements OnInit {
   }
   giveHoverEffect() {
     let teamElements = this.container.nativeElement.querySelectorAll('li.team');
-    let a = this.container.nativeElement.querySelectorAll("[id='match 0']")
-
     teamElements.forEach(el => {
       if (el.onmouseover != null) el.onmouseover = null;
       if (el.onmouseleave != null) el.onmouseleave = null;
@@ -69,7 +90,7 @@ export class DEBracketComponent implements OnInit {
     players.forEach((playerName:string) => {
       let samePlayer: any[] = []
       teamElements.forEach(el => {
-        if (el.innerText.split('\n')[0] == playerName) {
+        if (el.firstChild.textContent.trim() == playerName) {
           samePlayer.push(el)
         }
       });
@@ -123,7 +144,12 @@ export class DEBracketComponent implements OnInit {
     })
     modalRef.componentInstance.matches = allGames;
     modalRef.componentInstance.saveMode = 'double-elimination';
+    modalRef.componentInstance.gameType = this.gameType;
+
     if(this.gameName != 'NÉVTELEN') modalRef.componentInstance.IN_gameID = this.gameName;
+    modalRef.componentInstance.saveEvent.subscribe((name:string) =>{
+      this.gameName = name;
+    })
   }
   onLoad(){
     const modalRef = this.modalService.open(SELoadModal, { centered: true });
@@ -181,10 +207,27 @@ export class DEBracketComponent implements OnInit {
           nextMatch.Csapatok![1-thisMatch.bottom!] = thisMatch.Gyoztes!; //Ha már foglalt a hely berakjuk a másikba
         }
       }
+      this.httpservice.saveDEGame({body: this.matches, name: this.gameName, type:this.gameType}).subscribe({})
+      this.saveCache();
       this.giveEffects();
     })
   }
+  saveCache(){
+    this.httpservice.saveCache({gameName: this.gameName, bracketType:'double-elimination', gameType:this.gameType}).subscribe({})
+  }
   onPrintClick(){
     window.print()
+  }
+  loadMatchesFromDataObject(data){
+    let myarray = Object.values(data);
+    myarray.forEach((match:any)=>{
+      let newMatch:Match = {Csapatok: [match.player1, match.player2], Gyoztes:match.winner, bye: match.bye, Meccs_id:match.match_ID,
+      nextRoundID: match.nextMatch_ID, bottom: match.bottom, score0: match.score1, score1:match.score2, Round: match.round,
+       final: match.final, loser:match.loser};
+      this.matches.push(newMatch);
+    })
+  }
+  ngOnDestroy(){
+    this.isOpen = false;
   }
 }
