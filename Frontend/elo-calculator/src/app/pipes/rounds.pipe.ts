@@ -18,7 +18,7 @@ export class RoundsPipe implements PipeTransform {
     if(type == 'final'){
       newMatches = matches.filter(m=>{ return m.loser == false && m.final == true})
     }
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 20; i++) {
       let newRound = newMatches.filter(el => { return el.Round == (i + 1) });
       if (newRound.length > 0) {
         rounds.push(newRound)

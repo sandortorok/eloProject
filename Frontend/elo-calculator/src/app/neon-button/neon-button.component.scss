@@ -8,12 +8,16 @@
 //     font-family: 'Raleway', sans-serif;
 //     font-weight: bold;
 // }
-div{
+
+::ng-deep :root {
+    --buttonCLR: #03e9f4;
+}
+div {
     position: relative;
     display: inline-block;
     padding: 25px 30px;
     margin: 0;
-    color: #03e9f4;
+    color:var(--buttonCLR);
     text-decoration: none;
     text-transform: uppercase;
     transition: 0.5s;
@@ -25,29 +29,18 @@ div{
     text-align: center;
     user-select: none;
 }
-div:hover{
-    background: #03e9f4;
-    color: #050801;
-    box-shadow: 0 0 5px #03e9f4,
-                0 0 25px #03e9f4,
-                0 0 50px #03e9f4,
-                0 0 200px #03e9f4;
-     -webkit-box-reflect:below 1px linear-gradient(transparent, #0005);
+div:hover {
+    background: var(--buttonCLR);
+    color: black;
+    box-shadow: 0 0 5px var(--buttonCLR),
+                0 0 25px var(--buttonCLR),
+                0 0 50px var(--buttonCLR),
+                0 0 200px var(--buttonCLR);
+     -webkit-box-reflect:below 1px linear-gradient(transparent, black);
      outline: none;
-
-}
-div:active{
-    background: #019097;
-    transition: all 0ms;
-}
-a{
-    background-color: rgb(71, 228, 9);
 }
 div:nth-child(1){
     filter: hue-rotate(280deg);
-}
-div:nth-child(2){
-    filter: hue-rotate(150deg);
 }
 
 div span{
@@ -59,7 +52,7 @@ div span:nth-child(1){
     left: 0;
     width: 100%;
     height: 3px;
-    background: linear-gradient(90deg,transparent,#03e9f4);
+    background: linear-gradient(90deg,transparent,var(--buttonCLR));
 }
 @keyframes animate1{
     0%{
@@ -74,7 +67,7 @@ div span:nth-child(2){
     right: 0;
     width: 2px;
     height: 100%;
-    background: linear-gradient(180deg,transparent,#03e9f4);
+    background: linear-gradient(180deg,transparent,var(--buttonCLR));
 }
 @keyframes animate2{
     0%{
@@ -89,7 +82,7 @@ div span:nth-child(3){
     right: 0;
     width: 100%;
     height: 2px;
-    background: linear-gradient(270deg,transparent,#03e9f4);
+    background: linear-gradient(270deg,transparent,var(--buttonCLR));
 }
 @keyframes animate3{
     0%{
@@ -106,7 +99,7 @@ div span:nth-child(4){
     left: 0;
     width: 2px;
     height: 100%;
-    background: linear-gradient(360deg,transparent,#03e9f4);
+    background: linear-gradient(360deg,transparent,var(--buttonCLR));
 }
 @keyframes animate4{
     0%{

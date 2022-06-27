@@ -6,52 +6,76 @@
 	<link href='https://fonts.googleapis.com/css?family=Kaushan+Script|Herr+Von+Muellerhoff' rel='stylesheet' type='text/css'>
 	<link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
 	<link href='https://fonts.googleapis.com/css?family=Istok+Web|Roboto+Condensed:700' rel='stylesheet' type='text/css'>
-
-	<title>March Madness Stock Matchup</title>
 </head>
 <body>
     <section id="bracket">
         <div class="btn-wrapper">
-            <app-neon-button #new text="NEW BRACKET" (click)="onNewBracket()"></app-neon-button>
-            <app-neon-button #load text="LOAD" style="filter:hue-rotate(100deg);" (click)="onLoad()"></app-neon-button>
-            <app-neon-button #save text="SAVE" style="filter:hue-rotate(200deg);" (click)="onSave()"></app-neon-button>
+            <app-neon-button text="NEW BRACKET" (click)="onNewBracket()"></app-neon-button>
+            <app-neon-button text="LOAD" style="filter:hue-rotate(100deg);" (click)="onLoad()"></app-neon-button>
+            <app-neon-button text="SAVE" style="filter:hue-rotate(200deg);" (click)="onSave()"></app-neon-button>
+            <app-neon-button text="PRINT" style="filter:hue-rotate(300deg);" (click)="onPrintClick()"></app-neon-button>
+
         </div>
         <app-spinner *ngIf="matches != undefined && matches.length == 0"></app-spinner>
         <div *ngIf="matches != undefined && matches.length > 0" class="container" #container>
-            <h1>WINNERS BRACKET</h1>
-            <div class="split split-one" style="width: 100%; border: 2px solid white; padding: 20px 0; border-radius: 50px">
-                <div *ngFor="let round of matches | rounds: 'winner'; let i = index" class="round round-{{i+1}}" >
-                    <div class="round-details">{{i+1}}. Forduló <br/><span class="date">KEDD</span></div>
-                    <ul *ngFor="let match of round" class="matchup" id="match {{match.Meccs_id}}">
-                        <span class="matchNumber">{{match.Meccs_id}}</span>
-                        <li class="team"
-                        (click)="onTeamClick($event)"
-                        [class.win]="match.Csapatok![0]==match.Gyoztes && match.Gyoztes.length > 0"> 
-                        {{match.Csapatok![0]}}<span class="score">{{match.score0}}</span></li>
-                        <li class="team"
-                            (click)="onTeamClick($event)"
-                            [class.win]="match.Csapatok![1]==match.Gyoztes  && match.Gyoztes.length > 0"> 
-                            {{match.Csapatok![1]}}<span class="score">{{match.score1}}</span></li>
-                    </ul>
-                </div>	<!-- END ROUND ONE -->
-            </div>
-            <h1>LOSERS BRACKET</h1>
-            <div class="split split-one" style="width: 100%; border: 2px solid white;padding: 20px 0; border-radius: 50px">
-                <div *ngFor="let round of matches | rounds: 'loser'; let i = index" class="round loser-round-{{i+1}}" >
-                    <div class="round-details">{{i+1}}. Forduló <br/><span class="date">KEDD</span></div>
-                    <ul *ngFor="let match of round" class="matchup loser-matchup" id="match {{match.Meccs_id}}" 
-                        [class.bye]="match.Csapatok![0].length <= 0 && match.Csapatok![1].length <=0 && i == 0">
-                        <span class="matchNumber" style="display: hidden"></span>
-                        <li class="team"
+            <div class="split-wrap winners-bracket">
+                <h1>WINNERS BRACKET</h1>
+                <div class="split">
+                    <div *ngFor="let round of matches | rounds: 'winner'; let i = index" class="round round-{{i+1}}" >
+                        <div class="round-details">{{i+1}}. Forduló <br/><span class="date">KEDD</span></div>
+                        <ul *ngFor="let match of round" class="matchup" id="match {{match.Meccs_id}}">
+                            <span class="matchNumber">{{match.Meccs_id}}</span>
+                            <li class="team"
                             (click)="onTeamClick($event)"
                             [class.win]="match.Csapatok![0]==match.Gyoztes && match.Gyoztes.length > 0"> 
                             {{match.Csapatok![0]}}<span class="score">{{match.score0}}</span></li>
-                        <li class="team"
-                            (click)="onTeamClick($event)"
-                            [class.win]="match.Csapatok![1]==match.Gyoztes  && match.Gyoztes.length > 0"> 
-                            {{match.Csapatok![1]}}<span class="score">{{match.score1}}</span></li>
-                    </ul>
-                </div>	<!-- END ROUND ONE -->
+                            <li class="team"
+                                (click)="onTeamClick($event)"
+                                [class.win]="match.Csapatok![1]==match.Gyoztes  && match.Gyoztes.length > 0"> 
+                                {{match.Csapatok![1]}}<span class="score">{{match.score1}}</span></li>
+                        </ul>
+                    </div>	<!-- END ROUND ONE -->
+                </div>
+            </div>
+            <div class="split-wrap losers-bracket">
+                <h1>LOSERS BRACKET</h1>
+                <div class="split">
+                    <div *ngFor="let round of matches | rounds: 'loser'; let i = index" class="round loser-round-{{i+1}}" >
+                        <div class="round-details">{{i+1}}. Forduló <br/><span class="date">KEDD</span></div>
+                        <ul *ngFor="let match of round" class="matchup loser-matchup" id="match {{match.Meccs_id}}" 
+                            [class.bye]="match.Csapatok![0].length <= 0 && match.Csapatok![1].length <=0 && i == 0">
+                            <span class="matchNumber" style="display: hidden"></span>
+                            <li class="team"
+                                (click)="onTeamClick($event)"
+                                [class.win]="match.Csapatok![0]==match.Gyoztes && match.Gyoztes.length > 0"> 
+                                {{match.Csapatok![0]}}<span class="score">{{match.score0}}</span></li>
+                            <li class="team"
+                                (click)="onTeamClick($event)"
+                                [class.win]="match.Csapatok![1]==match.Gyoztes  && match.Gyoztes.length > 0"> 
+                                {{match.Csapatok![1]}}<span class="score">{{match.score1}}</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="split-wrap final-bracket">
+                <h1>FINALS</h1>
+                <div class="split">
+                    <div *ngFor="let round of matches | rounds: 'final'; let i = index" class="round loser-round-{{i+1}}" >
+                        <div class="round-details">{{i+1}}. Forduló <br/><span class="date">KEDD</span></div>
+                        <ul *ngFor="let match of round" class="matchup loser-matchup" id="match {{match.Meccs_id}}" 
+                            [class.bye]="match.Csapatok![0].length <= 0 && match.Csapatok![1].length <=0 && i == 0">
+                            <span class="matchNumber" style="display: hidden"></span>
+                            <li class="team"
+                                (click)="onTeamClick($event)"
+                                [class.win]="match.Csapatok![0]==match.Gyoztes && match.Gyoztes.length > 0"> 
+                                {{match.Csapatok![0]}}<span class="score">{{match.score0}}</span></li>
+                            <li class="team"
+                                (click)="onTeamClick($event)"
+                                [class.win]="match.Csapatok![1]==match.Gyoztes  && match.Gyoztes.length > 0"> 
+                                {{match.Csapatok![1]}}<span class="score">{{match.score1}}</span></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
 	</section>

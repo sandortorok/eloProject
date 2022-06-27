@@ -1,24 +1,23 @@
-
 <div class="modal-header">
-    <h4 class="modal-title" style="font-weight: bold">GYŐZTES KIVÁLASZTÁSA</h4>
+    <h4 class="modal-title" style="font-weight: bold; font-family: Arial, Helvetica, sans-serif;">GYŐZTES KIVÁLASZTÁSA</h4>
     <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
 </div>
 <div class="modal-body">
-    <div class="wrap">
-        <div class="btn" ngbDropdown> 
-            <button type="button" class="btn"  
-                [class.btn-outline-success] = "playerSelected"  
-                [class.btn-outline-danger] = "!playerSelected" 
-                ngbDropdownToggle>{{selPlayer}}
-            </button>
-            <div class="dropdown-menu" ngbDropdownMenu>
-                <button ngbDropdownItem (click)="onSelect(match.Csapatok![0])" >{{match.Csapatok![0]}}</button>
-                <button ngbDropdownItem (click)="onSelect(match.Csapatok![1])" >{{match.Csapatok![1]}}</button>
+    <div class="middle">
+        <label>
+            <input type="radio" name="radio" />
+            <div class="front-end box" (click)="onSelect(match.Csapatok![0])">
+                <span>{{match.Csapatok![0]}}</span>
             </div>
-        </div>
-        <button class="btn btn-outline-info" style="display: inline-block;" (click)="updateWinner()">Generálás</button>
+        </label>
+        <label>
+            <input type="radio" name="radio" />
+            <div class="back-end box" (click)="onSelect(match.Csapatok![1])">
+                <span>{{match.Csapatok![1]}}</span>
+            </div>
+        </label>
+        <div class="mybtn" (click)="updateWinner()">Kiválasztás</div>
     </div>
-
 </div>
 <!-- <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>

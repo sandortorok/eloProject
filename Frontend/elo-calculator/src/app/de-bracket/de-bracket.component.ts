@@ -74,10 +74,11 @@ export class DEBracketComponent implements OnInit {
         }
       });
       let match;
-      if (playerName.includes('Loser of')){
-        console.log(playerName);
-        let id = parseInt(playerName.match(/(\d+)/)![0]); //STRINGBEN LÉVŐ SZÁM (MATCHID)
-        match = this.container.nativeElement.querySelector(`[id='match ${id}']`)
+      if (playerName.includes('Loser of') || playerName.includes('Winner of')){
+        if(playerName.match(/(\d+)/)){
+          let id = parseInt(playerName.match(/(\d+)/)![0]); //STRINGBEN LÉVŐ SZÁM (MATCHID)
+          match = this.container.nativeElement.querySelector(`[id='match ${id}']`)
+        }
       }
       samePlayer.forEach(e => {
         e.onmouseover = () => {
@@ -129,7 +130,6 @@ export class DEBracketComponent implements OnInit {
     modalRef.componentInstance.matches = this.matches;
     modalRef.componentInstance.loadMode = 'double-elimination';
     modalRef.componentInstance.loadEvent.subscribe((loadData)=>{
-      console.log(loadData);
       this.gameName = loadData.name
       this.matches = [];
       //kell idő amíg felfogja hogy a newMatches nem üres.......
@@ -146,6 +146,7 @@ export class DEBracketComponent implements OnInit {
     let thisMatch = this.matches.filter(m =>{ return m.Meccs_id == matchID})[0];
     if (!thisMatch) return;
     if (thisMatch.Csapatok![0] == "" || thisMatch.Csapatok![1] == "") return;
+    if (thisMatch.Csapatok![0].includes('Winner of') || thisMatch.Csapatok![1].includes('Winner of')) return;
     if (thisMatch.Csapatok![0].includes('Loser of') || thisMatch.Csapatok![1].includes('Loser of')) return;
 
     const modalRef = this.modalService.open(DEWinModal, { centered: true });
@@ -167,15 +168,23 @@ export class DEBracketComponent implements OnInit {
           if(match.Gyoztes == `Loser of ${thisMatch.Meccs_id}`){
             match.Gyoztes = vesztes
           }
-        
       })
       let nextID = thisMatch.nextRoundID!
       if (nextID >= 0){
-        let nextMatch;
+        let nextMatch:Match;
         nextMatch = this.matches.filter(m=>{return m.Meccs_id == nextID})[0]
-        nextMatch.Csapatok![thisMatch.bottom!] = thisMatch.Gyoztes!; //Kövi meccs feltöltése
+        let nextTeam = nextMatch.Csapatok![thisMatch.bottom!]
+        if(nextTeam == "" || nextTeam.includes('Winner of')){
+          nextMatch.Csapatok![thisMatch.bottom!] = thisMatch.Gyoztes!; //Kövi meccs feltöltése
+        }
+        else{
+          nextMatch.Csapatok![1-thisMatch.bottom!] = thisMatch.Gyoztes!; //Ha már foglalt a hely berakjuk a másikba
+        }
       }
       this.giveEffects();
     })
+  }
+  onPrintClick(){
+    window.print()
   }
 }

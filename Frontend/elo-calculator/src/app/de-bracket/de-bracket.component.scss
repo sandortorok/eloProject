@@ -20,51 +20,37 @@ body {
 }
 
 .container {
-    max-width: 95%;
+    max-width: 97%;
     margin: 0 auto;
-    display: block;
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-flex-direction: column;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
 }
 
 .split {
-    float: left;
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
     display: flex;
-    width: 42%;
-    -webkit-flex-direction: row;
-    -moz-flex-direction: row;
+    width: 100%;
     flex-direction: row;
 }
-
-.champion {
-    float: left;
-    display: block;
-    width: 16%;
-    -webkit-flex-direction: row;
-    flex-direction: row;
-    -webkit-align-self: center;
-    align-self: center;
-    margin-top: -15px;
-    text-align: center;
+.split-wrap{
+    background-color: #141414;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: 2px solid white;
+    border-radius: 50px;
 }
-
-.champion i {
-    color: #a0a6a8;
-    font-size: 45px;
-    padding: 10px 0;
+// .winners-bracket{
+//     width: 50%
+// }
+.final-bracket{
+    grid-column: 2 / 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
 }
-
-
+.losers-bracket{
+    grid-column: span 2;
+}
 .score {
     font-size: 11px;
     text-transform: uppercase;
@@ -97,17 +83,16 @@ body {
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
-    -webkit-flex-direction: column;
     flex-direction: column;
     width: 95%;
     justify-content: center;
     align-items: center;
+    margin-bottom: 20px
 }
 
 .round-details {
     margin-bottom: 20px;
 }
-
 .matchup {
     position: relative;
     display: grid;
@@ -180,7 +165,8 @@ h1{
     color: white;
     text-align: center;
     font-size: max(3vw, 30px);
-    margin: 30px 0;
+    margin: 10px 0;
+    // margin: 0;
 }
 .round-details {
     font-family: 'Roboto Condensed', sans-serif;
@@ -195,7 +181,7 @@ h1{
     grid-row: span 2;
     font-weight: bolder;
 }
-.champion li,
+
 .round li {
     background-color: #fff;
     box-shadow: none;
@@ -229,35 +215,6 @@ h1{
     background-color: rgb(71, 228, 9) !important;
 }
 
-@media screen and (max-width: 980px) {
-    .container {
-        -webkit-flex-direction: column;
-        -moz-flex-direction: column;
-        flex-direction: column;
-    }
-    .split{
-        width: 90%!important;
-    }
-
-    .split,
-    .champion {
-        width: 90%;
-        margin: 35px 5%;
-    }
-
-    .champion {
-        -webkit-box-ordinal-group: 3;
-        -moz-box-ordinal-group: 3;
-        -ms-flex-order: 3;
-        -webkit-order: 3;
-        order: 3;
-    }
-
-    .split {
-        border-bottom: 1px solid #b6b6b6;
-        padding-bottom: 20px;
-    }
-}
 
 
 .btn-wrapper{
@@ -271,15 +228,27 @@ h1{
     margin-right: 5%;
     margin-left: 5%;
 }
-
+@media screen and (max-width: 1500px) {
+    .container{
+        display: flex;
+        flex-direction: column;
+    }
+}
 @media screen and (max-width: 980px) {
+    .split {
+        width: 100%;
+    }
+    .container{
+        display: flex;
+        flex-direction: column;
+    }
     .btn-wrapper>*{
         margin-bottom: 10%;
     }
 }
 
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 550px) {
     #bracket{
         margin-left: 0;
         margin-right: 0;
@@ -303,3 +272,14 @@ h1{
         grid-template-columns: 100%;
     }
 }
+
+
+@media print {
+
+    .btn-wrapper {
+      display: none;
+    }
+    .team{
+        opacity: 1 !important;
+    }
+  }

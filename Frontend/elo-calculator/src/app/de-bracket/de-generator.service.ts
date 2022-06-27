@@ -249,7 +249,6 @@ export class DEGeneratorService {
         newGame['Gyoztes'] = "";
         if(prevHasWinner){
           prevMatches.forEach(m=>{
-            console.log('pushed', m);
             teams.push(m.Gyoztes!);
           })
         }
@@ -275,23 +274,24 @@ export class DEGeneratorService {
       }
 
     }
-    let lastMatchofWinners:Match;
-    this.GeneratedGames.forEach(m=>{
-      if (!lastMatchofWinners){
-        lastMatchofWinners = m;
-      }
-      else if(lastMatchofWinners.Meccs_id! < m.Meccs_id!){
-        lastMatchofWinners = m;
-      }
-    })
-    lastMatchofWinners!.nextRoundID = (nextRoundID)
-    let newGame = {Meccs_id: matchID, loser: false, final: true, bye: false, Csapatok: ["Winner of Winner's Bracket", "Winner of Loser's Bracket"],
+    let lastMatchofLosers: Match = loserGames[loserGames.length-1];
+    lastMatchofLosers['bottom'] = 1; //Az utsó bottom beállítása 1-re
+    let lastMatchofWinners:Match = this.GeneratedGames[this.GeneratedGames.length-1];
+    lastMatchofWinners.nextRoundID = (nextRoundID) //Utolsó Winner meccs megkeresése és nextRound-jának beállítása
+    nextRoundID++;
+    let finalGame1 = {Meccs_id: matchID, loser: false, final: true, bye: false, Csapatok: ["Winner of Winner's Bracket", "Winner of Loser's Bracket"],
+          Gyoztes: "", Round: RoundNumber, score0: null, score1: null, bottom: 0, nextRoundID: nextRoundID}
+    matchID++;
+    nextRoundID++;
+    RoundNumber++;
+    let finalGame2 = {Meccs_id: matchID, loser: false, final: true, bye: false, Csapatok: [`Winner of ${matchID-1} (if needed)`, `Loser of ${matchID-1} (if needed)`],
           Gyoztes: "", Round: RoundNumber, score0: null, score1: null, bottom: 0, nextRoundID: -1}
-
+    
     loserGames.forEach(m=>{
       this.GeneratedGames.push(m);
     })
-    this.GeneratedGames.push(newGame);
+    this.GeneratedGames.push(finalGame1);
+    this.GeneratedGames.push(finalGame2);
   }
 
   getClosest(players) {
