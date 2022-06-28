@@ -1,10 +1,10 @@
+import { SEModal } from './../se-bracket/se-modal/se-modal.component';
 import { SESaveModal } from './../se-bracket/se-save-modal/se-save-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DEGeneratorService, Match } from './de-generator.service';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { SENewModal } from '../se-bracket/se-new-modal/se-new-modal.component';
 import { SELoadModal } from '../se-bracket/se-load-modal/se-load-modal.component';
-import { DEWinModal } from './de-win-modal/de-win-modal.component';
 import { HttpService } from '../services/http.service';
 import { CacheElement } from '../services/data.service';
 
@@ -21,32 +21,8 @@ export class DEBracketComponent implements OnInit {
   isOpen = true; //mivel fel maradt iratkozva a bracket.generated-re ezért kellett ezt bevezetni
   constructor(private bracket: DEGeneratorService, private modalService: NgbModal, private httpservice: HttpService) {}
   ngOnInit(): void {
-    this.httpservice.getCacheFromGame(this.gameType).subscribe(res=>{
-      console.log(this.gameType);
-
-      let myarray:Array<CacheElement> = Object.values(res);
-      if(myarray.length <= 0) return;
-      this.matches = [];
-      myarray.forEach(cacheEl=>{
-        if(cacheEl.bracketType == 'double-elimination'){
-          this.gameName = cacheEl.gameName;
-        }
-      })
-      this.httpservice.getDEMatch(this.gameName).subscribe(data=>{
-        this.loadMatchesFromDataObject(data);
-        this.giveEffects();
-      })
-    })
-    this.bracket.generated.subscribe(()=>{
-      if(this.isOpen){
-        this.matches = [];
-        this.matches = this.bracket.GeneratedGames
-        this.gameName = Math.random().toString(36).slice(2, 7);
-        this.httpservice.saveDEGame({body: this.matches, name: this.gameName, type: this.gameType}).subscribe({})
-        this.saveCache();
-        this.giveEffects();
-      }
-    })
+    this.loadCache();
+    this.sub2Generated();
   }
   giveEffects(){
     setTimeout(() => {
@@ -75,8 +51,8 @@ export class DEBracketComponent implements OnInit {
     });
     let players:string[] = []
     this.matches.forEach(match=>{
-      let p1 = match.Csapatok![0];
-      let p2 = match.Csapatok![1];
+      let p1 = match.Csapatok[0];
+      let p2 = match.Csapatok[1];
       if(p1 != "" && !players.includes(p1)){
         players.push(p1);
       }
@@ -171,40 +147,44 @@ export class DEBracketComponent implements OnInit {
     let matchID = event.target.parentNode.id.match(/(\d+)/)![0];
     let thisMatch = this.matches.filter(m =>{ return m.Meccs_id == matchID})[0];
     if (!thisMatch) return;
-    if (thisMatch.Csapatok![0] == "" || thisMatch.Csapatok![1] == "") return;
-    if (thisMatch.Csapatok![0].includes('Winner of') || thisMatch.Csapatok![1].includes('Winner of')) return;
-    if (thisMatch.Csapatok![0].includes('Loser of') || thisMatch.Csapatok![1].includes('Loser of')) return;
+    if(thisMatch.Gyoztes != "") return;
+    if (thisMatch.Csapatok[0] == "" || thisMatch.Csapatok![1] == "") return;
+    if (thisMatch.Csapatok[0].includes('Winner of') || thisMatch.Csapatok[1].includes('Winner of')) return;
+    if (thisMatch.Csapatok[0].includes('Loser of') || thisMatch.Csapatok[1].includes('Loser of')) return;
 
-    const modalRef = this.modalService.open(DEWinModal, { centered: true });
+    const modalRef = this.modalService.open(SEModal, { centered: true });
     modalRef.componentInstance.match = thisMatch;
     modalRef.componentInstance.updateEvent.subscribe((updatedMatch:Match)=>{
       thisMatch = updatedMatch;
       let vesztes: string;
-      if(thisMatch.Csapatok![0] == thisMatch.Gyoztes){
-        vesztes = thisMatch.Csapatok![1];
+      if(thisMatch.Csapatok[0] == thisMatch.Gyoztes){
+        vesztes = thisMatch.Csapatok[1];
       }
-      else { vesztes = thisMatch.Csapatok![0] }
+      else { vesztes = thisMatch.Csapatok[0] }
+      let changedFrom = "randomname987654321xyzqwerty"
       this.matches.forEach(match=>{
-          if(match.Csapatok![0] == `Loser of ${thisMatch.Meccs_id}`){
-            match.Csapatok![0] = vesztes
+          if(match.losersFrom  && match.losersFrom[0] == thisMatch.Meccs_id){
+            changedFrom = match.Csapatok[0];
+            match.Csapatok[0] = vesztes;
           }
-          if(match.Csapatok![1] == `Loser of ${thisMatch.Meccs_id}`){
-            match.Csapatok![1] = vesztes
+          if(match.losersFrom  && match.losersFrom[1] == thisMatch.Meccs_id){
+            changedFrom = match.Csapatok[0];
+            match.Csapatok[1] = vesztes;
           }
-          if(match.Gyoztes == `Loser of ${thisMatch.Meccs_id}`){
+          if(match.Gyoztes == changedFrom){
             match.Gyoztes = vesztes
           }
       })
-      let nextID = thisMatch.nextRoundID!
+      let nextID = thisMatch.nextRoundID
       if (nextID >= 0){
         let nextMatch:Match;
         nextMatch = this.matches.filter(m=>{return m.Meccs_id == nextID})[0]
-        let nextTeam = nextMatch.Csapatok![thisMatch.bottom!]
+        let nextTeam = nextMatch.Csapatok[thisMatch.bottom]
         if(nextTeam == "" || nextTeam.includes('Winner of')){
-          nextMatch.Csapatok![thisMatch.bottom!] = thisMatch.Gyoztes!; //Kövi meccs feltöltése
+          nextMatch.Csapatok[thisMatch.bottom] = thisMatch.Gyoztes; //Kövi meccs feltöltése
         }
         else{
-          nextMatch.Csapatok![1-thisMatch.bottom!] = thisMatch.Gyoztes!; //Ha már foglalt a hely berakjuk a másikba
+          nextMatch.Csapatok[1-thisMatch.bottom] = thisMatch.Gyoztes; //Ha már foglalt a hely berakjuk a másikba
         }
       }
       this.httpservice.saveDEGame({body: this.matches, name: this.gameName, type:this.gameType}).subscribe({})
@@ -223,8 +203,39 @@ export class DEBracketComponent implements OnInit {
     myarray.forEach((match:any)=>{
       let newMatch:Match = {Csapatok: [match.player1, match.player2], Gyoztes:match.winner, bye: match.bye, Meccs_id:match.match_ID,
       nextRoundID: match.nextMatch_ID, bottom: match.bottom, score0: match.score1, score1:match.score2, Round: match.round,
-       final: match.final, loser:match.loser};
+       final: match.final, loser:match.loser, losersFrom:[match.loserFrom1, match.loserFrom2]};
       this.matches.push(newMatch);
+    })
+  }
+  loadCache(){
+    this.httpservice.getCacheFromGame(this.gameType).subscribe(res=>{
+      let myarray:Array<CacheElement> = Object.values(res);
+      if(myarray.length <= 0) return;
+      myarray.forEach(cacheEl=>{
+        if(cacheEl.bracketType == 'double-elimination'){
+          this.gameName = cacheEl.gameName;
+        }
+      })
+      if(this.gameName != "NÉVTELEN"){
+        this.matches = [];
+        this.httpservice.getDEMatch(this.gameName).subscribe(data=>{
+          this.loadMatchesFromDataObject(data);
+          this.giveEffects();
+        })
+      }
+    })
+  }
+  sub2Generated(){
+    this.bracket.generated.subscribe(()=>{
+      if(this.isOpen){
+        this.matches = [];
+        this.matches = this.bracket.GeneratedGames
+        this.gameName = Math.random().toString(36).slice(2, 7);
+        this.httpservice.saveDEGame({body: this.matches, name: this.gameName, type: this.gameType}).subscribe({})
+        this.saveCache();
+        this.giveEffects();
+        console.log(this.matches);
+      }
     })
   }
   ngOnDestroy(){

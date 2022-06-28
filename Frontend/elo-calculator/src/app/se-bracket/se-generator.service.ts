@@ -21,7 +21,7 @@ export class SEGeneratorService {
   constructor(private data: DataService) {
   }
   
-  GeneratedGames:Object[] = [];
+  GeneratedGames:any[] = [];
   exampleTeams:string[] = []
   @Output() generated = new EventEmitter();
 

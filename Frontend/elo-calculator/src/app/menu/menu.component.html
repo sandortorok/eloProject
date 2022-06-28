@@ -22,7 +22,7 @@
     </li>
     <li [ngbNavItem] = "2" >
         <a ngbNavLink>Single Elimination</a>
-        <ng-template ngbNavContent><app-se-bracket></app-se-bracket></ng-template>
+        <ng-template ngbNavContent><app-se-bracket gameType="{{gamePlayed}}"></app-se-bracket></ng-template>
     </li>
 
     <li [ngbNavItem] = "3" >

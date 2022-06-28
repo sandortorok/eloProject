@@ -23,11 +23,6 @@ body {
     max-width: 95%;
     margin: 0 auto;
     display: block;
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: -webkit-flex;
     display: flex;
     -webkit-flex-direction: row;
     flex-direction: row;
@@ -36,10 +31,6 @@ body {
 .split {
     display: block;
     float: left;
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
     display: flex;
     width: 42%;
     -webkit-flex-direction: row;
@@ -218,7 +209,6 @@ body {
     }
 
     .split {
-        border-bottom: 1px solid #b6b6b6;
         padding-bottom: 20px;
     }
 }
@@ -258,5 +248,19 @@ body {
     }
     .team{
         font-size: 10px;
+    }
+}
+@media print {
+    ::ng-deep .myheader>*{
+        display:none
+    }
+    ::ng-deep .arrow-container{
+        display:none
+    }
+    .btn-wrapper {
+      display: none;
+    }
+    .team{
+        opacity: 1 !important;
     }
 }

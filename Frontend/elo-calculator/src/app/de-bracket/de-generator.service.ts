@@ -1,19 +1,19 @@
 import { DataService, Player, Team } from '../services/data.service';
 import { Injectable, Output, EventEmitter } from '@angular/core';
 
-
 export interface Match{
-  Csapatok?: string[],
-  Round?: number,
-  nextRoundID?: number,
-  score0?: number | null,
-  score1?: number | null,
-  Gyoztes?: string,
-  Meccs_id?: number,
-  bottom?: number,
-  bye?: boolean,
+  Csapatok: string[],
+  Round: number,
+  nextRoundID: number,
+  Gyoztes: string,
+  Meccs_id: number,
+  bye: boolean,
+  bottom: number,
   loser?: boolean;
   final?: boolean;
+  score0?: number | null,
+  score1?: number | null,
+  losersFrom?: number[];
 }
 
 @Injectable({
@@ -101,8 +101,8 @@ export class DEGeneratorService {
       matchesAdded = 0; //Hány meccset adtunk eddig hozzá a kövi nextRoundID-hez
       RoundNumber++;
       for (let i = 0; i < Meccsek_Száma; i++) {
-        let newGame = {Meccs_id: matchID, loser: false, bye: false, final:false,
-          Gyoztes: "", Round: RoundNumber, score1: null, nextRoundID: nextRoundID}
+        let newGame:Match = {Meccs_id: matchID, loser: false, bye: false, final:false,
+          Gyoztes: "", Round: RoundNumber, score1: null, nextRoundID: nextRoundID, Csapatok: [], bottom: 0}
 
         let teams: string[] = [];
         if(matchesAdded != 2){
@@ -159,29 +159,35 @@ export class DEGeneratorService {
     nextRoundID = Meccsek_Száma + games.length;
     //ROUND 1
     for(let i = 0; i < Meccsek_Száma; i++){
-      let newGame = {Meccs_id: matchID, loser: true, bye: false, final: false,
-          Gyoztes: "", Round: RoundNumber, score0: null, score1: null, bottom: 0, nextRoundID: nextRoundID}
+      let newGame:Match = {Meccs_id: matchID, loser: true, bye: false, final: false,
+          Gyoztes: "", Round: RoundNumber, score0: null, score1: null, bottom: 0, nextRoundID: nextRoundID, Csapatok: []}
       nextRoundID++;
       matchID++
+      let losersFrom:number[] = [];
       let teams:string[] = []
       if(games[LoserRoundID].bye == true){
           newGame['bye'] = true;
           teams.push("")
+          losersFrom.push(-1)
       }
       else{
           teams.push(`Loser of ${LoserRoundID}`)
+          losersFrom.push(LoserRoundID);
       }
       LoserRoundID++;
       if(games[LoserRoundID].bye == true){
           newGame['bye'] = true;
-          teams.push("")
+          teams.push("");
+          losersFrom.push(-1);
       }
       else{
-          teams.push(`Loser of ${LoserRoundID}`)
+          teams.push(`Loser of ${LoserRoundID}`);
+          losersFrom.push(LoserRoundID);
       }
       LoserRoundID++;
       teamNumber += 2;
       newGame['Csapatok'] = teams
+      newGame['losersFrom'] = losersFrom;
       if(matchesAdded%2 == 0){ // FELSŐ MECCS
         newGame['bottom'] = 0;
         matchesAdded++; 
@@ -238,27 +244,34 @@ export class DEGeneratorService {
             prevFullBye = true;
           }
         })
-        let newGame = {Meccs_id: matchID, loser: true, bye: false, final: false,
-          Gyoztes: "", Round: RoundNumber, score0: null, score1: null, bottom: 0, nextRoundID: nextRoundID}
+        let newGame:Match = {Meccs_id: matchID, loser: true, bye: false, final: false,
+          Gyoztes: "", Round: RoundNumber, score0: null, score1: null, bottom: 0, nextRoundID: nextRoundID, Csapatok:[]}
         matchID++
-        let teams:string[] = []
+        let teams:string[] = [];
+        let losersFrom:number[] = [];
         if(RoundNumber %2 == 0){
-          teams.push(`Loser of ${LoserRoundID}`)
+          teams.push(`Loser of ${LoserRoundID}`);
+          losersFrom.push(LoserRoundID);
           LoserRoundID--;
         }
         newGame['Gyoztes'] = "";
         if(prevHasWinner){
           prevMatches.forEach(m=>{
             teams.push(m.Gyoztes!);
+            if(m.Gyoztes?.includes('Loser of')){
+              losersFrom.push(parseInt(m.Gyoztes!.match(/(\d+)/)![0]))
+            }
           })
         }
         else if(prevFullBye){
           newGame['Gyoztes'] = teams[0];
         }
         while(teams.length != 2){
-          teams.push("")
+          teams.push("");
+          losersFrom.push(-1);
         }
-        newGame['Csapatok'] = teams
+        newGame['Csapatok'] = teams;
+        newGame['losersFrom'] = losersFrom;
         if(matchesAdded%2 == 1){ // 1 VAN BERAKVA => FELSŐ
             nextRoundID++;
             matchesAdded++;
@@ -284,8 +297,8 @@ export class DEGeneratorService {
     matchID++;
     nextRoundID++;
     RoundNumber++;
-    let finalGame2 = {Meccs_id: matchID, loser: false, final: true, bye: false, Csapatok: [`Winner of ${matchID-1} (if needed)`, `Loser of ${matchID-1} (if needed)`],
-          Gyoztes: "", Round: RoundNumber, score0: null, score1: null, bottom: 0, nextRoundID: -1}
+    let finalGame2 = {Meccs_id: matchID, loser: false, final: true, bye: false, Csapatok: [`Winner of ${matchID-1} (if needed)`, `Loser of ${matchID-1}`],
+          Gyoztes: "", Round: RoundNumber, score0: null, score1: null, bottom: 0, nextRoundID: -1, losersFrom: [-1, matchID-1]}
     
     loserGames.forEach(m=>{
       this.GeneratedGames.push(m);

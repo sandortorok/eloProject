@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { Match } from "../se-generator.service";
 
 @Component({
     selector: 'ngbd-modal-content',
@@ -7,21 +8,21 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
     styleUrls: ['./se-modal.component.scss']
 })
 export class SEModal {
-    @Input() player1: string;
-    @Input() player2: string;
-    @Output() updateEvent = new EventEmitter<{winner: string, player1: string, player2: string,score0?: number, score1?: number}>();
-
+    @Output() updateEvent = new EventEmitter<Match>();
+    @Input() match: Match;
     score1 = null;
     score2 = null;
     selPlayer = "Győztes"
     playerSelected: boolean = false
-    constructor(public activeModal: NgbActiveModal) {    }
+    constructor(public activeModal: NgbActiveModal) { }
     onSelect(name: string) {
-        this.selPlayer = name;
-        this.playerSelected = true;
+      this.selPlayer = name;
+      this.playerSelected = true;
     }
-    updateWinner(){
-        this.updateEvent.emit({winner:this.selPlayer, player1: this.player1, player2: this.player2})
-        this.activeModal.close()
+    updateWinner() {
+      if (this.selPlayer == "Győztes") return;
+      this.match.Gyoztes = this.selPlayer;
+      this.updateEvent.emit(this.match)
+      this.activeModal.close()
     }
 }

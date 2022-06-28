@@ -22,10 +22,11 @@ export class SESaveModal implements OnInit {
     if (this.matches == undefined) return;
     this.httpservice.getSEMatchNames()
       .subscribe(names =>{
+        this.httpservice.saveSEGame({body: this.matches, name: this.IN_gameID, type: this.gameType}).subscribe(()=>{
+          this.saveEvent.emit(this.IN_gameID);
+          this.activeModal.close();
+        });
     })
-    this.matches['gameName'] = this.IN_gameID;
-    this.httpservice.saveSEGame(this.matches).subscribe(()=>{});
-    this.activeModal.close()
   }
   saveDE(){
     if (this.IN_gameID.length < 5) return; 
@@ -33,7 +34,6 @@ export class SESaveModal implements OnInit {
     if (this.matches == undefined) return;
     this.httpservice.getDEMatchNames()
       .subscribe(names =>{
-        console.log(names);
         this.httpservice.saveDEGame({body: this.matches, name: this.IN_gameID, type: this.gameType}).subscribe(()=>{
           this.saveEvent.emit(this.IN_gameID);
           this.activeModal.close()

@@ -201,7 +201,10 @@ app.get('/sematches/names', (req, res) => {
 })
 app.post('/segame', (req, res) => {
     let msg = req.body.body;
-    let gameName = req.body.name
+    let gameName = req.body.name;
+    let gameType = req.body.type;
+    let sql = 'REPLACE INTO SEMatches (gameName, winner, player1, player2, round, bye, score1, score2, bottom, nextMatch_ID, match_ID, gameType) VALUES '
+    let first = true;
     for (el of msg){
         let player1 = el.Csapatok[0];
         let player2 = el.Csapatok[1];
@@ -213,14 +216,19 @@ app.post('/segame', (req, res) => {
         let bye = el.bye;
         let score0 = el.score0;
         let score1 = el.score1;
-        let sql = `INSERT INTO SEMatches (gameName, winner, player1, player2, round, bye, score1, score2, bottom, nextMatch_ID, match_ID)
-        VALUES ('${gameName}', '${winner}', '${player1}',
-            '${player2}', ${round}, ${bye}, ${score0},
-            ${score1}, ${bottom}, ${nextMatch_ID}, ${match_ID})`;
-        let query = pool.query(sql, (err, result) => {
-            if(err) throw err;
-        })
+        if(first){
+            first = false;
+        }
+        else{
+            sql += ','
+        }
+        sql += `('${gameName}', '${winner}', '${player1}',
+        '${player2}', ${round}, ${bye}, ${score0},
+        ${score1}, ${bottom}, ${nextMatch_ID}, ${match_ID}, '${gameType}')`;
     }
+    let query = pool.query(sql, (err, result) => {
+        if(err) throw err;
+    })
     res.send({msg: 'hey'})
 })
 app.get('/sematch/:name', (req, res) => {
@@ -240,11 +248,11 @@ app.get('/dematch/:name', (req, res) => {
     runQuery(sql, res);
 })
 app.post('/degame', (req, res) => {
+
     let msg = req.body.body;
     let gameName = req.body.name;
     let gameType = req.body.type;
-
-    let sql = 'REPLACE INTO DEMatches (gameName, winner, loser, final, player1, player2, round, bye, score1, score2, bottom, nextMatch_ID, match_ID, gameType) VALUES '
+    let sql = 'REPLACE INTO DEMatches (gameName, winner, loser, final, player1, player2, round, bye, score1, score2, bottom, nextMatch_ID, match_ID, gameType, loserFrom1, loserFrom2) VALUES '
     let first = true;
     for (el of msg){
         let player1 = el.Csapatok[0];
@@ -259,6 +267,12 @@ app.post('/degame', (req, res) => {
         let bye = el.bye;
         let score0 = el.score0;
         let score1 = el.score1;
+        let loserFrom1 = -1;
+        let loserFrom2 = -1;
+        if (el.losersFrom){
+            loserFrom1 = el.losersFrom[0];
+            loserFrom2 = el.losersFrom[1];
+        }
         if(first){
             first = false;
         }
@@ -267,7 +281,7 @@ app.post('/degame', (req, res) => {
         }
         sql += `('${gameName}', "${winner}",${loser}, ${final},"${player1}",
             "${player2}", ${round}, ${bye}, ${score0},
-            ${score1}, ${bottom}, ${nextMatch_ID}, ${match_ID}, '${gameType}')`;
+            ${score1}, ${bottom}, ${nextMatch_ID}, ${match_ID}, '${gameType}', ${loserFrom1}, ${loserFrom2})`;
     }
     if(!first){
         let query = pool.query(sql, (err, result) => {

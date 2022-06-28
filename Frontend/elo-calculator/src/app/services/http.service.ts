@@ -125,7 +125,7 @@ export class HttpService {
       .pipe(catchError(this.handleError));
   }
   saveSEGame(body){
-    return this.http.post(this.url + '/segame',{body: body, name: body.gameName})
+    return this.http.post(this.url + '/segame', body)
     .pipe(catchError(this.handleError));
   }
 /////////////////////////////////////////////////////////////////////////////////////////////////
