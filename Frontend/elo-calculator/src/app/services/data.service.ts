@@ -51,7 +51,6 @@ export class DataService {;
   eloPlayers:Player[] = [];
 
   constructor(private httpservice: HttpService) {
-    this.loadVolleyTeams();
     this.loadEloPlayers();
   }
   
@@ -60,14 +59,6 @@ export class DataService {;
       let myarray:Player[] = Object.values(data);
       myarray.forEach(player=>{
         this.eloPlayers.push(player);
-      })
-    })
-  }
-  loadVolleyTeams(){
-    this.httpservice.getVolleyTeams().subscribe(data=>{
-      let myarray = Object.values(data);
-      myarray.forEach(team=>{
-        this.volleyBallTeams.push(team);
       })
     })
   }
