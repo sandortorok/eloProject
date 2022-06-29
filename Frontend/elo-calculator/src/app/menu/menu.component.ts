@@ -24,6 +24,9 @@ export class MenuComponent implements OnInit {
         if (type == 'single-elimination'){
           this.bracketnav.select(2);
         }
+        if (type == 'round-robin'){
+          this.bracketnav.select(4);
+        }
       }
     })
   }

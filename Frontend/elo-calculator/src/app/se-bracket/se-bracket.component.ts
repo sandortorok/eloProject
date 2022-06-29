@@ -48,18 +48,23 @@ export class SEBracketComponent implements OnInit {
     })
   }
   onSave(){
+    if(this.matches == undefined) return;
+    if(this.matches.length < 1) return;
     const modalRef = this.modalService.open(SESaveModal, { centered: true });
     modalRef.componentInstance.matches = this.matches;
     modalRef.componentInstance.saveMode = 'single-elimination';
     modalRef.componentInstance.gameType = this.gameType;
+    if(this.gameName != 'NÉVTELEN') modalRef.componentInstance.IN_gameID = this.gameName;
     modalRef.componentInstance.saveEvent.subscribe(name=>{
       this.gameName = name;
+      this.saveCache();
     })
-    if(this.gameName != 'NÉVTELEN') modalRef.componentInstance.IN_gameID = this.gameName;
   }
   onLoad(){
     const modalRef = this.modalService.open(SELoadModal, { centered: true });
     modalRef.componentInstance.matches = this.matches;
+    modalRef.componentInstance.loadMode = 'single-elimination';
+
     modalRef.componentInstance.loadEvent.subscribe((loadData)=>{
       this.gameName = loadData.name
       this.matches = []

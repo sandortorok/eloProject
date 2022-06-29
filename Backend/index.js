@@ -291,6 +291,51 @@ app.post('/degame', (req, res) => {
     res.send({msg: 'hey'})
 })
 /////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////RRMATCHES////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+app.get('/rrmatches/names', (req, res) => {
+    let sql = `SELECT DISTINCT gameName FROM RRMatches`;
+    runQuery(sql, res);
+})
+app.get('/rrmatch/:name', (req, res) => {
+    let sql = `SELECT * FROM RRMatches WHERE gameName = '${req.params.name}'`;
+    runQuery(sql, res);
+})
+app.post('/rrgame', (req, res) => {
+
+    let msg = req.body.body;
+    let gameName = req.body.name;
+    let gameType = req.body.type;
+    let sql = 'REPLACE INTO RRMatches (gameName, winner, player1, player2, round, bye, match_ID, gameType) VALUES '
+    let first = true;
+    for (el of msg){
+        let player1 = el.Csapatok[0];
+        let player2 = el.Csapatok[1];
+        let winner = el.Gyoztes;
+        let match_ID = el.Meccs_id;
+        let round = el.Round;
+        let bye = el.bye;
+        if (el.losersFrom){
+            loserFrom1 = el.losersFrom[0];
+            loserFrom2 = el.losersFrom[1];
+        }
+        if(first){
+            first = false;
+        }
+        else{
+            sql += ','
+        }
+        sql += `('${gameName}', "${winner}","${player1}",
+            "${player2}", ${round}, ${bye}, ${match_ID}, '${gameType}')`;
+    }
+    if(!first){
+        let query = pool.query(sql, (err, result) => {
+            if(err) throw err;
+        })
+    }
+    res.send({msg: 'hey'})
+})
+/////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////CACHE////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////
 

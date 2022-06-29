@@ -1,7 +1,10 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { SELoadModal } from '../se-bracket/se-load-modal/se-load-modal.component';
 import { SEModal } from '../se-bracket/se-modal/se-modal.component';
-import { Match } from '../services/data.service';
+import { SENewModal } from '../se-bracket/se-new-modal/se-new-modal.component';
+import { SESaveModal } from '../se-bracket/se-save-modal/se-save-modal.component';
+import { CacheElement, Match } from '../services/data.service';
 import { HttpService } from '../services/http.service';
 import { RRGeneratorService } from './rr-generator.service';
 
@@ -23,15 +26,12 @@ export class RRBracketComponent implements OnInit {
   gameName:string = "NÉVTELEN";
   @Input() gameType:string;
   players:playerScore[] = [];
+  isOpen = true;
+
   constructor(private bracket: RRGeneratorService, private modalService: NgbModal, private httpservice: HttpService) { }
   ngOnInit(): void {
-    this.bracket.startGenerating('example');
-    this.bracket.generated.subscribe(()=>{
-      this.matches = [];
-      this.matches = this.bracket.GeneratedGames;
-      this.loadPlayerStats();
-      this.giveEffects();
-    })
+    this.loadCache();
+    this.sub2Generated();
   }
   giveEffects(){
     setTimeout(() => {
@@ -110,8 +110,8 @@ export class RRBracketComponent implements OnInit {
         let nextMatch:Match = this.matches.filter(m=>{return m.Meccs_id == nextID})[0]
         nextMatch.Csapatok[thisMatch.bottom] = thisMatch.Gyoztes;
       }
-      // this.httpservice.saveRRGame({body: this.matches, name: this.gameName, type:this.gameType}).subscribe({})
-      // this.saveCache();
+      this.httpservice.saveRRGame({body: this.matches, name: this.gameName, type:this.gameType}).subscribe({})
+      this.saveCache();
       this.loadPlayerStats();
       this.giveEffects();
     })
@@ -142,15 +142,94 @@ export class RRBracketComponent implements OnInit {
       this.players.push(newPlayerScore);
     });
   }
+  saveCache(){
+    this.httpservice.saveCache({gameName: this.gameName, bracketType:'round-robin', gameType:this.gameType}).subscribe({})
+  }
+  loadCache(){
+    this.httpservice.getCacheFromGame(this.gameType).subscribe(res=>{
+      let myarray:Array<CacheElement> = Object.values(res);
+      if(myarray.length <= 0) return;
+      myarray.forEach(cacheEl=>{
+        if(cacheEl.bracketType == 'round-robin'){
+          this.gameName = cacheEl.gameName;
+        }
+      })
+      if(this.gameName == "NÉVTELEN") return;
+      this.matches = [];
+      this.httpservice.getRRMatch(this.gameName).subscribe(data=>{
+        this.loadMatchesFromDataObject(data);
+        this.loadPlayerStats();
+        this.giveEffects();
+      })
+      
+    })
+  }
+  loadMatchesFromDataObject(data){
+    let myarray = Object.values(data);
+    myarray.forEach((match:any)=>{
+      let newMatch:Match = {
+        Csapatok: [match.player1, match.player2], Gyoztes: match.winner, bye: match.bye, Meccs_id: match.match_ID, Round: match.round,
+        nextRoundID: -1,
+        bottom: 0
+      };
+      this.matches.push(newMatch);
+    })
+  }
+  sub2Generated(){
+    this.bracket.generated.subscribe(()=>{
+      if(this.isOpen){
+        this.matches = [];
+        this.matches = this.bracket.GeneratedGames
+        this.gameName = Math.random().toString(36).slice(2, 7);
+        this.httpservice.saveRRGame({body: this.matches, name: this.gameName, type: this.gameType}).subscribe({})
+        this.saveCache();
+        this.loadPlayerStats();
+        this.giveEffects();
+        console.log(this.matches);
+      }
+    })
+  }
   onNewBracket(){
+    const modalRef = this.modalService.open(SENewModal, { centered: true });
+    modalRef.componentInstance.generateEvent.subscribe((players)=>{
+      this.matches = []
+      this.bracket.startGenerating('withNames', players=players)
+    })
   }
   onLoad(){
+    const modalRef = this.modalService.open(SELoadModal, { centered: true });
+    modalRef.componentInstance.matches = this.matches;
+    modalRef.componentInstance.loadMode = 'round-robin';
+    modalRef.componentInstance.loadEvent.subscribe((loadData)=>{
+      this.gameName = loadData.name
+      this.matches = []
+      //kell idő amíg felfogja hogy a newMatches nem üres.......
+      setTimeout(() => {
+        this.matches = []
+        this.matches = loadData.matches;
+        this.saveCache();
+        this.giveEffects();
+      }, 1000);
+      //meg kell várni míg renderel a view
+    })
   }
   onSave(){
-
+    if(this.matches == undefined) return;
+    if(this.matches.length < 1) return;
+    const modalRef = this.modalService.open(SESaveModal, { centered: true });
+    modalRef.componentInstance.matches = this.matches;
+    modalRef.componentInstance.saveMode = 'round-robin';
+    modalRef.componentInstance.gameType = this.gameType;
+    if(this.gameName != 'NÉVTELEN') modalRef.componentInstance.IN_gameID = this.gameName;
+    modalRef.componentInstance.saveEvent.subscribe(name=>{
+      this.gameName = name;
+      this.saveCache();
+    })
   }
   onPrintClick(){
     window.print();
   }
-
+  ngOnDestroy(){
+    this.isOpen = false;
+  }
 }

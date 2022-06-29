@@ -114,17 +114,13 @@ export class DEBracketComponent implements OnInit {
     if(this.matches == undefined) return;
     if(this.matches.length < 1) return;
     const modalRef = this.modalService.open(SESaveModal, { centered: true });
-    let allGames: Match[] = [];
-    this.matches.forEach(m=>{
-      allGames.push(m);
-    })
-    modalRef.componentInstance.matches = allGames;
+    modalRef.componentInstance.matches = this.matches;
     modalRef.componentInstance.saveMode = 'double-elimination';
     modalRef.componentInstance.gameType = this.gameType;
-
     if(this.gameName != 'NÉVTELEN') modalRef.componentInstance.IN_gameID = this.gameName;
-    modalRef.componentInstance.saveEvent.subscribe((name:string) =>{
+    modalRef.componentInstance.saveEvent.subscribe(name =>{
       this.gameName = name;
+      this.saveCache();
     })
   }
   onLoad(){
