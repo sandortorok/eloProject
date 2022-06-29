@@ -1,9 +1,9 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { SELoadModal } from '../se-bracket/se-load-modal/se-load-modal.component';
-import { SEModal } from '../se-bracket/se-modal/se-modal.component';
-import { SENewModal } from '../se-bracket/se-new-modal/se-new-modal.component';
-import { SESaveModal } from '../se-bracket/se-save-modal/se-save-modal.component';
+import { LoadModal } from '../modals/load-modal/load-modal.component';
+import { WinModal } from '../modals/win-modal/win-modal.component';
+import { NewModal } from '../modals/new-modal/new-modal.component';
+import { SaveModal } from '../modals/save-modal/save-modal.component';
 import { CacheElement, Match } from '../services/data.service';
 import { HttpService } from '../services/http.service';
 import { RRGeneratorService } from './rr-generator.service';
@@ -23,7 +23,7 @@ export class RRBracketComponent implements OnInit {
 
   @ViewChild('container') container;
   matches: Match[];
-  gameName:string = "NÉVTELEN";
+  gameName:string = "";
   @Input() gameType:string;
   players:playerScore[] = [];
   isOpen = true;
@@ -101,7 +101,7 @@ export class RRBracketComponent implements OnInit {
     if (!thisMatch) return;
     if(thisMatch.Gyoztes != "") return;
     if (thisMatch.Csapatok[0] == "" || thisMatch.Csapatok![1] == "") return;
-    const modalRef = this.modalService.open(SEModal, { centered: true });
+    const modalRef = this.modalService.open(WinModal, { centered: true });
     modalRef.componentInstance.match = thisMatch;
     modalRef.componentInstance.updateEvent.subscribe((updatedMatch:Match)=>{
       thisMatch = updatedMatch;
@@ -154,7 +154,7 @@ export class RRBracketComponent implements OnInit {
           this.gameName = cacheEl.gameName;
         }
       })
-      if(this.gameName == "NÉVTELEN") return;
+      if(this.gameName == "") return;
       this.matches = [];
       this.httpservice.getRRMatch(this.gameName).subscribe(data=>{
         this.loadMatchesFromDataObject(data);
@@ -190,14 +190,14 @@ export class RRBracketComponent implements OnInit {
     })
   }
   onNewBracket(){
-    const modalRef = this.modalService.open(SENewModal, { centered: true });
+    const modalRef = this.modalService.open(NewModal, { centered: true });
     modalRef.componentInstance.generateEvent.subscribe((players)=>{
       this.matches = []
       this.bracket.startGenerating('withNames', players=players)
     })
   }
   onLoad(){
-    const modalRef = this.modalService.open(SELoadModal, { centered: true });
+    const modalRef = this.modalService.open(LoadModal, { centered: true });
     modalRef.componentInstance.matches = this.matches;
     modalRef.componentInstance.loadMode = 'round-robin';
     modalRef.componentInstance.loadEvent.subscribe((loadData)=>{
@@ -207,6 +207,7 @@ export class RRBracketComponent implements OnInit {
       setTimeout(() => {
         this.matches = []
         this.matches = loadData.matches;
+        this.loadPlayerStats();
         this.saveCache();
         this.giveEffects();
       }, 1000);
@@ -216,11 +217,11 @@ export class RRBracketComponent implements OnInit {
   onSave(){
     if(this.matches == undefined) return;
     if(this.matches.length < 1) return;
-    const modalRef = this.modalService.open(SESaveModal, { centered: true });
+    const modalRef = this.modalService.open(SaveModal, { centered: true });
     modalRef.componentInstance.matches = this.matches;
     modalRef.componentInstance.saveMode = 'round-robin';
     modalRef.componentInstance.gameType = this.gameType;
-    if(this.gameName != 'NÉVTELEN') modalRef.componentInstance.IN_gameID = this.gameName;
+    if(this.gameName != '') modalRef.componentInstance.IN_gameID = this.gameName;
     modalRef.componentInstance.saveEvent.subscribe(name=>{
       this.gameName = name;
       this.saveCache();

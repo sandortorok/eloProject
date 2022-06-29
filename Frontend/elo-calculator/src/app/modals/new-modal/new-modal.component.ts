@@ -2,11 +2,11 @@ import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-se-new-modal',
-  templateUrl: './se-new-modal.component.html',
-  styleUrls: ['./se-new-modal.component.scss']
+  selector: 'app-new-modal',
+  templateUrl: './new-modal.component.html',
+  styleUrls: ['./new-modal.component.scss']
 })
-export class SENewModal {
+export class NewModal {
   playerInput: string = "";
   players:string[] = [];
   numInput: number = 1;

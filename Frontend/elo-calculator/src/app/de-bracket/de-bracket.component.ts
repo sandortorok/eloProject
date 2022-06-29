@@ -1,10 +1,10 @@
-import { SEModal } from './../se-bracket/se-modal/se-modal.component';
-import { SESaveModal } from './../se-bracket/se-save-modal/se-save-modal.component';
+import { WinModal } from '../modals/win-modal/win-modal.component';
+import { SaveModal } from '../modals/save-modal/save-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DEGeneratorService } from './de-generator.service';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { SENewModal } from '../se-bracket/se-new-modal/se-new-modal.component';
-import { SELoadModal } from '../se-bracket/se-load-modal/se-load-modal.component';
+import { NewModal } from '../modals/new-modal/new-modal.component';
+import { LoadModal } from '../modals/load-modal/load-modal.component';
 import { HttpService } from '../services/http.service';
 import { CacheElement, Match } from '../services/data.service';
 
@@ -15,7 +15,7 @@ import { CacheElement, Match } from '../services/data.service';
 })
 export class DEBracketComponent implements OnInit {
   @ViewChild('container') container;
-  gameName:string = "NÉVTELEN";
+  gameName:string = "";
   @Input() gameType:string;
   matches:Match[];
   isOpen = true; //mivel fel maradt iratkozva a bracket.generated-re ezért kellett ezt bevezetni
@@ -104,7 +104,7 @@ export class DEBracketComponent implements OnInit {
     });
   }
   onNewBracket(){
-    const modalRef = this.modalService.open(SENewModal, { centered: true });
+    const modalRef = this.modalService.open(NewModal, { centered: true });
     modalRef.componentInstance.generateEvent.subscribe((players)=>{
       this.matches = [];
       this.bracket.startGenerating('withNames', players=players)
@@ -113,18 +113,18 @@ export class DEBracketComponent implements OnInit {
   onSave(){
     if(this.matches == undefined) return;
     if(this.matches.length < 1) return;
-    const modalRef = this.modalService.open(SESaveModal, { centered: true });
+    const modalRef = this.modalService.open(SaveModal, { centered: true });
     modalRef.componentInstance.matches = this.matches;
     modalRef.componentInstance.saveMode = 'double-elimination';
     modalRef.componentInstance.gameType = this.gameType;
-    if(this.gameName != 'NÉVTELEN') modalRef.componentInstance.IN_gameID = this.gameName;
+    if(this.gameName != '') modalRef.componentInstance.IN_gameID = this.gameName;
     modalRef.componentInstance.saveEvent.subscribe(name =>{
       this.gameName = name;
       this.saveCache();
     })
   }
   onLoad(){
-    const modalRef = this.modalService.open(SELoadModal, { centered: true });
+    const modalRef = this.modalService.open(LoadModal, { centered: true });
     modalRef.componentInstance.matches = this.matches;
     modalRef.componentInstance.loadMode = 'double-elimination';
     modalRef.componentInstance.loadEvent.subscribe((loadData)=>{
@@ -148,7 +148,7 @@ export class DEBracketComponent implements OnInit {
     if (thisMatch.Csapatok[0].includes('Winner of') || thisMatch.Csapatok[1].includes('Winner of')) return;
     if (thisMatch.Csapatok[0].includes('Loser of') || thisMatch.Csapatok[1].includes('Loser of')) return;
 
-    const modalRef = this.modalService.open(SEModal, { centered: true });
+    const modalRef = this.modalService.open(WinModal, { centered: true });
     modalRef.componentInstance.match = thisMatch;
     modalRef.componentInstance.updateEvent.subscribe((updatedMatch:Match)=>{
       thisMatch = updatedMatch;
@@ -212,7 +212,7 @@ export class DEBracketComponent implements OnInit {
           this.gameName = cacheEl.gameName;
         }
       })
-      if(this.gameName != "NÉVTELEN"){
+      if(this.gameName != ""){
         this.matches = [];
         this.httpservice.getDEMatch(this.gameName).subscribe(data=>{
           this.loadMatchesFromDataObject(data);

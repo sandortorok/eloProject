@@ -65,6 +65,38 @@ INSERT INTO `DEMatches` VALUES (2726,'mokk2','Játékos 9',0,'Játékos 9','',1,
 UNLOCK TABLES;
 
 --
+-- Table structure for table `RRMatches`
+--
+
+DROP TABLE IF EXISTS `RRMatches`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8 */;
+CREATE TABLE `RRMatches` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `gameName` varchar(100) DEFAULT NULL,
+  `winner` varchar(100) DEFAULT NULL,
+  `match_ID` int DEFAULT NULL,
+  `gameType` varchar(255) DEFAULT NULL,
+  `round` int DEFAULT NULL,
+  `bye` tinyint(1) DEFAULT NULL,
+  `player1` varchar(100) DEFAULT NULL,
+  `player2` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `unique_index` (`gameName`,`match_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=149 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `RRMatches`
+--
+
+LOCK TABLES `RRMatches` WRITE;
+/*!40000 ALTER TABLE `RRMatches` DISABLE KEYS */;
+INSERT INTO `RRMatches` VALUES (1,'e6c91','1. Játékos',0,'csocsó',1,1,'1. Játékos',''),(2,'e6c91','',1,'csocsó',1,0,'2. Játékos','7. Játékos'),(3,'e6c91','',2,'csocsó',1,0,'3. Játékos','6. Játékos'),(4,'e6c91','',3,'csocsó',1,0,'4. Játékos','5. Játékos'),(5,'e6c91','',4,'csocsó',2,0,'1. Játékos','2. Játékos'),(6,'e6c91','3. Játékos',5,'csocsó',2,1,'3. Játékos',''),(7,'e6c91','',6,'csocsó',2,0,'4. Játékos','7. Játékos'),(8,'e6c91','',7,'csocsó',2,0,'5. Játékos','6. Játékos'),(9,'e6c91','',8,'csocsó',3,0,'1. Játékos','3. Játékos'),(10,'e6c91','',9,'csocsó',3,0,'4. Játékos','2. Játékos'),(11,'e6c91','5. Játékos',10,'csocsó',3,1,'5. Játékos',''),(12,'e6c91','',11,'csocsó',3,0,'6. Játékos','7. Játékos'),(13,'e6c91','',12,'csocsó',4,0,'1. Játékos','4. Játékos'),(14,'e6c91','',13,'csocsó',4,0,'5. Játékos','3. Játékos'),(15,'e6c91','',14,'csocsó',4,0,'6. Játékos','2. Játékos'),(16,'e6c91','7. Játékos',15,'csocsó',4,1,'7. Játékos',''),(17,'e6c91','',16,'csocsó',5,0,'1. Játékos','5. Játékos'),(18,'e6c91','',17,'csocsó',5,0,'6. Játékos','4. Játékos'),(19,'e6c91','',18,'csocsó',5,0,'7. Játékos','3. Játékos'),(20,'e6c91','2. Játékos',19,'csocsó',5,1,'','2. Játékos'),(21,'e6c91','',20,'csocsó',6,0,'1. Játékos','6. Játékos'),(22,'e6c91','',21,'csocsó',6,0,'7. Játékos','5. Játékos'),(23,'e6c91','4. Játékos',22,'csocsó',6,1,'','4. Játékos'),(24,'e6c91','',23,'csocsó',6,0,'2. Játékos','3. Játékos'),(25,'e6c91','',24,'csocsó',7,0,'1. Játékos','7. Játékos'),(26,'e6c91','6. Játékos',25,'csocsó',7,1,'','6. Játékos'),(27,'e6c91','',26,'csocsó',7,0,'2. Játékos','5. Játékos'),(28,'e6c91','',27,'csocsó',7,0,'3. Játékos','4. Játékos'),(57,'subh3','1. Játékos',0,'csocsó',1,1,'1. Játékos',''),(58,'subh3','',1,'csocsó',1,0,'2. Játékos','7. Játékos'),(59,'subh3','',2,'csocsó',1,0,'3. Játékos','6. Játékos'),(60,'subh3','',3,'csocsó',1,0,'4. Játékos','5. Játékos'),(61,'subh3','',4,'csocsó',2,0,'1. Játékos','2. Játékos'),(62,'subh3','3. Játékos',5,'csocsó',2,1,'3. Játékos',''),(63,'subh3','',6,'csocsó',2,0,'4. Játékos','7. Játékos'),(64,'subh3','',7,'csocsó',2,0,'5. Játékos','6. Játékos'),(65,'subh3','',8,'csocsó',3,0,'1. Játékos','3. Játékos'),(66,'subh3','',9,'csocsó',3,0,'4. Játékos','2. Játékos'),(67,'subh3','5. Játékos',10,'csocsó',3,1,'5. Játékos',''),(68,'subh3','6. Játékos',11,'csocsó',3,0,'6. Játékos','7. Játékos'),(69,'subh3','',12,'csocsó',4,0,'1. Játékos','4. Játékos'),(70,'subh3','',13,'csocsó',4,0,'5. Játékos','3. Játékos'),(71,'subh3','',14,'csocsó',4,0,'6. Játékos','2. Játékos'),(72,'subh3','7. Játékos',15,'csocsó',4,1,'7. Játékos',''),(73,'subh3','',16,'csocsó',5,0,'1. Játékos','5. Játékos'),(74,'subh3','',17,'csocsó',5,0,'6. Játékos','4. Játékos'),(75,'subh3','',18,'csocsó',5,0,'7. Játékos','3. Játékos'),(76,'subh3','2. Játékos',19,'csocsó',5,1,'','2. Játékos'),(77,'subh3','',20,'csocsó',6,0,'1. Játékos','6. Játékos'),(78,'subh3','',21,'csocsó',6,0,'7. Játékos','5. Játékos'),(79,'subh3','4. Játékos',22,'csocsó',6,1,'','4. Játékos'),(80,'subh3','',23,'csocsó',6,0,'2. Játékos','3. Játékos'),(81,'subh3','',24,'csocsó',7,0,'1. Játékos','7. Játékos'),(82,'subh3','6. Játékos',25,'csocsó',7,1,'','6. Játékos'),(83,'subh3','',26,'csocsó',7,0,'2. Játékos','5. Játékos'),(84,'subh3','',27,'csocsó',7,0,'3. Játékos','4. Játékos'),(109,'tc225','Dániel',0,'röplabda',1,0,'Dániel','Máté'),(110,'tc225','Norbert',1,'röplabda',1,0,'Sándor','Norbert'),(111,'tc225','Dániel',2,'röplabda',2,0,'Dániel','Sándor'),(112,'tc225','',3,'röplabda',2,0,'Norbert','Máté'),(113,'tc225','',4,'röplabda',3,0,'Dániel','Norbert'),(114,'tc225','',5,'röplabda',3,0,'Máté','Sándor'),(115,'nwl5i','',0,'csocsó',1,0,'Dániel','Máté'),(116,'nwl5i','',1,'csocsó',1,0,'Sándor','Norbert'),(117,'nwl5i','',2,'csocsó',2,0,'Dániel','Sándor'),(118,'nwl5i','',3,'csocsó',2,0,'Norbert','Máté'),(119,'nwl5i','Dániel',4,'csocsó',3,0,'Dániel','Norbert'),(120,'nwl5i','',5,'csocsó',3,0,'Máté','Sándor'),(121,'randommeccsek','1. Játékos',0,'ping-pong-páros',1,1,'1. Játékos',''),(122,'randommeccsek','',1,'ping-pong-páros',1,0,'2. Játékos','7. Játékos'),(123,'randommeccsek','',2,'ping-pong-páros',1,0,'3. Játékos','6. Játékos'),(124,'randommeccsek','',3,'ping-pong-páros',1,0,'4. Játékos','5. Játékos'),(125,'randommeccsek','',4,'ping-pong-páros',2,0,'1. Játékos','2. Játékos'),(126,'randommeccsek','3. Játékos',5,'ping-pong-páros',2,1,'3. Játékos',''),(127,'randommeccsek','',6,'ping-pong-páros',2,0,'4. Játékos','7. Játékos'),(128,'randommeccsek','',7,'ping-pong-páros',2,0,'5. Játékos','6. Játékos'),(129,'randommeccsek','',8,'ping-pong-páros',3,0,'1. Játékos','3. Játékos'),(130,'randommeccsek','',9,'ping-pong-páros',3,0,'4. Játékos','2. Játékos'),(131,'randommeccsek','5. Játékos',10,'ping-pong-páros',3,1,'5. Játékos',''),(132,'randommeccsek','',11,'ping-pong-páros',3,0,'6. Játékos','7. Játékos'),(133,'randommeccsek','',12,'ping-pong-páros',4,0,'1. Játékos','4. Játékos'),(134,'randommeccsek','',13,'ping-pong-páros',4,0,'5. Játékos','3. Játékos'),(135,'randommeccsek','',14,'ping-pong-páros',4,0,'6. Játékos','2. Játékos'),(136,'randommeccsek','7. Játékos',15,'ping-pong-páros',4,1,'7. Játékos',''),(137,'randommeccsek','',16,'ping-pong-páros',5,0,'1. Játékos','5. Játékos'),(138,'randommeccsek','',17,'ping-pong-páros',5,0,'6. Játékos','4. Játékos'),(139,'randommeccsek','',18,'ping-pong-páros',5,0,'7. Játékos','3. Játékos'),(140,'randommeccsek','2. Játékos',19,'ping-pong-páros',5,1,'','2. Játékos'),(141,'randommeccsek','',20,'ping-pong-páros',6,0,'1. Játékos','6. Játékos'),(142,'randommeccsek','',21,'ping-pong-páros',6,0,'7. Játékos','5. Játékos'),(143,'randommeccsek','4. Játékos',22,'ping-pong-páros',6,1,'','4. Játékos'),(144,'randommeccsek','',23,'ping-pong-páros',6,0,'2. Játékos','3. Játékos'),(145,'randommeccsek','',24,'ping-pong-páros',7,0,'1. Játékos','7. Játékos'),(146,'randommeccsek','6. Játékos',25,'ping-pong-páros',7,1,'','6. Játékos'),(147,'randommeccsek','',26,'ping-pong-páros',7,0,'2. Játékos','5. Játékos'),(148,'randommeccsek','',27,'ping-pong-páros',7,0,'3. Játékos','4. Játékos');
+/*!40000 ALTER TABLE `RRMatches` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `SEMatches`
 --
 
@@ -123,7 +155,7 @@ CREATE TABLE `cache` (
 
 LOCK TABLES `cache` WRITE;
 /*!40000 ALTER TABLE `cache` DISABLE KEYS */;
-INSERT INTO `cache` VALUES ('biba8','sakk','single-elimination','2022-06-28 13:41:23'),('mokk2','dekázás','double-elimination','2022-06-28 13:35:30');
+INSERT INTO `cache` VALUES ('biba8','csocsó','single-elimination','2022-06-29 09:56:18'),('biba8','sakk','single-elimination','2022-06-28 13:41:23'),('mokk2','dekázás','double-elimination','2022-06-28 13:35:30'),('nwl5i','csocsó','round-robin','2022-06-29 09:36:32'),('randommeccsek','ping-pong-páros','round-robin','2022-06-29 11:18:59'),('tc225','röplabda','round-robin','2022-06-29 09:56:52');
 /*!40000 ALTER TABLE `cache` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -358,4 +390,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-29  8:35:36
+-- Dump completed on 2022-06-29 11:21:05

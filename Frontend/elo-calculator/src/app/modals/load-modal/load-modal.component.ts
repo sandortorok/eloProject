@@ -4,11 +4,11 @@ import { Match } from 'src/app/services/data.service';
 import { HttpService } from 'src/app/services/http.service';
 
 @Component({
-  selector: 'app-se-load-modal',
-  templateUrl: './se-load-modal.component.html',
-  styleUrls: ['./se-load-modal.component.scss']
+  selector: 'app-load-modal',
+  templateUrl: './load-modal.component.html',
+  styleUrls: ['./load-modal.component.scss']
 })
-export class SELoadModal implements OnInit {
+export class LoadModal implements OnInit {
   names: Array<string> = []
   selGame = "Bajnokság neve"
   gameSelected = false;

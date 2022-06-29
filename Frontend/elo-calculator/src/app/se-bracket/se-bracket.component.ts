@@ -1,11 +1,11 @@
 import { HttpService } from 'src/app/services/http.service';
-import { SESaveModal } from './se-save-modal/se-save-modal.component';
+import { SaveModal } from '../modals/save-modal/save-modal.component';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { SEModal } from './se-modal/se-modal.component';
+import { WinModal } from '../modals/win-modal/win-modal.component';
 import { SEGeneratorService } from './se-generator.service';
-import { SELoadModal } from './se-load-modal/se-load-modal.component';
-import { SENewModal } from './se-new-modal/se-new-modal.component';
+import { LoadModal } from '../modals/load-modal/load-modal.component';
+import { NewModal } from '../modals/new-modal/new-modal.component';
 import { CacheElement, Match } from '../services/data.service';
 
 @Component({
@@ -16,7 +16,7 @@ import { CacheElement, Match } from '../services/data.service';
 export class SEBracketComponent implements OnInit {
   @ViewChild('container') container;
   matches:Match[];
-  gameName:string = "NÉVTELEN";
+  gameName:string = "";
   @Input() gameType;
   isOpen = true;
   constructor(private bracket: SEGeneratorService, private modalService: NgbModal, private httpservice: HttpService) {}
@@ -33,7 +33,7 @@ export class SEBracketComponent implements OnInit {
     if (!thisMatch) return;
     if(thisMatch.Gyoztes != "") return;
     if (thisMatch.Csapatok[0] == "" || thisMatch.Csapatok![1] == "") return;
-    const modalRef = this.modalService.open(SEModal, { centered: true });
+    const modalRef = this.modalService.open(WinModal, { centered: true });
     modalRef.componentInstance.match = thisMatch;
     modalRef.componentInstance.updateEvent.subscribe((updatedMatch:Match)=>{
       thisMatch = updatedMatch;
@@ -50,18 +50,18 @@ export class SEBracketComponent implements OnInit {
   onSave(){
     if(this.matches == undefined) return;
     if(this.matches.length < 1) return;
-    const modalRef = this.modalService.open(SESaveModal, { centered: true });
+    const modalRef = this.modalService.open(SaveModal, { centered: true });
     modalRef.componentInstance.matches = this.matches;
     modalRef.componentInstance.saveMode = 'single-elimination';
     modalRef.componentInstance.gameType = this.gameType;
-    if(this.gameName != 'NÉVTELEN') modalRef.componentInstance.IN_gameID = this.gameName;
+    if(this.gameName != '') modalRef.componentInstance.IN_gameID = this.gameName;
     modalRef.componentInstance.saveEvent.subscribe(name=>{
       this.gameName = name;
       this.saveCache();
     })
   }
   onLoad(){
-    const modalRef = this.modalService.open(SELoadModal, { centered: true });
+    const modalRef = this.modalService.open(LoadModal, { centered: true });
     modalRef.componentInstance.matches = this.matches;
     modalRef.componentInstance.loadMode = 'single-elimination';
 
@@ -79,7 +79,7 @@ export class SEBracketComponent implements OnInit {
     })
   }
   onNewBracket(){
-    const modalRef = this.modalService.open(SENewModal, { centered: true });
+    const modalRef = this.modalService.open(NewModal, { centered: true });
     modalRef.componentInstance.generateEvent.subscribe((players)=>{
       this.matches = []
       this.bracket.startGenerating('withNames', players=players)
@@ -168,7 +168,7 @@ export class SEBracketComponent implements OnInit {
           this.gameName = cacheEl.gameName;
         }
       })
-      if(this.gameName != "NÉVTELEN"){
+      if(this.gameName != ""){
         this.matches = [];
         this.httpservice.getSEMatch(this.gameName).subscribe(data=>{
           console.log('loading data', data);

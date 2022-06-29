@@ -3,11 +3,11 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { Match } from "src/app/services/data.service";
 
 @Component({
-    selector: 'ngbd-modal-content',
-    templateUrl: './se-modal.component.html',
-    styleUrls: ['./se-modal.component.scss']
+    selector: 'app-win-modal',
+    templateUrl: './win-modal.component.html',
+    styleUrls: ['./win-modal.component.scss']
 })
-export class SEModal {
+export class WinModal {
     @Output() updateEvent = new EventEmitter<Match>();
     @Input() match: Match;
     score1 = null;

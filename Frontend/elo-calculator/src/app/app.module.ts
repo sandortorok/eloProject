@@ -1,5 +1,5 @@
-import { SESaveModal } from './se-bracket/se-save-modal/se-save-modal.component';
-import { SEModal } from './se-bracket/se-modal/se-modal.component';
+import { SaveModal } from './modals/save-modal/save-modal.component';
+import { WinModal } from './modals/win-modal/win-modal.component';
 import { DataService } from './services/data.service';
 import { HttpService } from './services/http.service';
 import { NgModule } from '@angular/core';
@@ -22,8 +22,8 @@ import { SEBracketComponent } from './se-bracket/se-bracket.component';
 import { DEBracketComponent } from './de-bracket/de-bracket.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { NeonButtonComponent } from './neon-button/neon-button.component';
-import { SELoadModal } from './se-bracket/se-load-modal/se-load-modal.component';
-import { SENewModal } from './se-bracket/se-new-modal/se-new-modal.component';
+import { LoadModal } from './modals/load-modal/load-modal.component';
+import { NewModal } from './modals/new-modal/new-modal.component';
 import { MenuComponent } from './menu/menu.component';
 import { HexComponent } from './menu/hex/hex.component';
 import { RoundsPipe } from './pipes/rounds.pipe';
@@ -46,10 +46,10 @@ import { sortScorePipe } from './pipes/sort-score.pipe';
     SpinnerComponent,
     NeonButtonComponent,
     SEBracketComponent,
-    SEModal,
-    SESaveModal,
-    SELoadModal,
-    SENewModal,
+    WinModal,
+    SaveModal,
+    LoadModal,
+    NewModal,
     DEBracketComponent,
     MenuComponent,
     HexComponent,

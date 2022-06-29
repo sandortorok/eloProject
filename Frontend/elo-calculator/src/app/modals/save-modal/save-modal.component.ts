@@ -1,13 +1,13 @@
-import { HttpService } from './../../services/http.service';
+import { HttpService } from '../../services/http.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-se-save-modal',
-  templateUrl: './se-save-modal.component.html',
-  styleUrls: ['./se-save-modal.component.scss']
+  selector: 'app-save-modal',
+  templateUrl: './save-modal.component.html',
+  styleUrls: ['./save-modal.component.scss']
 })
-export class SESaveModal implements OnInit {
+export class SaveModal implements OnInit {
   IN_gameID:string;
   gameType:string;
   @Output() saveEvent = new EventEmitter<string>();
@@ -18,7 +18,6 @@ export class SESaveModal implements OnInit {
   constructor(public activeModal: NgbActiveModal, private httpservice: HttpService) {    }
   save() {
     if (this.IN_gameID.length < 5) return; 
-    if (this.IN_gameID == "NÉVTELEN") return;
     if (this.matches == undefined) return;
 
     if(this.saveMode == 'single-elimination'){

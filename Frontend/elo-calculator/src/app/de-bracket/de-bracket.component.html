@@ -8,6 +8,14 @@
 	<link href='https://fonts.googleapis.com/css?family=Istok+Web|Roboto+Condensed:700' rel='stylesheet' type='text/css'>
 </head>
 <body>
+    <header class="hero">
+        <div class="hero-wrap">
+         <p class="intro" id="intro" style="margin-bottom: 0;">Pányok</p>
+             <h1 id="headline">{{gameType}} Bajnokság</h1>
+             <p class="year"><i class="fa fa-star"></i> 2022 <i class="fa fa-star"></i></p>
+         <p>{{gameName}}</p>
+       </div>
+    </header>
     <section id="bracket">
         <div class="btn-wrapper">
             <app-neon-button text="NEW BRACKET" (click)="onNewBracket()"></app-neon-button>
