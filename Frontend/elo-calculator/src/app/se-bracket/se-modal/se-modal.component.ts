@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { Match } from "../se-generator.service";
+import { Match } from "src/app/services/data.service";
 
 @Component({
     selector: 'ngbd-modal-content',

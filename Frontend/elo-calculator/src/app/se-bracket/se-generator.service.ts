@@ -1,18 +1,6 @@
-import { DataService, Player, Team } from '../services/data.service';
+import { DataService, Match, Player, Team } from '../services/data.service';
 import { Injectable, Output, EventEmitter } from '@angular/core';
 
-
-export interface Match{
-  Csapatok?: string[],
-  Round?: number,
-  nextRoundID?: number,
-  score0?: number | null,
-  score1?: number | null,
-  Gyoztes?: string,
-  Meccs_id?: number,
-  bottom?: number,
-  bye?: boolean,
-}
 
 @Injectable({
   providedIn: 'root'
@@ -85,7 +73,15 @@ export class SEGeneratorService {
     let matchesAdded = 0; //Hány meccset adtunk eddig hozzá a kövi nextRoundID-hez
     //ELŐNYERŐK
     for (let i = 0; i < Elonyerok; i++) {
-      let newGame:Match = {};
+      let newGame:Match = {
+        Csapatok: [],
+        Round: 0,
+        nextRoundID: 0,
+        Gyoztes: '',
+        Meccs_id: 0,
+        bye: false,
+        bottom: 0
+      };
       
       let teams: string[] = [];
       teams.push(input[teamNumber]);

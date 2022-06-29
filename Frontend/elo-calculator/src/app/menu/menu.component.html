@@ -32,7 +32,7 @@
 
     <li [ngbNavItem] = "4">
         <a ngbNavLink>ROUND ROBIN</a>
-        <ng-template ngbNavContent>ROUND ROBIN</ng-template>
+        <ng-template ngbNavContent><app-rr-bracket gameType="{{gamePlayed}}"></app-rr-bracket></ng-template>
     </li>
     <li [ngbNavItem] = "5">
         <a ngbNavLink>Elo Rating</a>

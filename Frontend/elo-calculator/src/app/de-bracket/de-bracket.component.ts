@@ -1,12 +1,12 @@
 import { SEModal } from './../se-bracket/se-modal/se-modal.component';
 import { SESaveModal } from './../se-bracket/se-save-modal/se-save-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DEGeneratorService, Match } from './de-generator.service';
+import { DEGeneratorService } from './de-generator.service';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { SENewModal } from '../se-bracket/se-new-modal/se-new-modal.component';
 import { SELoadModal } from '../se-bracket/se-load-modal/se-load-modal.component';
 import { HttpService } from '../services/http.service';
-import { CacheElement } from '../services/data.service';
+import { CacheElement, Match } from '../services/data.service';
 
 @Component({
   selector: 'app-de-bracket',

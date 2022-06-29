@@ -1,20 +1,6 @@
-import { DataService, Player, Team } from '../services/data.service';
+import { DataService, Match, Team } from '../services/data.service';
 import { Injectable, Output, EventEmitter } from '@angular/core';
 
-export interface Match{
-  Csapatok: string[],
-  Round: number,
-  nextRoundID: number,
-  Gyoztes: string,
-  Meccs_id: number,
-  bye: boolean,
-  bottom: number,
-  loser?: boolean;
-  final?: boolean;
-  score0?: number | null,
-  score1?: number | null,
-  losersFrom?: number[];
-}
 
 @Injectable({
   providedIn: 'root'
@@ -70,7 +56,6 @@ export class DEGeneratorService {
         this.generateMatches(this.exampleTeams);
         break;
     }
-
   }
 
   generateMatches(input) {

@@ -29,6 +29,7 @@ import { HexComponent } from './menu/hex/hex.component';
 import { RoundsPipe } from './pipes/rounds.pipe';
 import { SechampionsPipe } from './pipes/sechampions.pipe';
 import { RRBracketComponent } from './rr-bracket/rr-bracket.component';
+import { sortScorePipe } from './pipes/sort-score.pipe';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { RRBracketComponent } from './rr-bracket/rr-bracket.component';
     RoundsPipe,
     SechampionsPipe,
     RRBracketComponent,
+    sortScorePipe,
   ],
   imports: [
     BrowserModule,

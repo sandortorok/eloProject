@@ -1,14 +1,14 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Match } from '../de-bracket/de-generator.service';
+import { Match } from '../services/data.service';
 
 @Pipe({
   name: 'rounds'
 })
 export class RoundsPipe implements PipeTransform {
 
-  transform(matches: Match[], type: string): Match[][] {
+  transform(matches: Match[], type?: string): Match[][] {
     let rounds:Match[][] = []
-    let newMatches:Match[] = []
+    let newMatches:Match[] = matches;
     switch (type){
       case 'winner':
         newMatches = matches.filter(m=>{ return m.loser == false && m.final == false})

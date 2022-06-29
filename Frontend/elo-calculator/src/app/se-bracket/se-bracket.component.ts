@@ -6,8 +6,7 @@ import { SEModal } from './se-modal/se-modal.component';
 import { SEGeneratorService } from './se-generator.service';
 import { SELoadModal } from './se-load-modal/se-load-modal.component';
 import { SENewModal } from './se-new-modal/se-new-modal.component';
-import { Match } from '../de-bracket/de-generator.service';
-import { CacheElement } from '../services/data.service';
+import { CacheElement, Match } from '../services/data.service';
 
 @Component({
   selector: 'app-se-bracket',

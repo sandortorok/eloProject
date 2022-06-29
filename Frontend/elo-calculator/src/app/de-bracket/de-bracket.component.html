@@ -14,7 +14,6 @@
             <app-neon-button text="LOAD" style="filter:hue-rotate(100deg);" (click)="onLoad()"></app-neon-button>
             <app-neon-button text="SAVE" style="filter:hue-rotate(200deg);" (click)="onSave()"></app-neon-button>
             <app-neon-button text="PRINT" style="filter:hue-rotate(300deg);" (click)="onPrintClick()"></app-neon-button>
-
         </div>
         <app-spinner *ngIf="matches != undefined && matches.length == 0"></app-spinner>
         <div *ngIf="matches != undefined && matches.length > 0" class="container" #container>

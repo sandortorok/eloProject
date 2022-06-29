@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Match } from 'src/app/services/data.service';
 import { HttpService } from 'src/app/services/http.service';
-import { Match } from '../se-generator.service';
 
 @Component({
   selector: 'app-se-load-modal',
@@ -22,16 +22,19 @@ export class SELoadModal implements OnInit {
     this.httpservice.getSEMatch(this.selGame).subscribe(data=>{
       let myarray = Object.values(data);
       myarray.forEach((match)=>{
-        let newMatch:Match = {};
-        newMatch['Csapatok'] = [match.player1, match.player2]
+        let newMatch:Match = {
+          Csapatok: [match.player1, match.player2],
+          Round: match.round,
+          nextRoundID: match.nextMatch_ID,
+          Gyoztes: match.winner,
+          Meccs_id: match.match_ID,
+          bye: false,
+          bottom: match.bottom
+        };
         newMatch['Gyoztes'] = match.winner
         newMatch['bye'] = match.bye
-        newMatch['Meccs_id'] = match.match_ID
-        newMatch['nextRoundID'] = match.nextMatch_ID
-        newMatch['bottom'] = match.bottom
         newMatch['score0'] = match.score1
         newMatch['score1'] = match.score2
-        newMatch['Round'] = match.round
         matches.push(newMatch);
       })
       this.loadEvent.emit({matches:matches, name: this.selGame})
@@ -44,16 +47,17 @@ export class SELoadModal implements OnInit {
     this.httpservice.getDEMatch(this.selGame).subscribe(data=>{
       let myarray = Object.values(data);
       myarray.forEach((match)=>{
-        let newMatch:Match = {};
-        newMatch['Csapatok'] = [match.player1, match.player2]
-        newMatch['Gyoztes'] = match.winner
-        newMatch['bye'] = match.bye
-        newMatch['Meccs_id'] = match.match_ID
-        newMatch['nextRoundID'] = match.nextMatch_ID
-        newMatch['bottom'] = match.bottom
+        let newMatch:Match = {
+          Csapatok: [match.player1, match.player2],
+          Round: match.round,
+          nextRoundID: match.nextMatch_ID,
+          Gyoztes: match.winner,
+          Meccs_id: match.match_ID,
+          bye: match.bye,
+          bottom: match.bottom
+        };
         newMatch['score0'] = match.score1
         newMatch['score1'] = match.score2
-        newMatch['Round'] = match.round
         newMatch['final'] = match.final
         newMatch['loser'] = match.loser
         matches.push(newMatch);

@@ -34,6 +34,7 @@
   padding: 25px 0 25px;
   text-align: center;
   transition: all 200ms ease-in-out;
+  border-radius: 50px;
   &:hover{
     filter:brightness(85%)
   }
@@ -103,6 +104,7 @@ html {
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 50px;
     &:active {
       transform: translateY(10px);
     }
@@ -112,6 +114,7 @@ html {
       font-size: 1.5em;
       user-select: none;
       color: $green;
+      margin-bottom: 35px;
       &:before {
         font-size: 1.2em;
         font-family: FontAwesome;

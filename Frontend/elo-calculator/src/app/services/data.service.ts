@@ -2,6 +2,20 @@ import { HttpService } from './http.service';
 import { Injectable } from '@angular/core';
 
 
+export interface Match{
+  Csapatok: string[],
+  Round: number,
+  nextRoundID: number,
+  Gyoztes: string,
+  Meccs_id: number,
+  bye: boolean,
+  bottom: number,
+  loser?: boolean;
+  final?: boolean;
+  score0?: number | null,
+  score1?: number | null,
+  losersFrom?: number[];
+}
 
 export interface CacheElement {
   gameName: string;

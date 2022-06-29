@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Match } from '../de-bracket/de-generator.service';
+import { Match } from '../services/data.service';
 
 @Pipe({
   name: 'sechampions'
