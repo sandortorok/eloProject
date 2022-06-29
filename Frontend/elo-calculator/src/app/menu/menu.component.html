@@ -18,7 +18,7 @@
     </li>
     <li [ngbNavItem] = "1" >
         <a ngbNavLink>Group Bracket</a>
-        <ng-template ngbNavContent><app-bracket></app-bracket></ng-template>
+        <ng-template ngbNavContent><app-group-bracket></app-group-bracket></ng-template>
     </li>
     <li [ngbNavItem] = "2" >
         <a ngbNavLink>Single Elimination</a>
@@ -36,11 +36,7 @@
     </li>
     <li [ngbNavItem] = "5">
         <a ngbNavLink>Elo Rating</a>
-        <ng-template ngbNavContent>
-            <app-chess-tab *ngIf="gamePlayed == 'sakk'"></app-chess-tab>
-            <app-klask-tab *ngIf="gamePlayed == 'klask'"></app-klask-tab>
-            <app-pingpong-tab *ngIf="gamePlayed == 'ping-pong'"></app-pingpong-tab>
-        </ng-template>
+        <ng-template ngbNavContent><app-elo-bracket gameType = "{{gamePlayed}}"></app-elo-bracket></ng-template>
     </li>
 </ul>
   

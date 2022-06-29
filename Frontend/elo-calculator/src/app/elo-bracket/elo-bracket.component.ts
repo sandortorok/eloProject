@@ -1,14 +1,15 @@
-import { HttpService } from './../../services/http.service';
-import { DataService, Player } from './../../services/data.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Player, DataService } from '../services/data.service';
+import { HttpService } from '../services/http.service';
 
 @Component({
-  selector: 'app-chess-tab',
-  templateUrl: './chess-tab.component.html',
-  styleUrls: ['./chess-tab.component.scss']
+  selector: 'app-elo-bracket',
+  templateUrl: './elo-bracket.component.html',
+  styleUrls: ['./elo-bracket.component.scss']
 })
-export class ChessTabComponent implements OnInit {
+export class EloBracketComponent implements OnInit {
+  @Input() gameType:string;
   players:Player[] = [];
   playing:string[] = [];
   
@@ -30,14 +31,15 @@ export class ChessTabComponent implements OnInit {
   deletedPlayer="Törölt Játékos"
   delSelected:boolean = false
   constructor(private dataservice: DataService, private httpservice: HttpService, private modalService: NgbModal) {
-    this.players = dataservice.chessPlayers;
-    console.log(this.players.length);
-    this.playing[2] = "Döntetlen"
-  }
-  
-  ngOnInit(): void {
-    console.log(this.players.length);
 
+  }
+
+  ngOnInit(): void {
+    this.players = this.dataservice.eloPlayers.filter(player=>{return player.gameType! == this.gameType });
+    this.dataservice.eloPlayers.forEach(p=>{
+      console.log(p.gameType, this.gameType);
+    })
+    this.playing[2] = "Döntetlen"
   }
   onP1Select(value){
     this.selPlayer1 = value
@@ -99,16 +101,16 @@ export class ChessTabComponent implements OnInit {
     this.players[idx2].rating = data!['newP2'];
     this.p2rating = data!['newP2'];
 
-    this.httpservice.updateChessPlayer('rating', {name: this.players[idx1].name, rating: this.players[idx1].rating})
+    this.httpservice.updateEloPlayer('rating', {name: this.players[idx1].name, rating: this.players[idx1].rating, gameType: this.gameType})
       .subscribe(res=>{})
 
-    this.httpservice.updateChessPlayer('rating', {name: this.players[idx2].name, rating: this.players[idx2].rating})
+    this.httpservice.updateEloPlayer('rating', {name: this.players[idx2].name, rating: this.players[idx2].rating, gameType: this.gameType})
       .subscribe(res=>{})
 
-    this.httpservice.updateChessPlayer('games', {name: this.players[idx1].name, games: this.players[idx1].games+=1})
+    this.httpservice.updateEloPlayer('games', {name: this.players[idx1].name, games: this.players[idx1].games+=1, gameType: this.gameType})
       .subscribe(res=>{})
 
-    this.httpservice.updateChessPlayer('games', {name: this.players[idx2].name, games: this.players[idx2].games+=1})
+    this.httpservice.updateEloPlayer('games', {name: this.players[idx2].name, games: this.players[idx2].games+=1, gameType: this.gameType})
       .subscribe(res=>{})
 
     let gameobj = {}
@@ -118,8 +120,8 @@ export class ChessTabComponent implements OnInit {
     gameobj['p1Win'] = data['p1Win'];
     gameobj['p1Gain'] = this.p1Gain;
     gameobj['p2Gain'] = this.p2Gain;
-
-    this.httpservice.addChessGame(gameobj)
+    gameobj['gameType'] = this.gameType
+    this.httpservice.addEloGame(gameobj)
       .subscribe(res=>{})
 
     this.p1Gain = 0;
@@ -166,8 +168,8 @@ export class ChessTabComponent implements OnInit {
       }
     })
     if(playerExists) return;
-    this.players.push({name: this.addedPlayer, rating: 1000, games: 0})
-    this.httpservice.createChessPlayer(this.addedPlayer)
+    this.players.push({name: this.addedPlayer, rating: 1000, games: 0, gameType:this.gameType})
+    this.httpservice.createEloPlayer({name: this.addedPlayer, gameType:this.gameType})
       .subscribe(data=>{})
     this.addedPlayer=""
   }
@@ -181,7 +183,7 @@ export class ChessTabComponent implements OnInit {
     if (idx > -1) {
       this.players.splice(idx, 1);
     }
-    this.httpservice.deleteChessPlayer(this.deletedPlayer)
+    this.httpservice.deleteEloPlayer({name: this.deletedPlayer, gameType: this.gameType})
       .subscribe(res=>{
         console.log(res);
       })

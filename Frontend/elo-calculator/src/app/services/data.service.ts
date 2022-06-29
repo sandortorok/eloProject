@@ -27,6 +27,7 @@ export interface Player {
   name: string;
   rating: number;
   games: number;
+  gameType?:string;
 }
 
 export interface Team{
@@ -45,40 +46,20 @@ export interface Team{
 @Injectable({
   providedIn: 'root'
 })
-export class DataService {
-  chessPlayers: Player[] = [];
-  klaskPlayers: Player[] = [];
-  pingpongPlayers: Player[] = [];
+export class DataService {;
   volleyBallTeams: Team[] = []
+  eloPlayers:Player[] = [];
 
   constructor(private httpservice: HttpService) {
-    this.loadChessPlayers();
-    this.loadKlaskPlayers();
-    this.loadPingPongPlayers();
     this.loadVolleyTeams();
+    this.loadEloPlayers();
   }
   
-  loadChessPlayers(){
-    this.httpservice.getChessPlayers().subscribe(data=>{
-      let myarray = Object.values(data);
+  loadEloPlayers(){
+    this.httpservice.getEloPlayers().subscribe(data=>{
+      let myarray:Player[] = Object.values(data);
       myarray.forEach(player=>{
-        this.chessPlayers.push(player);
-      })
-    })
-  }
-  loadKlaskPlayers(){
-    this.httpservice.getKlaskPlayers().subscribe(data=>{
-      let myarray = Object.values(data);
-      myarray.forEach(player=>{
-        this.klaskPlayers.push(player);
-      })
-    })
-  }
-  loadPingPongPlayers(){
-    this.httpservice.getPingPongPlayers().subscribe(data=>{
-      let myarray = Object.values(data);
-      myarray.forEach(player=>{
-        this.pingpongPlayers.push(player);
+        this.eloPlayers.push(player);
       })
     })
   }

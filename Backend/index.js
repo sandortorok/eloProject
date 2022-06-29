@@ -193,6 +193,64 @@ app.get('/volleyteams', (req, res) => {
     runQuery(sql, res);
 })
 /////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////ELOPLAYERS////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+app.get('/eloplayers', (req, res) => {
+    let sql = `SELECT * FROM eloPlayers`;
+    runQuery(sql, res);
+
+})
+
+app.post('/eloplayer', (req, res) => {
+    let msg = req.body;
+    let games = 0
+    let name = msg.name;
+    let gameType = msg.gameType;
+    let rating = 1000;
+    let sql = `INSERT INTO eloPlayers (name, rating, games, gameType) VALUES ('${name}', ${rating}, ${games}, '${gameType}')`
+    runQuery(sql, res);
+
+})
+
+app.patch('/eloplayer/rating', (req, res)=>{
+    let msg = req.body;
+    let rating = msg.rating;
+    let name = msg.name;
+    let gameType = msg.gameType;
+    let sql = `UPDATE eloPlayers SET rating = ${rating} WHERE (name = '${name}' AND gameType = '${gameType}')`;
+    runQuery(sql, res);
+})
+
+app.patch('/eloplayer/games', (req, res)=>{
+    let msg = req.body;
+    let games = msg.games;
+    let name = msg.name;
+    let gameType = msg.gameType;
+    let sql = `UPDATE eloPlayers SET games = ${games} WHERE (name = '${name}' AND gameType = '${gameType}')`;
+    runQuery(sql, res);
+})
+app.delete('/eloplayer', (req, res) => {
+    let msg = req.body;
+
+    let name = msg.name;
+    let gameType = msg.gameType;
+    let sql = `DELETE FROM eloPlayers WHERE (name = '${name}' AND gameType = '${gameType}')`
+    runQuery(sql, res);
+})
+
+app.post('/elogames', (req, res) => {
+    let msg = req.body;
+    let name1 = msg.name1;
+    let name2 = msg.name2;
+    let p1Win = msg.p1Win;
+    let p1Gain = msg.p1Gain;
+    let p2Gain = msg.p2Gain;
+    let gameType = msg.gameType;
+    let sql = `INSERT INTO eloGames (name1, name2, p1win, p1Gain, p2Gain, gameType) VALUES ('${name1}', '${name2}', ${p1Win}, ${p1Gain}, ${p2Gain}, '${gameType}')`
+    runQuery(sql, res);
+})
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////SEMATCHES////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////
 app.get('/sematches/names', (req, res) => {

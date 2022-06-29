@@ -21,83 +21,6 @@ export class HttpService {
 
   constructor(private http:HttpClient) {   }
 /////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////CHESS////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////
-  getChessPlayers(){
-    return this.http.get(this.url+ '/chessplayers')
-      .pipe(catchError(this.handleError));
-  }
-
-  createChessPlayer(name){
-    return this.http.post(this.url + '/chessplayer',{name: name})
-      .pipe(catchError(this.handleError));
-  }
-
-  updateChessPlayer(property, body){ //property is => rating or games
-    return this.http.patch(this.url+ '/chessplayer/' + property, body)
-      .pipe(catchError(this.handleError));
-  }
-  
-  deleteChessPlayer(name){
-    return this.http.delete(this.url + '/chessplayer', {body: {name: name}},)
-  }
-  
-  addChessGame(body){
-    return this.http.post(this.url + '/chessgames',body)
-      .pipe(catchError(this.handleError));
-  }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////KLASK////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////
-
-  getKlaskPlayers(){
-    return this.http.get(this.url+ '/klaskplayers')
-      .pipe(catchError(this.handleError));
-  }
-
-  createKlaskPlayer(name){
-    return this.http.post(this.url + '/klaskplayer',{name: name})
-      .pipe(catchError(this.handleError));
-  }
-
-  updateKlaskPlayer(property, body){ //property is => rating or games
-    return this.http.patch(this.url+ '/klaskplayer/' + property, body)
-      .pipe(catchError(this.handleError));
-  }
-
-  deleteKlaskPlayer(name){
-    return this.http.delete(this.url + '/klaskplayer', {body: {name: name}},)
-  }
-
-  addKlaskGame(body){
-    return this.http.post(this.url + '/klaskgames',body)
-      .pipe(catchError(this.handleError));
-  }
-  
-/////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////PINGPONG/////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////
-  getPingPongPlayers(){
-    return this.http.get(this.url+ '/pingpongplayers')
-      .pipe(catchError(this.handleError));
-  }
-
-  createPingPongPlayer(name){
-    return this.http.post(this.url + '/pingpongplayer',{name: name})
-      .pipe(catchError(this.handleError));
-  }
-
-  updatePingPongPlayer(property, body){ //property is => rating or games
-    return this.http.patch(this.url+ '/pingpongplayer/' + property, body)
-      .pipe(catchError(this.handleError));
-  }
-
-  addPingPongGame(body){
-    return this.http.post(this.url + '/pingponggames',body)
-      .pipe(catchError(this.handleError));
-  }
-/////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////VOLLEYBALL////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////
   getVolleyTeams(){
@@ -113,6 +36,33 @@ export class HttpService {
     }
     return throwError(new AppError(error))
   }
+/////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////ELOPLAYERS////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+getEloPlayers(){
+  return this.http.get(this.url+ '/eloplayers')
+    .pipe(catchError(this.handleError));
+}
+
+createEloPlayer(body:{name:string, gameType: string}){
+  return this.http.post(this.url + '/eloplayer',body)
+    .pipe(catchError(this.handleError));
+}
+
+updateEloPlayer(property, body:{name:string,games?:number, rating?:number, gameType:string}){ //property is => rating or games
+  return this.http.patch(this.url+ '/eloplayer/' + property, body)
+    .pipe(catchError(this.handleError));
+}
+
+deleteEloPlayer(body:{name:string, gameType:string}){
+  return this.http.delete(this.url + '/eloplayer', {body: body},)
+}
+
+addEloGame(body){
+  return this.http.post(this.url + '/elogames',body)
+    .pipe(catchError(this.handleError));
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////SEMATCHES////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////

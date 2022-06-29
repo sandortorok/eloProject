@@ -31,29 +31,12 @@ export class DEGeneratorService {
           this.generated.emit();
         }, 1000);
         break;
-      case 'volleyBall':
-        setTimeout(() => {
-          let arr:string[] = [];
-          this.data.volleyBallTeams.forEach(team=>{
-            arr.push(team.teamName);
-          })
-          this.generateMatches(arr)
-          this.generated.emit();
-        }, 1000);
-        break;
-      case 'chess':
-        setTimeout(() => {
-          let arr:string[] = [];
-          this.data.chessPlayers.forEach(player=>{
-            arr.push(player.name);
-          })
-          this.generateMatches(arr);
-          this.generated.emit();
-        }, 1000);
-        break;
       default:
         this.loadExampleTeams(players_length);
         this.generateMatches(this.exampleTeams);
+        setTimeout(() => {
+          this.generated.emit();
+        }, 1000);
         break;
     }
   }
