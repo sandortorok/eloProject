@@ -127,6 +127,7 @@ export class DEBracketComponent implements OnInit {
     const modalRef = this.modalService.open(LoadModal, { centered: true });
     modalRef.componentInstance.matches = this.matches;
     modalRef.componentInstance.loadMode = 'double-elimination';
+    modalRef.componentInstance.gameType = this.gameType;
     modalRef.componentInstance.loadEvent.subscribe((loadData)=>{
       this.gameName = loadData.name
       this.matches = [];

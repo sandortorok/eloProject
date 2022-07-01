@@ -63,8 +63,8 @@ export class SEBracketComponent implements OnInit {
   onLoad(){
     const modalRef = this.modalService.open(LoadModal, { centered: true });
     modalRef.componentInstance.matches = this.matches;
+    modalRef.componentInstance.gameType = this.gameType;
     modalRef.componentInstance.loadMode = 'single-elimination';
-
     modalRef.componentInstance.loadEvent.subscribe((loadData)=>{
       this.gameName = loadData.name
       this.matches = []

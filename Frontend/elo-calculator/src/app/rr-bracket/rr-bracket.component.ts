@@ -200,6 +200,7 @@ export class RRBracketComponent implements OnInit {
     const modalRef = this.modalService.open(LoadModal, { centered: true });
     modalRef.componentInstance.matches = this.matches;
     modalRef.componentInstance.loadMode = 'round-robin';
+    modalRef.componentInstance.gameType = this.gameType;
     modalRef.componentInstance.loadEvent.subscribe((loadData)=>{
       this.gameName = loadData.name
       this.matches = []

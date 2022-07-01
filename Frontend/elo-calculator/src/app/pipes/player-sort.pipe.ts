@@ -6,11 +6,11 @@ import { Player } from '../services/data.service';
 })
 export class PlayerSortPipe implements PipeTransform {
 
-  transform(array: Player[], field: string): any[] {
+  transform(array: any[], field: string): any[] {
     if (!Array.isArray(array)) {
       return [];
     }
-    array.sort((a: Player, b: Player) => {
+    array.sort((a: any, b: any) => {
       if (a[field] > b[field]) {
         return -1;
       } else if (a[field] < b[field]) {

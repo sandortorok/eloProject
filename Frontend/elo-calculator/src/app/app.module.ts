@@ -26,6 +26,8 @@ import { sortScorePipe } from './pipes/sort-score.pipe';
 import { GameTypePipe } from './pipes/game-name.pipe';
 import { EloBracketComponent } from './elo-bracket/elo-bracket.component';
 import { GroupBracketComponent } from './group-bracket/group-bracket.component';
+import { CommonModule } from '@angular/common';
+import { GroupNavigatorComponent } from './group-bracket/group-navigator/group-navigator.component';
 
 @NgModule({
   declarations: [
@@ -49,13 +51,15 @@ import { GroupBracketComponent } from './group-bracket/group-bracket.component';
     GameTypePipe,
     EloBracketComponent,
     GroupBracketComponent,
+    GroupNavigatorComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    CommonModule
   ],
   providers: [HttpService, DataService],
   bootstrap: [AppComponent]

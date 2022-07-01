@@ -61,7 +61,6 @@ body {
     // background-image: linear-gradient(to right, #0f0c29, #302b63, #24243e);
 
 }
-
 .container {
     max-width: 97%;
     margin: 0 auto;
@@ -77,6 +76,11 @@ body {
 }
 .split-wrap{
     width: 100%;
+    border: 5px solid white;
+    border-radius: 50px; 
+    box-sizing: border-box;
+    background-color: #141414; 
+    padding: 10px
 }
 .score {
     font-size: 11px;
@@ -270,5 +274,27 @@ h1{
     }
     .team{
         opacity: 1 !important;
+        border:2px solid black;
+        border-color: black !important;
+    }
+    .hero{
+        display:none;
+    }
+    ::ng-deep body{
+        background-color: white !important;
+    }
+    #bracket{
+        background-color: white !important;
+    }
+    .split-wrap{
+        background-color: white !important;
+        border-color: black !important;
+    }
+    h1{
+        color:black !important;
+    }
+    .scoreBoard{
+        background-color: white !important;
+        border-color: black !important;
     }
 }

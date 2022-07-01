@@ -27,27 +27,28 @@ export interface Player {
   name: string;
   rating: number;
   games: number;
-  gameType?:string;
+  gameType:string;
 }
-
-export interface Team{
-  teamName:string,
-  name1: string,
-  name2?: string,
-  name3?: string,
-  name4?: string,
-  name5?: string,
-  name6?: string,
-  name7?: string,
-  rating?: number,
-  games?:number
+export interface Group{
+  groupName:string;
+  teams:GroupPlayer[];
+  /**
+   * Hány ember jut tovabb
+   */
+  qualifyNumber: number;
 }
-
+export interface GroupPlayer{
+  name:string;
+  wins:number;
+  loses:number;
+  draws:number;
+  points:number;
+  last3Results:string[];
+}
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {;
-  volleyBallTeams: Team[] = []
   eloPlayers:Player[] = [];
 
   constructor(private httpservice: HttpService) {

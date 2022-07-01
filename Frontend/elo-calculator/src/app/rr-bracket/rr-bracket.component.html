@@ -17,26 +17,23 @@
        </div>
     </header>
     <section id="bracket">
-        <div *ngIf="false" class="btn-wrapper">
-            <app-neon-button text="NEW BRACKET" (click)="onNewBracket()"></app-neon-button>
-            <app-neon-button text="LOAD" style="filter:hue-rotate(100deg);" (click)="onLoad()"></app-neon-button>
-            <app-neon-button text="SAVE" style="filter:hue-rotate(200deg);" (click)="onSave()"></app-neon-button>
+        <div class="btn-wrapper">
+            <app-neon-button #new text="NEW BRACKET" (click)="onNewBracket()"></app-neon-button>
+            <app-neon-button #load text="LOAD" style="filter:hue-rotate(300deg);" (click)="onLoad()"></app-neon-button>
+            <app-neon-button #save text="SAVE" (click)="onSave()"></app-neon-button>
             <app-neon-button text="PRINT" style="filter:hue-rotate(300deg);" (click)="onPrintClick()"></app-neon-button>
         </div>
         <app-spinner *ngIf="matches != undefined && matches.length == 0"></app-spinner>
         <div *ngIf="matches != undefined && matches.length > 0" class="container" #container>
-            <div *ngFor="let round of matches | rounds; let i = index" 
-                    style="border: 5px solid white; border-radius: 50px; box-sizing: border-box;background-color: #141414; padding: 10px">
+            <div *ngFor="let round of matches | rounds; let i = index" class="split-wrap">
                 <h1 >{{i+1}}. Forduló</h1>
                 <div class="round">
                     <ul *ngFor="let match of round" class="matchup" id="match {{match.Meccs_id}}">
                         <span class="matchNumber">{{match.Meccs_id}}</span>
-                        <li class="team"
-                        (click)="onTeamClick($event)"
+                        <li class="team" (click)="onTeamClick($event)"
                         [class.win]="match.Csapatok![0]==match.Gyoztes && match.Gyoztes.length > 0"> 
                         {{match.Csapatok![0]}}<span class="score">{{match.score0}}</span></li>
-                        <li class="team"
-                            (click)="onTeamClick($event)"
+                        <li class="team" (click)="onTeamClick($event)"
                             [class.win]="match.Csapatok![1]==match.Gyoztes  && match.Gyoztes.length > 0"> 
                             {{match.Csapatok![1]}}<span class="score">{{match.score1}}</span></li>
                     </ul>

@@ -1,1 +1,35 @@
-<p>group-bracket works!</p>
+<link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet">
+
+<div class="btn-wrapper">
+    <app-neon-button #new text="NEW GROUP" (click)="onNewGroup()"></app-neon-button>
+    <app-neon-button #load text="LOAD" style="filter:hue-rotate(300deg);" (click)="onLoad()"></app-neon-button>
+    <app-neon-button #save text="SAVE" (click)="onSave()"></app-neon-button>
+    <app-neon-button text="PRINT" style="filter:hue-rotate(300deg);" (click)="onPrintClick()"></app-neon-button>
+</div>
+<app-spinner *ngIf="groups != undefined && groups.length == 0"></app-spinner>
+<div style="display: flex; flex-wrap: wrap; place-items: center; justify-content: center; gap:30px">
+    <div *ngFor="let group of groups" class="ptable">
+        <h1 class="headin">{{group.groupName}}</h1>
+        <table>
+            <tr class="col">
+                <th>#</th>
+                <th>Team</th>
+                <th>W</th>
+                <th>D</th>
+                <th>L</th>
+                <th>PTS</th>
+                <th>LAST3</th>
+            </tr>
+            <tr *ngFor="let player of group.teams | sort:'points'; let i = index" [ngClass] = "(i+1 > group.qualifyNumber)? 'pos': 'wpos'">
+                <td>{{i+1}}</td>
+                <td>{{player.name}}</td>
+                <td>{{player.wins}}</td>
+                <td>{{player.draws}}</td>
+                <td>{{player.loses}}</td>
+                <td>{{player.points}}</td>
+                <td>{{player.last3Results}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+

@@ -68,6 +68,10 @@ addEloGame(body){
     return this.http.get(this.url+ '/sematches/names')
       .pipe(catchError(this.handleError));
   }
+  getSEMatches(){
+    return this.http.get(this.url+ '/sematches')
+      .pipe(catchError(this.handleError));
+  }
   saveSEGame(body){
     return this.http.post(this.url + '/segame', body)
     .pipe(catchError(this.handleError));
@@ -81,6 +85,10 @@ addEloGame(body){
   }
   getDEMatchNames(){
     return this.http.get(this.url+ '/dematches/names')
+      .pipe(catchError(this.handleError));
+  }
+  getDEMatches(){
+    return this.http.get(this.url+ '/dematches')
       .pipe(catchError(this.handleError));
   }
   saveDEGame(body){
@@ -98,6 +106,10 @@ addEloGame(body){
     return this.http.get(this.url+ '/rrmatches/names')
       .pipe(catchError(this.handleError));
   }
+  getRRMatches(){
+    return this.http.get(this.url+ '/rrmatches')
+      .pipe(catchError(this.handleError));
+  }
   saveRRGame(body){
     return this.http.post(this.url + '/rrgame',body)
     .pipe(catchError(this.handleError));
@@ -113,7 +125,7 @@ addEloGame(body){
     return this.http.get(this.url+ '/cache/'+gameType)
       .pipe(catchError(this.handleError));
   }
-  saveCache(body){
+  saveCache(body:{gameType:string, bracketType:string, gameName?:string}){
     return this.http.post(this.url + '/savecache',body)
     .pipe(catchError(this.handleError));
   }

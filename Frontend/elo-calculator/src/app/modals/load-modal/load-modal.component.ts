@@ -12,6 +12,7 @@ export class LoadModal implements OnInit {
   names: Array<string> = []
   selGame = "Bajnokság neve"
   gameSelected = false;
+  gameType: string;
   loadMode = "single-elimination"
   @Output() loadEvent = new EventEmitter<Object>();
   
@@ -90,33 +91,33 @@ export class LoadModal implements OnInit {
   }
   ngOnInit(): void {
     if(this.loadMode == 'single-elimination'){
-      this.httpservice.getSEMatchNames()
+      this.httpservice.getSEMatches()
       .subscribe(data =>{
         let myarray = Object.values(data);
         myarray.forEach(el =>{
-          if (!this.names.includes(el.gameName)){
+          if (!this.names.includes(el.gameName) && el.gameType == this.gameType){
             this.names.push(el.gameName);
           }
         })
       })
     }
     if(this.loadMode == 'double-elimination'){
-      this.httpservice.getDEMatchNames()
+      this.httpservice.getDEMatches()
       .subscribe(data =>{
         let myarray = Object.values(data);
         myarray.forEach(el =>{
-          if (!this.names.includes(el.gameName)){
+          if (!this.names.includes(el.gameName) && el.gameType == this.gameType){
             this.names.push(el.gameName);
           }
         })
       })
     }
     if(this.loadMode == 'round-robin'){
-      this.httpservice.getRRMatchNames()
+      this.httpservice.getRRMatches()
       .subscribe(data =>{
         let myarray = Object.values(data);
         myarray.forEach(el =>{
-          if (!this.names.includes(el.gameName)){
+          if (!this.names.includes(el.gameName) && el.gameType == this.gameType){
             this.names.push(el.gameName);
           }
         })

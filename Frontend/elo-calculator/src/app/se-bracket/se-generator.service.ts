@@ -1,4 +1,4 @@
-import { DataService, Match, Player, Team } from '../services/data.service';
+import { DataService, Match, } from '../services/data.service';
 import { Injectable, Output, EventEmitter } from '@angular/core';
 
 
@@ -13,10 +13,9 @@ export class SEGeneratorService {
   exampleTeams:string[] = []
   @Output() generated = new EventEmitter();
 
-  startGenerating(gameType: string = 'example', players?: string[], teams?: Team[]){
+  startGenerating(gameType: string = 'example', players?: string[]){
     let players_length = 20;
     if (players == undefined){}
-    if (teams == undefined){}
     switch (gameType){
       case 'example': 
         this.loadExampleTeams(players_length);

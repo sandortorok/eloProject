@@ -1,0 +1,17 @@
+
+<div class="btn-wrapper">
+    <app-neon-button text="GROUPS" style="filter:hue-rotate(100deg);" (click)="groupstage.select(1)"></app-neon-button>
+    <app-neon-button text="MATCHES" style="filter:hue-rotate(100deg);" (click)="groupstage.select(2)"></app-neon-button>
+</div>
+<ul ngbNav #groupstage="ngbNav" style="display: none;">
+    <li [ngbNavItem] = "1">
+        <a ngbNavLink>GROUPS</a>
+        <ng-template ngbNavContent><app-group-bracket></app-group-bracket></ng-template>
+    </li>
+    <li [ngbNavItem] = "2" >
+        <a ngbNavLink>Matches</a>
+        <ng-template ngbNavContent></ng-template>
+    </li>
+</ul>
+
+<div [ngbNavOutlet]="groupstage" class="items"></div>
