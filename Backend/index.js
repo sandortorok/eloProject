@@ -218,7 +218,6 @@ app.get('/rrmatch/:name', (req, res) => {
     runQuery(sql, res);
 })
 app.post('/rrgame', (req, res) => {
-
     let msg = req.body.body;
     let gameName = req.body.name;
     let gameType = req.body.type;
@@ -235,12 +234,8 @@ app.post('/rrgame', (req, res) => {
             loserFrom1 = el.losersFrom[0];
             loserFrom2 = el.losersFrom[1];
         }
-        if(first){
-            first = false;
-        }
-        else{
-            sql += ','
-        }
+        if(first){first = false;}
+        else{sql += ','}
         sql += `('${gameName}', "${winner}","${player1}",
             "${player2}", ${round}, ${bye}, ${match_ID}, '${gameType}')`;
     }
@@ -273,6 +268,70 @@ app.post('/savecache', (req, res) => {
     let sql = `REPLACE INTO cache (gameName, gameType, bracketType, lastSaved) values ('${gameName}', '${gameType}', '${bracketType}', NOW())`;
     runQuery(sql, res)
 })
+/////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////GROUPSTAGE///////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+app.get('/groupstage/names', (req, res) => {
+    let sql = `SELECT DISTINCT gameName FROM groupStage`;
+    runQuery(sql, res);
+})
+app.post('/groupstage', (req, res) => {
+    let msg = req.body.body;
+    let gameName = req.body.name;
+    let gameType = req.body.type;
+    let sqlGroup = 'REPLACE INTO groupStage (gameName, qualifyNumber, gameType) VALUES '
+    let groupFirst = true;
+    let sqlPlayer = 'REPLACE INTO groupPlayers (playerName, wins, loses, draws, points, last3Results, gameName, groupName) VALUES '
+    let playerFirst = true;
+    for (el of msg){
+        let groupName = el.groupName;
+        let qualifyNumber = el.qualifyNumber;
+        if(groupFirst){groupFirst = false;}
+        else{sqlGroup += ','}
+        sqlGroup += `('${gameName}', ${qualifyNumber}, '${gameType}')`
+
+        for(t of el.teams){
+            let playerName = t.name;
+            let wins = t.wins;
+            let loses = t.loses;
+            let draws = t.draws;
+            let points = t.points;
+            let last3Results = "";
+            for(char of t.last3Results){
+                last3Results+=char;
+            }
+            if(playerFirst){playerFirst = false;}
+            else{sqlPlayer += ','}
+            sqlPlayer+=`('${playerName}', "${wins}","${loses}",
+            "${draws}", ${points}, '${last3Results}', '${gameName}', '${groupName}')`
+        }
+    }
+    if(!groupFirst){
+        let query = pool.query(sqlGroup, (err, result) => {
+            if(err) throw err;
+        })
+    }
+    if(!playerFirst){
+        let query = pool.query(sqlPlayer, (err, result) => {
+            if(err) throw err;
+        })
+    }
+    res.send({msg: 'hey'})
+})
+app.get('/groupstage/:name', (req, res) => {
+    let sql = `
+        SELECT * 
+        FROM groupStage 
+        INNER JOIN groupPlayers ON groupStage.gameName=groupPlayers.gameName 
+        WHERE groupStage.gameName = '${req.params.name}'
+    `;
+    runQuery(sql, res);
+})
+
+
+
+
+
 
 // simple route
 app.get("/", (req, res) => {

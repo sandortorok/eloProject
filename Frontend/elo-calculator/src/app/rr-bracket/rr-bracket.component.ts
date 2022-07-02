@@ -1,12 +1,13 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LoadModal } from '../modals/load-modal/load-modal.component';
 import { WinModal } from '../modals/win-modal/win-modal.component';
 import { NewModal } from '../modals/new-modal/new-modal.component';
 import { SaveModal } from '../modals/save-modal/save-modal.component';
-import { CacheElement, Match } from '../services/data.service';
+import { CacheElement, Group, Match } from '../services/data.service';
 import { HttpService } from '../services/http.service';
 import { RRGeneratorService } from './rr-generator.service';
+import { TemplateBindingParseResult } from '@angular/compiler';
 
 
 export interface playerScore{
@@ -27,11 +28,27 @@ export class RRBracketComponent implements OnInit {
   @Input() gameType:string;
   players:playerScore[] = [];
   isOpen = true;
-
+  @Input() groupMode:boolean= false;
+  @Input() groups:Group[] = [];
+  @Output() groupsChange = new EventEmitter<Group[]>();
+  groupNames:string[] = [];
   constructor(private bracket: RRGeneratorService, private modalService: NgbModal, private httpservice: HttpService) { }
   ngOnInit(): void {
-    this.loadCache();
     this.sub2Generated();
+    if(!this.groupMode){ //HA RENDES ÜZEMMMÓDBAN VAN
+      this.matches = [];
+      this.loadCache();
+    }
+    else{ //HA CSOPORTOS ÜZENMÓDBAN VAN
+      this.matches = [];
+      this.bracket.generateGroupMatches(this.groups);
+      this.groupNames = [];
+      this.groups.forEach(group=>{
+        this.groupNames.push(group.groupName);
+      })
+      // this.bracket.startGenerating('withNames', this.groupPlayers);
+      // console.log('started', this.groupPlayers);
+    }
   }
   giveEffects(){
     setTimeout(() => {
@@ -110,11 +127,48 @@ export class RRBracketComponent implements OnInit {
         let nextMatch:Match = this.matches.filter(m=>{return m.Meccs_id == nextID})[0]
         nextMatch.Csapatok[thisMatch.bottom] = thisMatch.Gyoztes;
       }
-      this.httpservice.saveRRGame({body: this.matches, name: this.gameName, type:this.gameType}).subscribe({})
-      this.saveCache();
+      if(!this.groupMode){
+        this.httpservice.saveRRGame({body: this.matches, name: this.gameName, type:this.gameType}).subscribe({});
+        this.saveCache();
+      }
+      else{//HA CSOPORTOS JÁTÉK VAN
+        this.updateGroups(updatedMatch.Csapatok[0], updatedMatch.Csapatok[1], updatedMatch.Gyoztes);
+      }
       this.loadPlayerStats();
       this.giveEffects();
     })
+  }
+  updateGroups(p1:string, p2:string, winner:string){
+    this.groups.forEach(group=>{
+      group.teams.forEach(team=>{
+        if(team.name == p1 || team.name == p2){
+          if(team.name == winner){
+            team.wins+=1;
+            team.points+=3;
+            if(team.last3Results.length > 0){
+              team.last3Results.unshift('W');
+              if(team.last3Results.length > 3){
+                team.last3Results.pop();
+              }
+            }
+            else{
+              team.last3Results = ['W']
+            }
+          }
+          else{
+            team.loses+=1;
+            if(team.last3Results.length > 0){
+              team.last3Results.unshift(team.last3Results.pop()!);
+              team[0] = 'L';
+            }
+            else{
+              team.last3Results = ['L']
+            }
+          }
+        }
+      })
+    })
+    this.groupsChange.emit(this.groups);
   }
   loadPlayerStats(){
     this.players = [];
@@ -161,7 +215,6 @@ export class RRBracketComponent implements OnInit {
         this.loadPlayerStats();
         this.giveEffects();
       })
-      
     })
   }
   loadMatchesFromDataObject(data){
@@ -176,24 +229,24 @@ export class RRBracketComponent implements OnInit {
     })
   }
   sub2Generated(){
-    this.bracket.generated.subscribe(()=>{
+    this.bracket.generated.subscribe((newMatches)=>{
       if(this.isOpen){
-        this.matches = [];
-        this.matches = this.bracket.GeneratedGames
-        this.gameName = Math.random().toString(36).slice(2, 7);
-        this.httpservice.saveRRGame({body: this.matches, name: this.gameName, type: this.gameType}).subscribe({})
-        this.saveCache();
+        this.matches = newMatches;
+        if(!this.groupMode){
+          this.gameName = Math.random().toString(36).slice(2, 7);
+          this.httpservice.saveRRGame({body: this.matches, name: this.gameName, type: this.gameType}).subscribe({})
+          this.saveCache();
+        }
         this.loadPlayerStats();
         this.giveEffects();
-        console.log(this.matches);
       }
     })
   }
   onNewBracket(){
     const modalRef = this.modalService.open(NewModal, { centered: true });
     modalRef.componentInstance.generateEvent.subscribe((players)=>{
-      this.matches = []
-      this.bracket.startGenerating('withNames', players=players)
+      this.matches = [];
+      this.bracket.startGenerating('withNames', players=players);
     })
   }
   onLoad(){

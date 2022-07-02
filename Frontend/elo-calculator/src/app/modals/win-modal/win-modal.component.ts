@@ -13,7 +13,8 @@ export class WinModal {
     score1 = null;
     score2 = null;
     selPlayer = "Győztes"
-    playerSelected: boolean = false
+    playerSelected: boolean = false;
+    clicked:number = 0;
     constructor(public activeModal: NgbActiveModal) { }
     onSelect(name: string) {
       this.selPlayer = name;
@@ -21,8 +22,10 @@ export class WinModal {
     }
     updateWinner() {
       if (this.selPlayer == "Győztes") return;
+      if (this.clicked > 0) return;
       this.match.Gyoztes = this.selPlayer;
-      this.updateEvent.emit(this.match)
-      this.activeModal.close()
+      this.updateEvent.emit(this.match);
+      this.activeModal.close();
+      this.clicked++;
     }
 }

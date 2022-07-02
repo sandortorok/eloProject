@@ -15,6 +15,7 @@ export interface Match{
   score0?: number | null,
   score1?: number | null,
   losersFrom?: number[];
+  groupName?:string;
 }
 
 export interface CacheElement {

@@ -27,6 +27,9 @@ export class MenuComponent implements OnInit {
         if (type == 'round-robin'){
           this.bracketnav.select(4);
         }
+        if (type == 'group-stage'){
+          this.bracketnav.select(1);
+        }
       }
     })
   }

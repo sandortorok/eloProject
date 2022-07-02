@@ -28,6 +28,7 @@ import { EloBracketComponent } from './elo-bracket/elo-bracket.component';
 import { GroupBracketComponent } from './group-bracket/group-bracket.component';
 import { CommonModule } from '@angular/common';
 import { GroupNavigatorComponent } from './group-bracket/group-navigator/group-navigator.component';
+import { GroupPipe } from './pipes/group.pipe';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { GroupNavigatorComponent } from './group-bracket/group-navigator/group-n
     EloBracketComponent,
     GroupBracketComponent,
     GroupNavigatorComponent,
+    GroupPipe,
   ],
   imports: [
     BrowserModule,

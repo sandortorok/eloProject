@@ -12,7 +12,7 @@ export class SaveModal implements OnInit {
   gameType:string;
   @Output() saveEvent = new EventEmitter<string>();
 
-  matches;
+  matches:any[]; // or groups
   placeholder:string = "Bajnokság neve";
   saveMode:string = "single-elimination";
   constructor(public activeModal: NgbActiveModal, private httpservice: HttpService) {    }
@@ -47,7 +47,15 @@ export class SaveModal implements OnInit {
         });
       })
     }
-
+    if(this.saveMode == 'group-stage'){
+      this.httpservice.getGroupStageNames()
+      .subscribe(names =>{
+        this.httpservice.saveGroupStage({body: this.matches, name: this.IN_gameID, type: this.gameType}).subscribe(()=>{
+          this.saveEvent.emit(this.IN_gameID);
+          this.activeModal.close()
+        });
+      })
+    }
   }
   ngOnInit(): void {
   }

@@ -24,7 +24,7 @@
             <app-neon-button text="PRINT" style="filter:hue-rotate(300deg);" (click)="onPrintClick()"></app-neon-button>
         </div>
         <app-spinner *ngIf="matches != undefined && matches.length == 0"></app-spinner>
-        <div *ngIf="matches != undefined && matches.length > 0" class="container" #container>
+        <div *ngIf="matches != undefined && matches.length > 0 && !groupMode" class="container" #container>
             <div *ngFor="let round of matches | rounds; let i = index" class="split-wrap">
                 <h1 >{{i+1}}. Forduló</h1>
                 <div class="round">
@@ -45,6 +45,26 @@
                     <li *ngFor="let player of players | sortScore: 'WinRate'" class="team current"> 
                     {{player.name}}<span class="score">{{player.wins}}/{{player.wins+player.loses}}</span></li>
                 </div>
+            </div>
+        </div>
+        <!-- CSOPORTOS MECCSEK ESETÉN -->
+        <div *ngIf="matches != undefined && matches.length > 0 && groupMode" class="container" #container>
+            <div *ngFor="let group of groupNames" class="group-wrapper">
+                <h1>{{group}}</h1>
+                <div *ngFor="let round of (matches|myGroupPipe:group) | rounds; let i = index" class="split-wrap">
+                    <h1 >{{i+1}}. Forduló</h1>
+                    <div class="round">
+                        <ul *ngFor="let match of round" class="matchup" id="match {{match.Meccs_id}}">
+                            <span class="matchNumber">{{match.Meccs_id}}</span>
+                            <li class="team" (click)="onTeamClick($event)"
+                            [class.win]="match.Csapatok![0]==match.Gyoztes && match.Gyoztes.length > 0"> 
+                            {{match.Csapatok![0]}}<span class="score">{{match.score0}}</span></li>
+                            <li class="team" (click)="onTeamClick($event)"
+                                [class.win]="match.Csapatok![1]==match.Gyoztes  && match.Gyoztes.length > 0"> 
+                                {{match.Csapatok![1]}}<span class="score">{{match.score1}}</span></li>
+                        </ul>
+                    </div>
+                </div>	<!-- END ROUND ONE -->
             </div>
         </div>
 	</section>

@@ -129,4 +129,19 @@ addEloGame(body){
     return this.http.post(this.url + '/savecache',body)
     .pipe(catchError(this.handleError));
   }
+/////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////GROUPSTAGE////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+  getGroupStage(name){
+    return this.http.get(this.url+ '/groupstage/'+name)
+      .pipe(catchError(this.handleError));
+  }
+  getGroupStageNames(){
+    return this.http.get(this.url+ '/groupstage/names')
+      .pipe(catchError(this.handleError));
+  }
+  saveGroupStage(body){
+    return this.http.post(this.url + '/groupstage',body)
+    .pipe(catchError(this.handleError));
+  }
 }

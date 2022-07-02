@@ -1,5 +1,5 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
-import { Match } from '../services/data.service';
+import { Group, Match } from '../services/data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +7,7 @@ import { Match } from '../services/data.service';
 export class RRGeneratorService {
   GeneratedGames:Match[] = [];
   exampleTeams:string[] = []
-  @Output() generated = new EventEmitter();
+  @Output() generated = new EventEmitter<Match[]>();
   
   startGenerating(gameType: string = 'example', players?: string[]){
     let players_length = 7;
@@ -16,15 +16,9 @@ export class RRGeneratorService {
       case 'example':
         this.loadExampleTeams(players_length);
         this.generateMatches(this.exampleTeams);
-        setTimeout(() => {
-          this.generated.emit();
-        }, 1000);
         break;
       case 'withNames':
         this.generateMatches(players);
-        setTimeout(() => {
-          this.generated.emit();
-        }, 1000);
         break;
       default:
         this.loadExampleTeams(players_length);
@@ -63,7 +57,48 @@ export class RRGeneratorService {
       }
       input = this.rotateArray(input);
       }
-    
+      this.generated.emit(this.GeneratedGames)
+  }
+  generateGroupMatches(groups:Group[]){
+    this.GeneratedGames = [];
+    let match_ID = 0;
+    groups.forEach(group=>{
+      let input:string[] = [];
+      group.teams.forEach(team=>{
+        input.push(team.name)
+      })
+      if(input.length %2 == 1){
+        input.push('')
+      }
+      let p_count = input.length;
+  
+      for(let roundNumber = 0; roundNumber < p_count-1; roundNumber++){
+        for(let gameNumber = 0; gameNumber < p_count/2; gameNumber++){
+          let newGame:Match = {
+            Csapatok: [input[gameNumber], input[p_count-1-gameNumber]],
+            Round: roundNumber+1,
+            nextRoundID: -1,
+            Gyoztes: '',
+            Meccs_id: match_ID,
+            bye: false,
+            bottom: 0,
+            groupName: group.groupName
+          }
+          match_ID++
+          if(input[gameNumber] == ''){
+            newGame.Gyoztes = input[p_count-1-gameNumber];
+            newGame.bye = true;
+          }
+          if(input[p_count-1-gameNumber] == ''){
+            newGame.Gyoztes = input[gameNumber];
+            newGame.bye = true;
+          }
+          this.GeneratedGames.push(newGame);
+        }
+        input = this.rotateArray(input);
+        }
+    })
+    this.generated.emit(this.GeneratedGames)
   }
   loadExampleTeams(how_many){
     this.exampleTeams = [];
