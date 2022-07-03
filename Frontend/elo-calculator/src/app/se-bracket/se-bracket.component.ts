@@ -7,6 +7,7 @@ import { SEGeneratorService } from './se-generator.service';
 import { LoadModal } from '../modals/load-modal/load-modal.component';
 import { NewModal } from '../modals/new-modal/new-modal.component';
 import { CacheElement, Match } from '../services/data.service';
+import { Subscription } from 'rxjs/internal/Subscription';
 
 @Component({
   selector: 'app-se-bracket',
@@ -18,14 +19,13 @@ export class SEBracketComponent implements OnInit {
   matches:Match[];
   gameName:string = "";
   @Input() gameType;
-  isOpen = true;
+  private subscriptions: Array<Subscription> = [];
+
   constructor(private bracket: SEGeneratorService, private modalService: NgbModal, private httpservice: HttpService) {}
   ngOnInit(): void {
     this.loadCache();
-    this.sub2Generated();
+    this.subscriptions.push(this.sub2Generated());
   }
-
-
   onTeamClick(event) {
 
     let matchID = event.target.parentNode.id.match(/(\d+)/)![0];
@@ -160,7 +160,6 @@ export class SEBracketComponent implements OnInit {
   }
   loadCache(){
     this.httpservice.getCacheFromGame(this.gameType).subscribe(res=>{
-      console.log('loading cache');
       let myarray:Array<CacheElement> = Object.values(res);
       if(myarray.length <= 0) return;
       myarray.forEach(cacheEl=>{
@@ -180,8 +179,7 @@ export class SEBracketComponent implements OnInit {
     })
   }
   sub2Generated(){
-    this.bracket.generated.subscribe(()=>{
-      if(this.isOpen){
+    return this.bracket.generated.subscribe(()=>{
         this.matches = [];
         this.matches = this.bracket.GeneratedGames
         this.gameName = Math.random().toString(36).slice(2, 7);
@@ -189,13 +187,14 @@ export class SEBracketComponent implements OnInit {
         this.saveCache();
         this.giveEffects();
         console.log(this.matches);
-      }
     })
   }
   onPrintClick(){
     window.print();
   }
   ngOnDestroy(){
-    this.isOpen = false;
+    this.subscriptions.forEach((sub:Subscription) => {
+      sub.unsubscribe();
+    });  
   }
 }

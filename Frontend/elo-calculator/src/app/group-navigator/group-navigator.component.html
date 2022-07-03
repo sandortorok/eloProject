@@ -1,0 +1,39 @@
+
+<div class="btn-wrapper">
+    <app-neon-button text="GROUPS" style="filter:hue-rotate(100deg);" (click)="groupstage.select(1)"></app-neon-button>
+    <app-neon-button text="MATCHES" style="filter:hue-rotate(100deg);" (click)="groupstage.select(2)"></app-neon-button>
+</div>
+<div class="btn-wrapper">
+    <app-neon-button #new text="NEW GROUP" (click)="onNewGroup()"></app-neon-button>
+    <app-neon-button #load text="LOAD" style="filter:hue-rotate(300deg);" (click)="onLoad()"></app-neon-button>
+    <app-neon-button #save text="SAVE" (click)="onSave()"></app-neon-button>
+    <app-neon-button text="PRINT" style="filter:hue-rotate(300deg);" (click)="onPrintClick()"></app-neon-button>
+</div>
+<header class="hero">
+    <div class="hero-wrap">
+        <p class="intro" id="intro" style="margin-bottom: 0;">Pányok</p>
+        <h1 id="headline">{{gameType| gameType}} Bajnokság</h1>
+        <p class="year"><i class="fa fa-star"></i> 2022 <i class="fa fa-star"></i></p>
+        <p>{{gameName}}</p>
+   </div>
+</header>
+<ul ngbNav #groupstage="ngbNav" style="display: none;">
+    <li [ngbNavItem] = "1">
+        <a ngbNavLink>GROUPS</a>
+        <ng-template ngbNavContent>
+            <app-group-bracket [groups]="groups" (groupChange)="groups = $event">
+            </app-group-bracket>
+        </ng-template>
+    </li>
+    <li [ngbNavItem] = "2" >
+        <a ngbNavLink>Matches</a>
+        <ng-template ngbNavContent>
+            <app-rr-bracket [groupMode]="true" [groups]="groups" 
+                (groupsChange)="RRBracketUpdate($event)" 
+                [matches]="matches">
+            </app-rr-bracket>
+        </ng-template>
+    </li>
+</ul>
+
+<div [ngbNavOutlet]="groupstage" class="items"></div>

@@ -1,71 +1,60 @@
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="viewport" content="width=device-width,initial-scale=1.0">
-	<link href='https://fonts.googleapis.com/css?family=Holtwood+One+SC' rel='stylesheet' type='text/css'>
-	<link href='https://fonts.googleapis.com/css?family=Kaushan+Script|Herr+Von+Muellerhoff' rel='stylesheet' type='text/css'>
-	<link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
-	<link href='https://fonts.googleapis.com/css?family=Istok+Web|Roboto+Condensed:700' rel='stylesheet' type='text/css'>
-</head>
-<body>
-    <header class="hero">
-        <div class="hero-wrap">
-         <p class="intro" id="intro" style="margin-bottom: 0;">Pányok</p>
-             <h1 id="headline">{{gameType| gameType}} Bajnokság</h1>
-             <p class="year"><i class="fa fa-star"></i> 2022 <i class="fa fa-star"></i></p>
-         <p>{{gameName}}</p>
-       </div>
-    </header>
-    <section id="bracket">
-        <div class="btn-wrapper">
-            <app-neon-button #new text="NEW BRACKET" (click)="onNewBracket()"></app-neon-button>
-            <app-neon-button #load text="LOAD" style="filter:hue-rotate(300deg);" (click)="onLoad()"></app-neon-button>
-            <app-neon-button #save text="SAVE" (click)="onSave()"></app-neon-button>
-            <app-neon-button text="PRINT" style="filter:hue-rotate(300deg);" (click)="onPrintClick()"></app-neon-button>
+<header *ngIf="!groupMode" class="hero">
+    <div class="hero-wrap">
+        <p class="intro" id="intro" style="margin-bottom: 0;">Pányok</p>
+        <h1 id="headline">{{gameType| gameType}} Bajnokság</h1>
+        <p class="year"><i class="fa fa-star"></i> 2022 <i class="fa fa-star"></i></p>
+        <p>{{gameName}}</p>
+    </div>
+</header>
+<section id="bracket">
+    <app-spinner *ngIf="matches != undefined && matches.length == 0"></app-spinner>
+    <div *ngIf="!groupMode" class="btn-wrapper">
+        <app-neon-button #new text="NEW BRACKET" (click)="onNewBracket()"></app-neon-button>
+        <app-neon-button #load text="LOAD" style="filter:hue-rotate(300deg);" (click)="onLoad()"></app-neon-button>
+        <app-neon-button #save text="SAVE" (click)="onSave()"></app-neon-button>
+        <app-neon-button text="PRINT" style="filter:hue-rotate(300deg);" (click)="onPrintClick()"></app-neon-button>
+    </div>
+    <div *ngIf="matches != undefined && matches.length > 0 && !groupMode" class="container" #container>
+        <div *ngFor="let round of matches | rounds; let i = index" class="split-wrap">
+            <h1>{{i+1}}. Forduló</h1>
+            <div class="round">
+                <ul *ngFor="let match of round" class="matchup" id="match {{match.Meccs_id}}">
+                    <span class="matchNumber">{{match.Meccs_id}}</span>
+                    <li class="team" (click)="onTeamClick($event)"
+                        [class.win]="match.Csapatok![0]==match.Gyoztes && match.Gyoztes.length > 0">
+                        {{match.Csapatok![0]}}<span class="score">{{match.score0}}</span></li>
+                    <li class="team" (click)="onTeamClick($event)"
+                        [class.win]="match.Csapatok![1]==match.Gyoztes  && match.Gyoztes.length > 0">
+                        {{match.Csapatok![1]}}<span class="score">{{match.score1}}</span></li>
+                </ul>
+            </div>
         </div>
-        <app-spinner *ngIf="matches != undefined && matches.length == 0"></app-spinner>
-        <div *ngIf="matches != undefined && matches.length > 0 && !groupMode" class="container" #container>
-            <div *ngFor="let round of matches | rounds; let i = index" class="split-wrap">
-                <h1 >{{i+1}}. Forduló</h1>
+        <div class="scoreBoard">
+            <h1>EREDMÉNYEK</h1>
+            <div class="round" style="width:50%; align-self:center;">
+                <li *ngFor="let player of players | sortScore: 'WinRate'" class="team current">
+                    {{player.name}}<span class="score">{{player.wins}}/{{player.wins+player.loses}}</span></li>
+            </div>
+        </div>
+    </div>
+    <!-- CSOPORTOS MECCSEK ESETÉN -->
+    <div *ngIf="matches != undefined && matches.length > 0 && groupMode" class="container" #container>
+        <div *ngFor="let groupName of groups|groupName" class="group-wrapper">
+            <h1>{{groupName}}</h1>
+            <div *ngFor="let round of (matches|myGroupPipe:groupName) | rounds; let i = index" class="split-wrap">
+                <h1>{{i+1}}. Forduló</h1>
                 <div class="round">
                     <ul *ngFor="let match of round" class="matchup" id="match {{match.Meccs_id}}">
                         <span class="matchNumber">{{match.Meccs_id}}</span>
                         <li class="team" (click)="onTeamClick($event)"
-                        [class.win]="match.Csapatok![0]==match.Gyoztes && match.Gyoztes.length > 0"> 
-                        {{match.Csapatok![0]}}<span class="score">{{match.score0}}</span></li>
+                            [class.win]="match.Csapatok![0]==match.Gyoztes && match.Gyoztes.length > 0">
+                            {{match.Csapatok![0]}}<span class="score">{{match.score0}}</span></li>
                         <li class="team" (click)="onTeamClick($event)"
-                            [class.win]="match.Csapatok![1]==match.Gyoztes  && match.Gyoztes.length > 0"> 
+                            [class.win]="match.Csapatok![1]==match.Gyoztes  && match.Gyoztes.length > 0">
                             {{match.Csapatok![1]}}<span class="score">{{match.score1}}</span></li>
                     </ul>
                 </div>
-            </div>	<!-- END ROUND ONE -->
-            <div class="scoreBoard">
-                <h1 >EREDMÉNYEK</h1>
-                <div class="round" style="width:50%; align-self:center;">
-                    <li *ngFor="let player of players | sortScore: 'WinRate'" class="team current"> 
-                    {{player.name}}<span class="score">{{player.wins}}/{{player.wins+player.loses}}</span></li>
-                </div>
             </div>
         </div>
-        <!-- CSOPORTOS MECCSEK ESETÉN -->
-        <div *ngIf="matches != undefined && matches.length > 0 && groupMode" class="container" #container>
-            <div *ngFor="let group of groupNames" class="group-wrapper">
-                <h1>{{group}}</h1>
-                <div *ngFor="let round of (matches|myGroupPipe:group) | rounds; let i = index" class="split-wrap">
-                    <h1 >{{i+1}}. Forduló</h1>
-                    <div class="round">
-                        <ul *ngFor="let match of round" class="matchup" id="match {{match.Meccs_id}}">
-                            <span class="matchNumber">{{match.Meccs_id}}</span>
-                            <li class="team" (click)="onTeamClick($event)"
-                            [class.win]="match.Csapatok![0]==match.Gyoztes && match.Gyoztes.length > 0"> 
-                            {{match.Csapatok![0]}}<span class="score">{{match.score0}}</span></li>
-                            <li class="team" (click)="onTeamClick($event)"
-                                [class.win]="match.Csapatok![1]==match.Gyoztes  && match.Gyoztes.length > 0"> 
-                                {{match.Csapatok![1]}}<span class="score">{{match.score1}}</span></li>
-                        </ul>
-                    </div>
-                </div>	<!-- END ROUND ONE -->
-            </div>
-        </div>
-	</section>
-</body>
+    </div>
+</section>

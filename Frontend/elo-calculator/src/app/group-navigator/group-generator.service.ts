@@ -1,4 +1,4 @@
-import { GroupPlayer } from './../services/data.service';
+import { GroupPlayer, Match } from '../services/data.service';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { Group } from '../services/data.service';
 
@@ -9,7 +9,6 @@ export class GroupGeneratorService {
   GeneratedGroups:Group[] = [];
   exampleTeams:string[] = []
   @Output() generated = new EventEmitter();
-  alphabet
   startGenerating(gameType: string = 'example', players?: string[]){
     let players_length = 16;
     if (players == undefined){}

@@ -7,6 +7,7 @@ import { NewModal } from '../modals/new-modal/new-modal.component';
 import { LoadModal } from '../modals/load-modal/load-modal.component';
 import { HttpService } from '../services/http.service';
 import { CacheElement, Match } from '../services/data.service';
+import { Subscription } from 'rxjs/internal/Subscription';
 
 @Component({
   selector: 'app-de-bracket',
@@ -15,14 +16,15 @@ import { CacheElement, Match } from '../services/data.service';
 })
 export class DEBracketComponent implements OnInit {
   @ViewChild('container') container;
+  matches:Match[];
   gameName:string = "";
   @Input() gameType:string;
-  matches:Match[];
-  isOpen = true; //mivel fel maradt iratkozva a bracket.generated-re ezért kellett ezt bevezetni
+  private subscriptions: Array<Subscription> = [];
+
   constructor(private bracket: DEGeneratorService, private modalService: NgbModal, private httpservice: HttpService) {}
   ngOnInit(): void {
     this.loadCache();
-    this.sub2Generated();
+    this.subscriptions.push(this.sub2Generated());
   }
   giveEffects(){
     setTimeout(() => {
@@ -223,8 +225,7 @@ export class DEBracketComponent implements OnInit {
     })
   }
   sub2Generated(){
-    this.bracket.generated.subscribe(()=>{
-      if(this.isOpen){
+    return this.bracket.generated.subscribe(()=>{
         this.matches = [];
         this.matches = this.bracket.GeneratedGames
         this.gameName = Math.random().toString(36).slice(2, 7);
@@ -232,10 +233,11 @@ export class DEBracketComponent implements OnInit {
         this.saveCache();
         this.giveEffects();
         console.log(this.matches);
-      }
     })
   }
   ngOnDestroy(){
-    this.isOpen = false;
+    this.subscriptions.forEach((sub:Subscription) => {
+      sub.unsubscribe();
+    });  
   }
 }

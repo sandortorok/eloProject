@@ -1,13 +1,13 @@
+import { RRHelperService } from './rr-helper.service';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LoadModal } from '../modals/load-modal/load-modal.component';
 import { WinModal } from '../modals/win-modal/win-modal.component';
 import { NewModal } from '../modals/new-modal/new-modal.component';
 import { SaveModal } from '../modals/save-modal/save-modal.component';
-import { CacheElement, Group, Match } from '../services/data.service';
-import { HttpService } from '../services/http.service';
+import { Group, Match } from '../services/data.service';
 import { RRGeneratorService } from './rr-generator.service';
-import { TemplateBindingParseResult } from '@angular/compiler';
+import { Subscription } from 'rxjs/internal/Subscription';
 
 
 export interface playerScore{
@@ -21,33 +21,29 @@ export interface playerScore{
   styleUrls: ['./rr-bracket.component.scss']
 })
 export class RRBracketComponent implements OnInit {
-
   @ViewChild('container') container;
-  matches: Match[];
-  gameName:string = "";
+  @Input() matches: Match[];
   @Input() gameType:string;
+  gameName:string = "";
   players:playerScore[] = [];
-  isOpen = true;
+
+  //GROUP STUFF
   @Input() groupMode:boolean= false;
   @Input() groups:Group[] = [];
-  @Output() groupsChange = new EventEmitter<Group[]>();
-  groupNames:string[] = [];
-  constructor(private bracket: RRGeneratorService, private modalService: NgbModal, private httpservice: HttpService) { }
+  @Output() groupsChange = new EventEmitter<{groups: Group[], matches: Match[]}>();
+  
+  private subscriptions: Array<Subscription> = [];
+
+  //GROUP STUFF END
+  constructor(private bracket: RRGeneratorService, private modalService: NgbModal, private rrhelper: RRHelperService) { }
   ngOnInit(): void {
-    this.sub2Generated();
     if(!this.groupMode){ //HA RENDES ÜZEMMMÓDBAN VAN
-      this.matches = [];
+      this.subscriptions.push(this.sub2Generated());
+      this.subscriptions.push(this.sub2Load());
       this.loadCache();
     }
-    else{ //HA CSOPORTOS ÜZENMÓDBAN VAN
-      this.matches = [];
-      this.bracket.generateGroupMatches(this.groups);
-      this.groupNames = [];
-      this.groups.forEach(group=>{
-        this.groupNames.push(group.groupName);
-      })
-      // this.bracket.startGenerating('withNames', this.groupPlayers);
-      // console.log('started', this.groupPlayers);
+    else{ //HA CSOPORTOS ÜZENMÓDBAN VAN AKKOR INPUT-KÉNT KAPJA A MECCSEKET
+      this.giveEffects();
     }
   }
   giveEffects(){
@@ -128,11 +124,12 @@ export class RRBracketComponent implements OnInit {
         nextMatch.Csapatok[thisMatch.bottom] = thisMatch.Gyoztes;
       }
       if(!this.groupMode){
-        this.httpservice.saveRRGame({body: this.matches, name: this.gameName, type:this.gameType}).subscribe({});
+        this.rrhelper.saveRRGame(this.gameName, this.gameType, this.matches);
         this.saveCache();
       }
       else{//HA CSOPORTOS JÁTÉK VAN
         this.updateGroups(updatedMatch.Csapatok[0], updatedMatch.Csapatok[1], updatedMatch.Gyoztes);
+        this.groupsChange.emit({groups: this.groups, matches:this.matches});
       }
       this.loadPlayerStats();
       this.giveEffects();
@@ -158,8 +155,10 @@ export class RRBracketComponent implements OnInit {
           else{
             team.loses+=1;
             if(team.last3Results.length > 0){
-              team.last3Results.unshift(team.last3Results.pop()!);
-              team[0] = 'L';
+              team.last3Results.unshift('L');
+              if(team.last3Results.length > 3){
+                team.last3Results.pop();
+              }
             }
             else{
               team.last3Results = ['L']
@@ -168,86 +167,48 @@ export class RRBracketComponent implements OnInit {
         }
       })
     })
-    this.groupsChange.emit(this.groups);
   }
   loadPlayerStats(){
-    this.players = [];
-    let playerNames:string[] = []
-    this.matches.forEach(m=>{
-      if(m.Csapatok[0]!= "" && !playerNames.includes(m.Csapatok[0])){
-        playerNames.push(m.Csapatok[0])
-      }
-      if(m.Csapatok[1]!= "" && !playerNames.includes(m.Csapatok[1])){
-        playerNames.push(m.Csapatok[1])
-      }
-    })
-    playerNames.forEach(player => {
-      let newPlayerScore:playerScore = {name: player,wins: 0,loses: 0}
-      this.matches.forEach(m=>{
-        if(m.bye != true && m.Gyoztes!="" && m.Csapatok.includes(player)){
-          if(m.Gyoztes == player){
-            newPlayerScore.wins+=1;
-          }
-          else {
-            newPlayerScore.loses+=1;
-          }
-        }
-      })
-      this.players.push(newPlayerScore);
-    });
+    this.players = this.rrhelper.loadPlayerStats(this.matches)
   }
   saveCache(){
-    this.httpservice.saveCache({gameName: this.gameName, bracketType:'round-robin', gameType:this.gameType}).subscribe({})
+    this.rrhelper.saveCache(this.gameName, this.gameType);
+  }
+  saveGroupCache(){
+    this.rrhelper.saveGroupCache(this.gameName, this.gameType);
   }
   loadCache(){
-    this.httpservice.getCacheFromGame(this.gameType).subscribe(res=>{
-      let myarray:Array<CacheElement> = Object.values(res);
-      if(myarray.length <= 0) return;
-      myarray.forEach(cacheEl=>{
-        if(cacheEl.bracketType == 'round-robin'){
-          this.gameName = cacheEl.gameName;
-        }
-      })
-      if(this.gameName == "") return;
-      this.matches = [];
-      this.httpservice.getRRMatch(this.gameName).subscribe(data=>{
-        this.loadMatchesFromDataObject(data);
-        this.loadPlayerStats();
-        this.giveEffects();
-      })
-    })
-  }
-  loadMatchesFromDataObject(data){
-    let myarray = Object.values(data);
-    myarray.forEach((match:any)=>{
-      let newMatch:Match = {
-        Csapatok: [match.player1, match.player2], Gyoztes: match.winner, bye: match.bye, Meccs_id: match.match_ID, Round: match.round,
-        nextRoundID: -1,
-        bottom: 0
-      };
-      this.matches.push(newMatch);
-    })
+    this.rrhelper.loadCache(this.gameType);
   }
   sub2Generated(){
-    this.bracket.generated.subscribe((newMatches)=>{
-      if(this.isOpen){
+    return this.bracket.generated.subscribe((newMatches)=>{
         this.matches = newMatches;
-        if(!this.groupMode){
-          this.gameName = Math.random().toString(36).slice(2, 7);
-          this.httpservice.saveRRGame({body: this.matches, name: this.gameName, type: this.gameType}).subscribe({})
-          this.saveCache();
-        }
+        this.gameName = Math.random().toString(36).slice(2, 7);
+        this.rrhelper.saveRRGame(this.gameName, this.gameType, this.matches, this.groupMode);
+        this.saveCache();
         this.loadPlayerStats();
         this.giveEffects();
-      }
+    })
+  }
+  sub2Load(){
+    return this.rrhelper.matchesLoaded.subscribe(obj=>{
+      this.matches = obj.matches;
+      this.gameName = obj.gameName;
+      this.loadPlayerStats();
+      this.giveEffects();
     })
   }
   onNewBracket(){
-    const modalRef = this.modalService.open(NewModal, { centered: true });
-    modalRef.componentInstance.generateEvent.subscribe((players)=>{
-      this.matches = [];
-      this.bracket.startGenerating('withNames', players=players);
-    })
+    if(this.groupMode){
+      this.bracket.generateGroupMatches(this.groups);
+    }
+    else{      
+      const modalRef = this.modalService.open(NewModal, { centered: true });
+      modalRef.componentInstance.generateEvent.subscribe((players)=>{
+        this.matches = [];
+        this.bracket.startGenerating('withNames', players=players);
+      })
+    }
   }
   onLoad(){
     const modalRef = this.modalService.open(LoadModal, { centered: true });
@@ -285,6 +246,8 @@ export class RRBracketComponent implements OnInit {
     window.print();
   }
   ngOnDestroy(){
-    this.isOpen = false;
+    this.subscriptions.forEach((sub:Subscription) => {
+      sub.unsubscribe();
+    });  
   }
 }

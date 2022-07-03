@@ -50,10 +50,9 @@ export class SaveModal implements OnInit {
     if(this.saveMode == 'group-stage'){
       this.httpservice.getGroupStageNames()
       .subscribe(names =>{
-        this.httpservice.saveGroupStage({body: this.matches, name: this.IN_gameID, type: this.gameType}).subscribe(()=>{
-          this.saveEvent.emit(this.IN_gameID);
-          this.activeModal.close()
-        });
+        this.saveEvent.emit(this.IN_gameID);//EZT A NAVIGATOR-BAN MENTJÜK EL
+        this.activeModal.close()
+
       })
     }
   }

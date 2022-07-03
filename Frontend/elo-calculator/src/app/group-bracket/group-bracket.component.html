@@ -1,11 +1,4 @@
 <link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet">
-
-<div class="btn-wrapper">
-    <app-neon-button #new text="NEW GROUP" (click)="onNewGroup()"></app-neon-button>
-    <app-neon-button #load text="LOAD" style="filter:hue-rotate(300deg);" (click)="onLoad()"></app-neon-button>
-    <app-neon-button #save text="SAVE" (click)="onSave()"></app-neon-button>
-    <app-neon-button text="PRINT" style="filter:hue-rotate(300deg);" (click)="onPrintClick()"></app-neon-button>
-</div>
 <app-spinner *ngIf="groups != undefined && groups.length == 0"></app-spinner>
 <div style="display: flex; flex-wrap: wrap; place-items: center; justify-content: center; gap:30px">
     <div *ngFor="let group of groups" class="ptable">

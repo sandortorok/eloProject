@@ -221,8 +221,10 @@ app.post('/rrgame', (req, res) => {
     let msg = req.body.body;
     let gameName = req.body.name;
     let gameType = req.body.type;
-    let sql = 'REPLACE INTO RRMatches (gameName, winner, player1, player2, round, bye, match_ID, gameType) VALUES '
+    let groupMode = req.body.groupMode;
+    let sql = 'REPLACE INTO RRMatches (gameName, winner, player1, player2, round, bye, match_ID, gameType, groupMode, groupName) VALUES '
     let first = true;
+    let groupName = ""
     for (el of msg){
         let player1 = el.Csapatok[0];
         let player2 = el.Csapatok[1];
@@ -230,14 +232,13 @@ app.post('/rrgame', (req, res) => {
         let match_ID = el.Meccs_id;
         let round = el.Round;
         let bye = el.bye;
-        if (el.losersFrom){
-            loserFrom1 = el.losersFrom[0];
-            loserFrom2 = el.losersFrom[1];
+        if(groupMode){
+            groupName = el.groupName;
         }
         if(first){first = false;}
         else{sql += ','}
         sql += `('${gameName}', "${winner}","${player1}",
-            "${player2}", ${round}, ${bye}, ${match_ID}, '${gameType}')`;
+            "${player2}", ${round}, ${bye}, ${match_ID}, '${gameType}', ${groupMode}, '${groupName}')`;
     }
     if(!first){
         let query = pool.query(sql, (err, result) => {
@@ -324,6 +325,7 @@ app.get('/groupstage/:name', (req, res) => {
         FROM groupStage 
         INNER JOIN groupPlayers ON groupStage.gameName=groupPlayers.gameName 
         WHERE groupStage.gameName = '${req.params.name}'
+        ORDER BY groupPlayers.groupName
     `;
     runQuery(sql, res);
 })

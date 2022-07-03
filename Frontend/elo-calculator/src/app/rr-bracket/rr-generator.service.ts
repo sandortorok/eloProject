@@ -59,8 +59,8 @@ export class RRGeneratorService {
       }
       this.generated.emit(this.GeneratedGames)
   }
-  generateGroupMatches(groups:Group[]){
-    this.GeneratedGames = [];
+  generateGroupMatches(groups:Group[]): Match[]{
+    let GeneratedGames:Match[] = [];
     let match_ID = 0;
     groups.forEach(group=>{
       let input:string[] = [];
@@ -93,12 +93,12 @@ export class RRGeneratorService {
             newGame.Gyoztes = input[gameNumber];
             newGame.bye = true;
           }
-          this.GeneratedGames.push(newGame);
+          GeneratedGames.push(newGame);
         }
         input = this.rotateArray(input);
         }
     })
-    this.generated.emit(this.GeneratedGames)
+    return GeneratedGames;
   }
   loadExampleTeams(how_many){
     this.exampleTeams = [];
