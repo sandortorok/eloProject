@@ -68,6 +68,8 @@ html {
   text-align: center;
   display:grid;
   grid-template-columns: 1fr 1fr;
+  justify-content: center;
+  align-content: center;
   gap: 10px;
   h1 {
     font-family: $font;

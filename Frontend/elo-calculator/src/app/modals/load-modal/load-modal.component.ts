@@ -32,7 +32,9 @@ export class LoadModal implements OnInit {
               Gyoztes: match.winner,
               Meccs_id: match.match_ID,
               bye: match.bye,
-              bottom: match.bottom
+              bottom: match.bottom,
+              score0:match.score1,
+              score1:match.score2
             };
             newMatch['score0'] = match.score1
             newMatch['score1'] = match.score2
@@ -52,10 +54,10 @@ export class LoadModal implements OnInit {
               Gyoztes: match.winner,
               Meccs_id: match.match_ID,
               bye: match.bye,
-              bottom: match.bottom
+              bottom: match.bottom,
+              score0: match.score1,
+              score1: match.score2
             };
-            newMatch['score0'] = match.score1
-            newMatch['score1'] = match.score2
             newMatch['final'] = match.final
             newMatch['loser'] = match.loser
             matches.push(newMatch);
@@ -74,7 +76,9 @@ export class LoadModal implements OnInit {
               Gyoztes: match.winner,
               Meccs_id: match.match_ID,
               bye: match.bye,
-              bottom: 0
+              bottom: 0,
+              score0:null,
+              score1:null
             };
             matches.push(newMatch);
           })

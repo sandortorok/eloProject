@@ -39,7 +39,7 @@ export class GroupGeneratorService {
     let newGroup:Group = {groupName: `${alphabet[groupNumber]} Csoport`,teams: [], qualifyNumber: qualify};
     groupNumber++;
     for(let p_idx = 0; p_idx < players.length; p_idx++){
-      let newPlayer:GroupPlayer = { name: players[p_idx],wins: 0,loses: 0,draws: 0,points: 0,last3Results: [] }
+      let newPlayer:GroupPlayer = { name: players[p_idx],wins: 0,loses: 0,draws: 0,points: 0,last3Results: [], diff:0 }
       if(newGroup.teams.length == groupSize){
         this.GeneratedGroups.push(newGroup);
         newGroup = {groupName: `${alphabet[groupNumber]} Csoport`,teams: [], qualifyNumber: qualify};

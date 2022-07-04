@@ -1,9 +1,5 @@
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Group, GroupPlayer } from './../services/data.service';
-import { GroupGeneratorService } from '../group-navigator/group-generator.service';
+import { Group } from './../services/data.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { SaveModal } from '../modals/save-modal/save-modal.component';
-import { Subscription } from 'rxjs/internal/Subscription';
 
 @Component({
   selector: 'app-group-bracket',

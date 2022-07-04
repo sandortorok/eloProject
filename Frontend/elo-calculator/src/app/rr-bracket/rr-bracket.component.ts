@@ -116,6 +116,7 @@ export class RRBracketComponent implements OnInit {
   onTeamClick(event){
     let matchID = event.target.parentNode.id.match(/(\d+)/)![0];
     let thisMatch = this.matches.filter(m =>{ return m.Meccs_id == matchID})[0];
+    console.log(thisMatch);
     if (!thisMatch) return;
     if(thisMatch.Gyoztes != "") return;
     if (thisMatch.Csapatok[0] == "" || thisMatch.Csapatok![1] == "") return;
@@ -133,40 +134,39 @@ export class RRBracketComponent implements OnInit {
         this.saveCache();
       }
       else{//HA CSOPORTOS JÁTÉK VAN
-        this.updateGroups(updatedMatch.Csapatok[0], updatedMatch.Csapatok[1], updatedMatch.Gyoztes);
+        this.updateGroups(updatedMatch);
         this.groupsChange.emit({groups: this.groups, matches:this.matches});
       }
       this.loadPlayerStats();
       this.giveEffects();
     })
   }
-  updateGroups(p1:string, p2:string, winner:string){
+  updateGroups(updatedMatch:Match){
+    let p1 = updatedMatch.Csapatok[0];
+    let p2 = updatedMatch.Csapatok[1];
+    let winner = updatedMatch.Gyoztes;
+    let diff = 0;
+    if(updatedMatch.score0!=null && updatedMatch.score1!=null){
+      diff = Math.abs(updatedMatch.score0-updatedMatch.score1);
+    }
     this.groups.forEach(group=>{
       group.teams.forEach(team=>{
         if(team.name == p1 || team.name == p2){
           if(team.name == winner){
             team.wins+=1;
             team.points+=3;
-            if(team.last3Results.length > 0){
-              team.last3Results.unshift('W');
-              if(team.last3Results.length > 3){
-                team.last3Results.pop();
-              }
-            }
-            else{
-              team.last3Results = ['W']
+            team.last3Results.unshift('W');
+            team.diff += diff
+            if(team.last3Results.length > 3){
+              team.last3Results.pop();
             }
           }
           else{
             team.loses+=1;
-            if(team.last3Results.length > 0){
-              team.last3Results.unshift('L');
-              if(team.last3Results.length > 3){
-                team.last3Results.pop();
-              }
-            }
-            else{
-              team.last3Results = ['L']
+            team.diff -= diff
+            team.last3Results.unshift('L');
+            if(team.last3Results.length > 3){
+              team.last3Results.pop();
             }
           }
         }

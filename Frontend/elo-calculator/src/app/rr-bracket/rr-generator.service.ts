@@ -43,7 +43,9 @@ export class RRGeneratorService {
           Gyoztes: '',
           Meccs_id: roundNumber*p_count/2 + gameNumber,
           bye: false,
-          bottom: 0
+          bottom: 0,
+          score0:null,
+          score1:null
         }
         if(input[gameNumber] == ''){
           newGame.Gyoztes = input[p_count-1-gameNumber];
@@ -82,7 +84,9 @@ export class RRGeneratorService {
             Meccs_id: match_ID,
             bye: false,
             bottom: 0,
-            groupName: group.groupName
+            groupName: group.groupName,
+            score0: null,
+            score1: null
           }
           match_ID++
           if(input[gameNumber] == ''){

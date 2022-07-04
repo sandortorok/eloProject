@@ -10,10 +10,10 @@ export interface Match{
   Meccs_id: number,
   bye: boolean,
   bottom: number,
+  score0: number | null,
+  score1: number | null,
   loser?: boolean;
   final?: boolean;
-  score0?: number | null,
-  score1?: number | null,
   losersFrom?: number[];
   groupName?:string;
   gameName?:string;
@@ -46,6 +46,7 @@ export interface GroupPlayer{
   draws:number;
   points:number;
   last3Results:string[];
+  diff:number
 }
 @Injectable({
   providedIn: 'root'

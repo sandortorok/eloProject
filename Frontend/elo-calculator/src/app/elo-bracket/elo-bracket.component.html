@@ -92,7 +92,7 @@
                 <th>Pont</th>
                 <th>Játszott Meccsek</th>
             </tr>
-            <tr *ngFor="let player of players | sort: 'rating'; let i = index">
+            <tr *ngFor="let player of players | sort: ['rating']; let i = index">
                 <td>{{i+1}}.</td>
                 <td>{{player.name}}</td>
                 <td>{{player.rating | number: '1.0-0'}}</td>

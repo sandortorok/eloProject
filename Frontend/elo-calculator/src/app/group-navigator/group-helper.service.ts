@@ -42,7 +42,8 @@ export class GroupHelperService {
         loses: MYSQL_OBJECT.loses,
         draws: MYSQL_OBJECT.draws,
         points: MYSQL_OBJECT.points,
-        last3Results: MYSQL_OBJECT.last3Results.split("")
+        last3Results: MYSQL_OBJECT.last3Results.split(""),
+        diff: MYSQL_OBJECT.diff
       }
       if(newGroup.groupName == ''){
         newGroup.groupName = MYSQL_OBJECT.groupName;

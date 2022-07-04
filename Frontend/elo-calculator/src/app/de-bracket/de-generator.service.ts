@@ -69,7 +69,7 @@ export class DEGeneratorService {
       RoundNumber++;
       for (let i = 0; i < Meccsek_Száma; i++) {
         let newGame:Match = {Meccs_id: matchID, loser: false, bye: false, final:false,
-          Gyoztes: "", Round: RoundNumber, score1: null, nextRoundID: nextRoundID, Csapatok: [], bottom: 0}
+          Gyoztes: "", Round: RoundNumber,score0:null, score1: null, nextRoundID: nextRoundID, Csapatok: [], bottom: 0}
 
         let teams: string[] = [];
         if(matchesAdded != 2){

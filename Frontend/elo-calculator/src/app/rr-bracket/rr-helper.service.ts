@@ -38,7 +38,9 @@ export class RRHelperService {
       let newMatch:Match = {
         Csapatok: [match.player1, match.player2], Gyoztes: match.winner, bye: match.bye, Meccs_id: match.match_ID, Round: match.round,
         nextRoundID: -1,
-        bottom: 0
+        bottom: 0,
+        score0: match.score1,
+        score1: match.score2
       };
       if(match.groupName){
         newMatch['groupName'] = match.groupName;

@@ -222,7 +222,7 @@ app.post('/rrgame', (req, res) => {
     let gameName = req.body.name;
     let gameType = req.body.type;
     let groupMode = req.body.groupMode;
-    let sql = 'REPLACE INTO RRMatches (gameName, winner, player1, player2, round, bye, match_ID, gameType, groupMode, groupName) VALUES '
+    let sql = 'REPLACE INTO RRMatches (gameName, winner, player1, player2, round, bye, match_ID, gameType, groupMode, groupName, score1, score2) VALUES '
     let first = true;
     let groupName = ""
     for (el of msg){
@@ -232,13 +232,15 @@ app.post('/rrgame', (req, res) => {
         let match_ID = el.Meccs_id;
         let round = el.Round;
         let bye = el.bye;
+        let score1 = el.score0;
+        let score2 = el.score1;
         if(groupMode){
             groupName = el.groupName;
         }
         if(first){first = false;}
         else{sql += ','}
         sql += `('${gameName}', "${winner}","${player1}",
-            "${player2}", ${round}, ${bye}, ${match_ID}, '${gameType}', ${groupMode}, '${groupName}')`;
+            "${player2}", ${round}, ${bye}, ${match_ID}, '${gameType}', ${groupMode}, '${groupName}', ${score1}, ${score2})`;
     }
     if(!first){
         let query = pool.query(sql, (err, result) => {
@@ -282,7 +284,7 @@ app.post('/groupstage', (req, res) => {
     let gameType = req.body.type;
     let sqlGroup = 'REPLACE INTO groupStage (gameName, qualifyNumber, gameType) VALUES '
     let groupFirst = true;
-    let sqlPlayer = 'REPLACE INTO groupPlayers (playerName, wins, loses, draws, points, last3Results, gameName, groupName) VALUES '
+    let sqlPlayer = 'REPLACE INTO groupPlayers (playerName, wins, loses, draws, points, last3Results, gameName, groupName, diff) VALUES '
     let playerFirst = true;
     for (el of msg){
         let groupName = el.groupName;
@@ -298,13 +300,14 @@ app.post('/groupstage', (req, res) => {
             let draws = t.draws;
             let points = t.points;
             let last3Results = "";
+            let diff = t.diff;
             for(char of t.last3Results){
                 last3Results+=char;
             }
             if(playerFirst){playerFirst = false;}
             else{sqlPlayer += ','}
             sqlPlayer+=`('${playerName}', "${wins}","${loses}",
-            "${draws}", ${points}, '${last3Results}', '${gameName}', '${groupName}')`
+            "${draws}", ${points}, '${last3Results}', '${gameName}', '${groupName}', ${diff})`
         }
     }
     if(!groupFirst){

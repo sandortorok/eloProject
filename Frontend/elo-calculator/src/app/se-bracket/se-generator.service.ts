@@ -62,7 +62,9 @@ export class SEGeneratorService {
         Gyoztes: '',
         Meccs_id: 0,
         bye: false,
-        bottom: 0
+        bottom: 0,
+        score0:null,
+        score1:null
       };
       
       let teams: string[] = [];

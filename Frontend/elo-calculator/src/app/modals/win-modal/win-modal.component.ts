@@ -10,8 +10,8 @@ import { Match } from "src/app/services/data.service";
 export class WinModal {
     @Output() updateEvent = new EventEmitter<Match>();
     @Input() match: Match;
-    score1 = null;
-    score2 = null;
+    score1:number = 0;
+    score2:number = 0;
     selPlayer = "Győztes"
     playerSelected: boolean = false;
     clicked:number = 0;
@@ -23,6 +23,13 @@ export class WinModal {
     updateWinner() {
       if (this.selPlayer == "Győztes") return;
       if (this.clicked > 0) return;
+      let p1 = this.match.Csapatok[0];
+      let p2 = this.match.Csapatok[1];
+      if(this.selPlayer == p1 && this.score2 > this.score1) return;
+      if(this.selPlayer == p2 && this.score2 < this.score1) return;
+      if(this.score1 == 0 && this.score2 == 0) return;
+      this.match.score0 = this.score1;
+      this.match.score1 = this.score2;
       this.match.Gyoztes = this.selPlayer;
       this.updateEvent.emit(this.match);
       this.activeModal.close();

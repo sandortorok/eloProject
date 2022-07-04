@@ -10,15 +10,17 @@
                 <th>W</th>
                 <th>D</th>
                 <th>L</th>
+                <th>DIFF</th>
                 <th>PTS</th>
                 <th>LAST3</th>
             </tr>
-            <tr *ngFor="let player of group.teams | sort:'points'; let i = index" [ngClass] = "(i+1 > group.qualifyNumber)? 'pos': 'wpos'">
+            <tr *ngFor="let player of group.teams | sort:['points', 'diff']; let i = index" [ngClass] = "(i+1 > group.qualifyNumber)? 'pos': 'wpos'">
                 <td>{{i+1}}</td>
                 <td>{{player.name}}</td>
                 <td>{{player.wins}}</td>
                 <td>{{player.draws}}</td>
                 <td>{{player.loses}}</td>
+                <td>{{player.diff}}</td>
                 <td>{{player.points}}</td>
                 <td>{{player.last3Results}}</td>
             </tr>
