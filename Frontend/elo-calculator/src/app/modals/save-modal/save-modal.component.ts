@@ -1,6 +1,7 @@
 import { HttpService } from '../../services/http.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Group, Match } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-save-modal',
@@ -12,7 +13,8 @@ export class SaveModal implements OnInit {
   gameType:string;
   @Output() saveEvent = new EventEmitter<string>();
 
-  matches:any[]; // or groups
+  matches:Match[]; // or groups
+  groups:Group[];
   placeholder:string = "Bajnokság neve";
   saveMode:string = "single-elimination";
   constructor(public activeModal: NgbActiveModal, private httpservice: HttpService) {    }

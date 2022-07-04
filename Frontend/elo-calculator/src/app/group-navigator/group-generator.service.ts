@@ -9,7 +9,7 @@ export class GroupGeneratorService {
   GeneratedGroups:Group[] = [];
   exampleTeams:string[] = []
   @Output() generated = new EventEmitter();
-  startGenerating(gameType: string = 'example', players?: string[]){
+  startGenerating(gameType: string = 'example', players: string[], groupSize?:number, qualifyNumber?:number){
     let players_length = 16;
     if (players == undefined){}
     switch (gameType){
@@ -21,7 +21,7 @@ export class GroupGeneratorService {
         }, 1000);
         break;
       case 'withNames':
-        this.generateGroups(players!);
+        this.generateGroups(players, groupSize, qualifyNumber);
         setTimeout(() => {
           this.generated.emit();
         }, 1000);

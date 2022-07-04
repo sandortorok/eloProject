@@ -140,6 +140,10 @@ addEloGame(body){
     return this.http.get(this.url+ '/groupstage/'+name)
       .pipe(catchError(this.handleError));
   }
+  getGroupStages(){
+    return this.http.get(this.url+ '/groupstages')
+      .pipe(catchError(this.handleError));
+  }
   getGroupStageNames(){
     return this.http.get(this.url+ '/groupstage/names')
       .pipe(catchError(this.handleError));

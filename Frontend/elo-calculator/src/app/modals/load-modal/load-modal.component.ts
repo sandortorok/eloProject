@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Match } from 'src/app/services/data.service';
+import { Group, Match } from 'src/app/services/data.service';
 import { HttpService } from 'src/app/services/http.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class LoadModal implements OnInit {
   gameType: string;
   loadMode = "single-elimination"
   @Output() loadEvent = new EventEmitter<Object>();
-  
+  @Output() loadGroupEvent = new EventEmitter<Object>();
   constructor(public activeModal: NgbActiveModal, private httpservice: HttpService) {    }
   load() {
     if (this.selGame == "Bajnokság neve") return;
@@ -81,6 +81,9 @@ export class LoadModal implements OnInit {
           this.loadEvent.emit({matches:matches, name: this.selGame})
         });
         break;
+      case 'group-stage':
+        this.loadGroupEvent.emit({name: this.selGame})
+        break;
     }
 
     this.activeModal.close();
@@ -105,6 +108,7 @@ export class LoadModal implements OnInit {
       this.httpservice.getDEMatches()
       .subscribe(data =>{
         let myarray = Object.values(data);
+        console.log(myarray);
         myarray.forEach(el =>{
           if (!this.names.includes(el.gameName) && el.gameType == this.gameType){
             this.names.push(el.gameName);
@@ -116,6 +120,19 @@ export class LoadModal implements OnInit {
       this.httpservice.getRRMatches()
       .subscribe(data =>{
         let myarray = Object.values(data);
+        console.log(myarray);
+        myarray.forEach(el =>{
+          if (!this.names.includes(el.gameName) && el.gameType == this.gameType){
+            this.names.push(el.gameName);
+          }
+        })
+      })
+    }
+    if(this.loadMode == 'group-stage'){
+      this.httpservice.getGroupStages()
+      .subscribe(data =>{
+        let myarray = Object.values(data);
+        console.log(myarray);
         myarray.forEach(el =>{
           if (!this.names.includes(el.gameName) && el.gameType == this.gameType){
             this.names.push(el.gameName);

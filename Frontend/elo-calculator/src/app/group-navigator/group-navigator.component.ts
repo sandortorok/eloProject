@@ -7,6 +7,8 @@ import { SaveModal } from 'src/app/modals/save-modal/save-modal.component';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { RRHelperService } from 'src/app/rr-bracket/rr-helper.service';
 import { RRGeneratorService } from 'src/app/rr-bracket/rr-generator.service';
+import { LoadModal } from '../modals/load-modal/load-modal.component';
+import { NewModal } from '../modals/new-modal/new-modal.component';
 
 @Component({
   selector: 'app-group-navigator',
@@ -41,17 +43,29 @@ export class GroupNavigatorComponent implements OnInit {
     this.groupHelper.loadCache(this.gameType);
   }
   onNewGroup() {
-    this.groups = []
-    this.generator.startGenerating('example');
+    const modalRef = this.modalService.open(NewModal, { centered: true });
+    modalRef.componentInstance.groupMode = true;
+    modalRef.componentInstance.generateEvent.subscribe((obj)=>{
+      this.groups = [];
+      this.matches = [];
+      this.generator.startGenerating('withNames', obj.players, obj.groupSize, obj.qualifyNumber);
+    })
   }
-  onLoad() {
-
+  onLoad(){
+    const modalRef = this.modalService.open(LoadModal, { centered: true });
+    modalRef.componentInstance.matches = this.matches;
+    modalRef.componentInstance.gameType = this.gameType;
+    modalRef.componentInstance.loadMode = 'group-stage';
+    modalRef.componentInstance.loadGroupEvent.subscribe((loadData:{name:string})=>{
+      this.gameName = loadData.name;
+      this.groupHelper.loadGroup(this.gameName);
+    })
   }
   onSave() {
     if (this.groups == undefined) return;
     if (this.groups.length < 1) return;
     const modalRef = this.modalService.open(SaveModal, { centered: true });
-    modalRef.componentInstance.matches = this.groups;
+    modalRef.componentInstance.matches = [];
     modalRef.componentInstance.saveMode = 'group-stage';
     modalRef.componentInstance.gameType = this.gameType;
     if (this.gameName != '') modalRef.componentInstance.IN_gameID = this.gameName;

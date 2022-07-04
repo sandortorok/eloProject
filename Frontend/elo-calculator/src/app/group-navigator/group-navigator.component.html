@@ -21,14 +21,18 @@
     <li [ngbNavItem] = "1">
         <a ngbNavLink>GROUPS</a>
         <ng-template ngbNavContent>
-            <app-group-bracket [groups]="groups" (groupChange)="groups = $event">
+            <app-group-bracket
+                [groups]="groups" 
+                (groupChange)="groups = $event">
             </app-group-bracket>
         </ng-template>
     </li>
     <li [ngbNavItem] = "2" >
         <a ngbNavLink>Matches</a>
         <ng-template ngbNavContent>
-            <app-rr-bracket [groupMode]="true" [groups]="groups" 
+            <app-rr-bracket 
+                [groupMode]="true" 
+                [groups]="groups" 
                 (groupsChange)="RRBracketUpdate($event)" 
                 [matches]="matches">
             </app-rr-bracket>

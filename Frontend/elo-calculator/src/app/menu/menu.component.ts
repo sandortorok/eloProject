@@ -30,6 +30,9 @@ export class MenuComponent implements OnInit {
         if (type == 'group-stage'){
           this.bracketnav.select(1);
         }
+        if (type == 'elo-system'){
+          this.bracketnav.select(5);
+        }
       }
     })
   }

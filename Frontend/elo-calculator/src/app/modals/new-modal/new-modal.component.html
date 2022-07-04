@@ -4,6 +4,15 @@
     <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
 </div>
 <div class="modal-body">
+    <div *ngIf="groupMode" style="margin-bottom: 1rem; border-bottom: 1px solid #444;">
+        <h4 style="margin-bottom: 5%;">Group Mode</h4>
+        <p style="margin-bottom: 10px">qualifyNumber</p>
+        <input type="number" style="width: 50%; display: inline-block; margin-bottom: 1rem"
+                    class="form-control" min="1" max="10" [(ngModel)] = "qualifyNumber"/>
+        <p style="margin-bottom: 10px">Group Size</p>
+        <input type="number" style="width: 50%; display: inline-block; margin-bottom: 1rem;"
+                    class="form-control" min="1" max="10" [(ngModel)] = "groupSize"/>
+    </div>
     <h4 style="margin-bottom: 5%;">Random játékosnevek</h4>
     <p style="margin-bottom: 10px">Játékosok száma</p>
     <div class="wrap">

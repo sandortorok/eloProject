@@ -79,3 +79,51 @@ table .col{
 		padding: 5px;
 	}
 }
+@media print {
+    ::ng-deep .myheader>*{
+        display:none
+    }
+    ::ng-deep .arrow-container{
+        display:none
+    }
+    .btn-wrapper {
+      display: none;
+    }
+    .team{
+        opacity: 1 !important;
+        border:2px solid black;
+        border-color: black !important;
+    }
+    .hero{
+        display:none;
+    }
+    ::ng-deep body{
+        background-color: white !important;
+    }
+    #bracket{
+        background-color: white !important;
+    }
+    .split-wrap{
+        background-color: white !important;
+        border-color: black !important;
+    }
+    h1{
+        color:black !important;
+    }
+    .scoreBoard{
+        background-color: white !important;
+        border-color: black !important;
+    }
+	.ptable{
+		border-color: black !important;
+	}
+	th{
+		color: black;
+	}
+	.headin{
+		color: black;
+	}
+	table .col{
+		border-bottom: 1px solid black;
+	}
+}

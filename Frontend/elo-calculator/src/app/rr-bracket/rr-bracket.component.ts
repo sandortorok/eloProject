@@ -1,5 +1,5 @@
 import { RRHelperService } from './rr-helper.service';
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LoadModal } from '../modals/load-modal/load-modal.component';
 import { WinModal } from '../modals/win-modal/win-modal.component';
@@ -23,6 +23,11 @@ export interface playerScore{
 export class RRBracketComponent implements OnInit {
   @ViewChild('container') container;
   @Input() matches: Match[];
+  ngOnChanges(changes: SimpleChanges) {
+    if(changes['matches'] != undefined){
+      this.giveEffects();
+    }
+  }
   @Input() gameType:string;
   gameName:string = "";
   players:playerScore[] = [];
@@ -204,9 +209,9 @@ export class RRBracketComponent implements OnInit {
     }
     else{      
       const modalRef = this.modalService.open(NewModal, { centered: true });
-      modalRef.componentInstance.generateEvent.subscribe((players)=>{
+      modalRef.componentInstance.generateEvent.subscribe((obj)=>{
         this.matches = [];
-        this.bracket.startGenerating('withNames', players=players);
+        this.bracket.startGenerating('withNames', obj.players);
       })
     }
   }

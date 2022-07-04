@@ -329,7 +329,10 @@ app.get('/groupstage/:name', (req, res) => {
     `;
     runQuery(sql, res);
 })
-
+app.get('/groupstages', (req, res) => {
+    let sql = `SELECT * FROM groupStage`;
+    runQuery(sql, res);
+})
 
 
 

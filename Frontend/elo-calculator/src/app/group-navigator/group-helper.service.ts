@@ -25,8 +25,13 @@ export class GroupHelperService {
       })
     })
   }
+  loadGroup(gameName:string){
+    if(gameName == "") return;
+    this.httpservice.getGroupStage(gameName).subscribe(data=>{
+      this.loadGroupsFromDataObject(data, gameName);
+    })
+  }
   loadGroupsFromDataObject(data, gameName:string){
-    console.log(data);
     let groups:Group[] = []
     let myarray = Object.values(data);
     let newGroup:Group = {groupName: '',teams: [], qualifyNumber: 0}

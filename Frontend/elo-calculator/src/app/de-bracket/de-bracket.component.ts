@@ -107,9 +107,9 @@ export class DEBracketComponent implements OnInit {
   }
   onNewBracket(){
     const modalRef = this.modalService.open(NewModal, { centered: true });
-    modalRef.componentInstance.generateEvent.subscribe((players)=>{
+    modalRef.componentInstance.generateEvent.subscribe((obj)=>{
       this.matches = [];
-      this.bracket.startGenerating('withNames', players=players)
+      this.bracket.startGenerating('withNames', obj.players)
     })
   }
   onSave(){

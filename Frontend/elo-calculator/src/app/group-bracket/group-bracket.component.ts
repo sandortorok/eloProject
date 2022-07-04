@@ -18,7 +18,4 @@ export class GroupBracketComponent implements OnInit {
   ngOnInit(): void {
 
   }
-
-
-
 }

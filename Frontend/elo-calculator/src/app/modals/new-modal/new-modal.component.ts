@@ -10,7 +10,10 @@ export class NewModal {
   playerInput: string = "";
   players:string[] = [];
   numInput: number = 1;
-  @Output() generateEvent = new EventEmitter<string[]>();
+  qualifyNumber:number = 2;
+  groupSize:number = 4;
+  groupMode:boolean = false;
+  @Output() generateEvent = new EventEmitter<{players: string[], qualifyNumber?: number, groupSize?:number}>();
   @ViewChild('list') private scrollUL: ElementRef;
 
   scrollToBottom(): void {
@@ -20,7 +23,6 @@ export class NewModal {
       console.log(err);
     }                 
   }
-  
   constructor(public activeModal: NgbActiveModal) {}
   addPlayer(){
     if (this.playerInput == "") return;
@@ -40,12 +42,20 @@ export class NewModal {
       randPlayers.push(`Játékos ${i+1}`);
     }
     this.shuffle(randPlayers)
-    this.generateEvent.emit(randPlayers);
+    this.generateEvent.emit({
+      players: randPlayers,
+      qualifyNumber:this.qualifyNumber,
+      groupSize:this.groupSize
+    });
     this.activeModal.close();
   }
   generateCustom(){
     this.shuffle(this.players)
-    this.generateEvent.emit(this.players);
+    this.generateEvent.emit({
+      players: this.players,
+      qualifyNumber: this.qualifyNumber,
+      groupSize: this.groupSize
+    });
     this.activeModal.close();
   }
   //COPY PASTE FROM STACK OVERFLOW
