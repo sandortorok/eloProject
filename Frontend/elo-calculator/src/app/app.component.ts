@@ -1,5 +1,6 @@
+import { User, UserService } from './services/user-service.service';
 import { Component } from '@angular/core';
-import { DataService } from './services/data.service';
+import { NgbNav } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-root',
@@ -8,10 +9,15 @@ import { DataService } from './services/data.service';
 })
 export class AppComponent {
   title = 'elo-calculator';
-  constructor(private data: DataService){
+  navigator:NgbNav;
+  constructor(private userservice: UserService){
 
   }
-  openTabs(user){
-    
+  login(user: User){
+    this.userservice.loggedUser = user
+    this.userservice.userChanged.emit();
+  }
+  logout(){
+    // this.userservice.loggedUser = undefined;
   }
 }

@@ -10,13 +10,13 @@
     <li [ngbNavItem] = "1">
         <a ngbNavLink>GROUPS</a>
         <ng-template ngbNavContent>
-            <app-login-form (loginEvent)="loginNav.select(2)" (loginEvent)="openTabs($event)"></app-login-form>
+            <app-login-form (loginEvent)="loginNav.select(2)" (loginEvent)="login($event)"></app-login-form>
         </ng-template>
     </li>
     <li [ngbNavItem] = "2" >
         <a ngbNavLink>Matches</a>
         <ng-template ngbNavContent>
-            <app-tabs></app-tabs>
+            <app-tabs (logoutEvent)="loginNav.select(1)"></app-tabs>
         </ng-template>
     </li>
 </ul>
@@ -24,3 +24,4 @@
 <div [ngbNavOutlet]="loginNav" class="items"></div>
 
 <router-outlet></router-outlet>
+<!-- <app-tabs></app-tabs> -->

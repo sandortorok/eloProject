@@ -1,7 +1,11 @@
+
+<div class="logout">
+    <p style="text-align: center;">{{user?.username}}</p>
+    <button class="bn29" (click)="logoutEvent.emit()">LOGOUT</button>
+</div>
 <button class="myheader" (click)="mynav.select(0)">
     <img src="assets/header3.png">
 </button>
-
 <ul ngbNav #mynav="ngbNav" style="display: none;">
     <li [ngbNavItem] = "0">
         <a ngbNavLink>HOME</a>

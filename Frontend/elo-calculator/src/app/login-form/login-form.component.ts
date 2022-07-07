@@ -1,15 +1,6 @@
+import { HttpService } from 'src/app/services/http.service';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-
-enum Privilege {
-  Admin,
-  Normal,
-  Guest
-}
-export interface User{
-  username:string;
-  password:string;
-  privilegeType:Privilege //admin,normal,guest
-}
+import { User, Privilege } from '../services/user-service.service';
 
 @Component({
   selector: 'app-login-form',
@@ -26,11 +17,11 @@ export class LoginFormComponent implements OnInit {
   loading = false;
   @Output() loginEvent = new EventEmitter<User>();
 
-  constructor() { }
+  constructor(private httpservice:HttpService) { }
 
   ngOnInit(): void {
   }
-  usernameKeydown(){
+  userFocusCheck(){
     if(this.username == ""){
       this.usernameError = true;
       this.usernameErrorMessage = "Username is required"
@@ -39,7 +30,15 @@ export class LoginFormComponent implements OnInit {
       this.usernameError = false;
     }
   }
-  passwordKeydown(){
+  userKeydownCheck(key:KeyboardEvent){
+    if (key.key=='Enter') return;
+    setTimeout(() => { //need to wait a little or username doesn't update
+      if(this.username != ""){
+        this.usernameError = false;
+      }
+    });
+  }
+  passFocusCheck(){
     if(this.password == ""){
       this.passwordError = true;
       this.passwordErrorMessage = "Password is required"
@@ -48,29 +47,48 @@ export class LoginFormComponent implements OnInit {
       this.passwordError = false;
     }
   }
-  login(){
-    this.loading = true;
+  passKeydownCheck(){
     setTimeout(() => {
-      if(this.username == 'sanyi' && this.password == 'jelszo'){
-        this.usernameError = false;
+      if(this.password != ""){
         this.passwordError = false;
-        this.loginEvent.emit({username:this.username, password: this.password, privilegeType: Privilege.Admin})
+      }
+    });
+  }
+  login(){
+    if(this.username == ""){
+      this.userFocusCheck();
+      return;
+    }
+    if(this.password == ""){
+      this.passFocusCheck();
+      return;
+    }
+    this.loading = true;
+    this.httpservice.getUser(this.username).subscribe(response=>{
+      let myarray = Object.values(response);
+      if(myarray.length == 0){
+        this.validationFailed();
       }
       else{
-        this.usernameError = true;
-        this.usernameErrorMessage = "Wrong username or password"
-        this.passwordError = true;
-        this.passwordErrorMessage = "Wrong username or password"
+        let responseUser = myarray[0]
+        if(responseUser.password == this.password){
+          console.log({username:responseUser.displayName, privilegeType:responseUser.privilegeType});
+          this.loginEvent.emit({username:responseUser.displayName, privilegeType:responseUser.privilegeType})
+        }
+        else{
+          this.validationFailed();
+        }
       }
-      this.loading = false;
-    }, 2000);
+    })
   }
   guestLogin(){
-    console.log(this.username, this.password);
-    this.loading = true;
-    setTimeout(() => {
-      this.loading = false;
-    }, 2000);
+    this.loginEvent.emit({username:'Guest', privilegeType: Privilege.Guest})
   }
-
+  validationFailed(){
+    this.usernameError = true;
+    this.usernameErrorMessage = "Wrong username or password"
+    this.passwordError = true;
+    this.passwordErrorMessage = "Wrong username or password"
+    this.loading = false;
+  }
 }

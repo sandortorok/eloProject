@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Privilege, User, UserService } from './../services/user-service.service';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { SEGeneratorService } from '../se-bracket/se-generator.service';
 
 @Component({
@@ -7,10 +8,14 @@ import { SEGeneratorService } from '../se-bracket/se-generator.service';
   styleUrls: ['./tabs.component.scss']
 })
 export class TabsComponent implements OnInit {
-
-  constructor(a: SEGeneratorService) { }
+  @Output() logoutEvent = new EventEmitter();
+  user:User;
+  constructor(private userservice: UserService) { }
 
   ngOnInit(): void {
+    this.userservice.userChanged.subscribe(()=>{
+      this.user = this.userservice.loggedUser
+    });
   }
 
 }

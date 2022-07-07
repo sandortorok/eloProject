@@ -337,6 +337,11 @@ app.get('/groupstages', (req, res) => {
     runQuery(sql, res);
 })
 
+app.get('/user/:name', (req, res) => {
+    let sql = `SELECT * FROM users WHERE username = '${req.params.name}'`;
+    runQuery(sql, res);
+})
+
 
 
 
