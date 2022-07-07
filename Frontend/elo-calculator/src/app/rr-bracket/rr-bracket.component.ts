@@ -33,7 +33,7 @@ export class RRBracketComponent implements OnInit {
   players:playerScore[] = [];
 
   //GROUP STUFF
-  @Input() groupMode:boolean= false;
+  @Input() groupMode:boolean = false;
   @Input() groups:Group[] = [];
   @Output() groupsChange = new EventEmitter<{groups: Group[], matches: Match[]}>();
   

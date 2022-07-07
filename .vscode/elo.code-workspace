@@ -1,0 +1,17 @@
+{
+	"folders": [
+        {
+            "path": "../Frontend/elo-calculator"
+        },
+        {
+            "path":"../Backend"
+        },
+        {
+            "path": "../nestjs"
+        }
+    ],
+    "settings": {
+        "vsicons.presets.angular": true,
+    },
+    
+}

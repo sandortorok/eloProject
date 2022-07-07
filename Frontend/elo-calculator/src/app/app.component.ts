@@ -11,4 +11,7 @@ export class AppComponent {
   constructor(private data: DataService){
 
   }
+  openTabs(user){
+    
+  }
 }

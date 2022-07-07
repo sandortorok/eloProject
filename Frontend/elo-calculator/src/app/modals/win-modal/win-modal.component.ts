@@ -23,6 +23,7 @@ export class WinModal {
     updateWinner() {
       if (this.selPlayer == "Győztes") return;
       if (this.clicked > 0) return;
+      if (this.score1 > 100 || this.score2 > 100 || this.score1 < 0 || this.score2 < 0) return;
       let p1 = this.match.Csapatok[0];
       let p2 = this.match.Csapatok[1];
       if(this.selPlayer == p1 && this.score2 > this.score1) return;

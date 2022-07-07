@@ -30,6 +30,8 @@ import { CommonModule } from '@angular/common';
 import { GroupNavigatorComponent } from './group-navigator/group-navigator.component';
 import { GroupPipe } from './pipes/group.pipe';
 import { GroupNamePipe } from './pipes/group-name.pipe';
+import { LoginFormComponent } from './login-form/login-form.component';
+
 
 @NgModule({
   declarations: [
@@ -56,6 +58,8 @@ import { GroupNamePipe } from './pipes/group-name.pipe';
     GroupNavigatorComponent,
     GroupPipe,
     GroupNamePipe,
+    LoginFormComponent,
+
   ],
   imports: [
     BrowserModule,

@@ -51,7 +51,7 @@ CREATE TABLE `DEMatches` (
   `loserFrom2` int DEFAULT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `unique_idx` (`gameName`,`match_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2788 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2943 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -60,7 +60,7 @@ CREATE TABLE `DEMatches` (
 
 LOCK TABLES `DEMatches` WRITE;
 /*!40000 ALTER TABLE `DEMatches` DISABLE KEYS */;
-INSERT INTO `DEMatches` VALUES (2726,'mokk2','Játékos 9',0,'Játékos 9','',1,1,1,NULL,'dekázás',0,8,NULL,0,0,-1,-1),(2727,'mokk2','Játékos 10',0,'Játékos 10','',1,1,1,NULL,'dekázás',1,8,NULL,1,0,-1,-1),(2728,'mokk2','Játékos 6',0,'Játékos 6','',1,1,1,NULL,'dekázás',0,9,NULL,2,0,-1,-1),(2729,'mokk2','Játékos 1',0,'Játékos 1','',1,1,1,NULL,'dekázás',1,9,NULL,3,0,-1,-1),(2730,'mokk2','Játékos 2',0,'Játékos 2','',1,1,1,NULL,'dekázás',0,10,NULL,4,0,-1,-1),(2731,'mokk2','Játékos 4',0,'Játékos 4','',1,1,1,NULL,'dekázás',1,10,NULL,5,0,-1,-1),(2732,'mokk2','',0,'Játékos 5','Játékos 7',1,0,NULL,NULL,'dekázás',0,11,NULL,6,0,-1,-1),(2733,'mokk2','',0,'Játékos 8','Játékos 3',1,0,NULL,NULL,'dekázás',1,11,NULL,7,0,-1,-1),(2734,'mokk2','Játékos 9',0,'Játékos 9','Játékos 10',2,0,NULL,NULL,'dekázás',0,12,NULL,8,0,-1,-1),(2735,'mokk2','',0,'Játékos 6','Játékos 1',2,0,NULL,NULL,'dekázás',1,12,NULL,9,0,-1,-1),(2736,'mokk2','Játékos 2',0,'Játékos 2','Játékos 4',2,0,NULL,NULL,'dekázás',0,13,NULL,10,0,-1,-1),(2737,'mokk2','',0,'','',2,0,NULL,NULL,'dekázás',1,13,NULL,11,0,-1,-1),(2738,'mokk2','',0,'Játékos 9','',3,0,NULL,NULL,'dekázás',0,14,NULL,12,0,-1,-1),(2739,'mokk2','',0,'Játékos 2','',3,0,NULL,NULL,'dekázás',1,14,NULL,13,0,-1,-1),(2740,'mokk2','',0,'','',4,0,NULL,NULL,'dekázás',0,29,NULL,14,0,-1,-1),(2741,'mokk2','',1,'','',1,1,NULL,NULL,'dekázás',0,19,NULL,15,0,-1,-1),(2742,'mokk2','',1,'','',1,1,NULL,NULL,'dekázás',1,20,NULL,16,0,-1,-1),(2743,'mokk2','',1,'','',1,1,NULL,NULL,'dekázás',1,21,NULL,17,0,-1,-1),(2744,'mokk2','',1,'Loser of 6','Loser of 7',1,0,NULL,NULL,'dekázás',1,22,NULL,18,0,6,7),(2745,'mokk2','Loser of 11',1,'Loser of 11','',2,0,NULL,NULL,'dekázás',0,23,NULL,19,0,11,-1),(2746,'mokk2','Játékos 4',1,'Játékos 4','',2,0,NULL,NULL,'dekázás',1,23,NULL,20,0,10,-1),(2747,'mokk2','Loser of 9',1,'Loser of 9','',2,0,NULL,NULL,'dekázás',0,24,NULL,21,0,9,-1),(2748,'mokk2','',1,'Játékos 10','',2,0,NULL,NULL,'dekázás',1,24,NULL,22,0,8,-1),(2749,'mokk2','',1,'Loser of 11','Játékos 4',3,0,NULL,NULL,'dekázás',0,25,NULL,23,0,11,10),(2750,'mokk2','',1,'Loser of 9','',3,0,NULL,NULL,'dekázás',1,26,NULL,24,0,9,-1),(2751,'mokk2','',1,'Loser of 13','',4,0,NULL,NULL,'dekázás',0,27,NULL,25,0,13,-1),(2752,'mokk2','',1,'Loser of 12','',4,0,NULL,NULL,'dekázás',1,27,NULL,26,0,12,-1),(2753,'mokk2','',1,'','',5,0,NULL,NULL,'dekázás',0,28,NULL,27,0,-1,-1),(2754,'mokk2','',1,'Loser of 14','',6,0,NULL,NULL,'dekázás',1,29,NULL,28,0,14,-1),(2755,'mokk2','',0,'Winner of Winner\'s Bracket','Winner of Loser\'s Bracket',7,0,NULL,NULL,'dekázás',0,30,NULL,29,1,-1,-1),(2756,'mokk2','',0,'Winner of 29 (if needed)','Loser of 29',8,0,NULL,NULL,'dekázás',0,-1,NULL,30,1,-1,29),(2757,'1w9sa','Játékos 3',0,'Játékos 3','',1,1,1,NULL,'sakk',0,8,NULL,0,0,-1,-1),(2758,'1w9sa','Játékos 1',0,'Játékos 1','',1,1,1,NULL,'sakk',1,8,NULL,1,0,-1,-1),(2759,'1w9sa','Játékos 10',0,'Játékos 10','',1,1,1,NULL,'sakk',0,9,NULL,2,0,-1,-1),(2760,'1w9sa','Játékos 2',0,'Játékos 2','',1,1,1,NULL,'sakk',1,9,NULL,3,0,-1,-1),(2761,'1w9sa','Játékos 9',0,'Játékos 9','',1,1,1,NULL,'sakk',0,10,NULL,4,0,-1,-1),(2762,'1w9sa','Játékos 5',0,'Játékos 5','',1,1,1,NULL,'sakk',1,10,NULL,5,0,-1,-1),(2763,'1w9sa','',0,'Játékos 8','Játékos 6',1,0,NULL,NULL,'sakk',0,11,NULL,6,0,-1,-1),(2764,'1w9sa','',0,'Játékos 7','Játékos 4',1,0,NULL,NULL,'sakk',1,11,NULL,7,0,-1,-1),(2765,'1w9sa','',0,'Játékos 3','Játékos 1',2,0,NULL,NULL,'sakk',0,12,NULL,8,0,-1,-1),(2766,'1w9sa','',0,'Játékos 10','Játékos 2',2,0,NULL,NULL,'sakk',1,12,NULL,9,0,-1,-1),(2767,'1w9sa','',0,'Játékos 9','Játékos 5',2,0,NULL,NULL,'sakk',0,13,NULL,10,0,-1,-1),(2768,'1w9sa','',0,'','',2,0,NULL,NULL,'sakk',1,13,NULL,11,0,-1,-1),(2769,'1w9sa','',0,'','',3,0,NULL,NULL,'sakk',0,14,NULL,12,0,-1,-1),(2770,'1w9sa','',0,'','',3,0,NULL,NULL,'sakk',1,14,NULL,13,0,-1,-1),(2771,'1w9sa','',0,'','',4,0,NULL,NULL,'sakk',0,29,NULL,14,0,-1,-1),(2772,'1w9sa','',1,'','',1,1,NULL,NULL,'sakk',0,19,NULL,15,0,-1,-1),(2773,'1w9sa','',1,'','',1,1,NULL,NULL,'sakk',1,20,NULL,16,0,-1,-1),(2774,'1w9sa','',1,'','',1,1,NULL,NULL,'sakk',1,21,NULL,17,0,-1,-1),(2775,'1w9sa','',1,'Loser of 6','Loser of 7',1,0,NULL,NULL,'sakk',1,22,NULL,18,0,6,7),(2776,'1w9sa','Loser of 11',1,'Loser of 11','',2,0,NULL,NULL,'sakk',0,23,NULL,19,0,11,-1),(2777,'1w9sa','Loser of 10',1,'Loser of 10','',2,0,NULL,NULL,'sakk',1,23,NULL,20,0,10,-1),(2778,'1w9sa','Loser of 9',1,'Loser of 9','',2,0,NULL,NULL,'sakk',0,24,NULL,21,0,9,-1),(2779,'1w9sa','',1,'Loser of 8','',2,0,NULL,NULL,'sakk',1,24,NULL,22,0,8,-1),(2780,'1w9sa','',1,'Loser of 11','Loser of 10',3,0,NULL,NULL,'sakk',0,25,NULL,23,0,11,10),(2781,'1w9sa','',1,'Loser of 9','',3,0,NULL,NULL,'sakk',1,26,NULL,24,0,9,-1),(2782,'1w9sa','',1,'Loser of 13','',4,0,NULL,NULL,'sakk',0,27,NULL,25,0,13,-1),(2783,'1w9sa','',1,'Loser of 12','',4,0,NULL,NULL,'sakk',1,27,NULL,26,0,12,-1),(2784,'1w9sa','',1,'','',5,0,NULL,NULL,'sakk',0,28,NULL,27,0,-1,-1),(2785,'1w9sa','',1,'Loser of 14','',6,0,NULL,NULL,'sakk',1,29,NULL,28,0,14,-1),(2786,'1w9sa','',0,'Winner of Winner\'s Bracket','Winner of Loser\'s Bracket',7,0,NULL,NULL,'sakk',0,30,NULL,29,1,-1,-1),(2787,'1w9sa','',0,'Winner of 29 (if needed)','Loser of 29',8,0,NULL,NULL,'sakk',0,-1,NULL,30,1,-1,29);
+INSERT INTO `DEMatches` VALUES (2726,'mokk2','Játékos 9',0,'Játékos 9','',1,1,1,NULL,'dekázás',0,8,NULL,0,0,-1,-1),(2727,'mokk2','Játékos 10',0,'Játékos 10','',1,1,1,NULL,'dekázás',1,8,NULL,1,0,-1,-1),(2728,'mokk2','Játékos 6',0,'Játékos 6','',1,1,1,NULL,'dekázás',0,9,NULL,2,0,-1,-1),(2729,'mokk2','Játékos 1',0,'Játékos 1','',1,1,1,NULL,'dekázás',1,9,NULL,3,0,-1,-1),(2730,'mokk2','Játékos 2',0,'Játékos 2','',1,1,1,NULL,'dekázás',0,10,NULL,4,0,-1,-1),(2731,'mokk2','Játékos 4',0,'Játékos 4','',1,1,1,NULL,'dekázás',1,10,NULL,5,0,-1,-1),(2732,'mokk2','',0,'Játékos 5','Játékos 7',1,0,NULL,NULL,'dekázás',0,11,NULL,6,0,-1,-1),(2733,'mokk2','',0,'Játékos 8','Játékos 3',1,0,NULL,NULL,'dekázás',1,11,NULL,7,0,-1,-1),(2734,'mokk2','Játékos 9',0,'Játékos 9','Játékos 10',2,0,NULL,NULL,'dekázás',0,12,NULL,8,0,-1,-1),(2735,'mokk2','',0,'Játékos 6','Játékos 1',2,0,NULL,NULL,'dekázás',1,12,NULL,9,0,-1,-1),(2736,'mokk2','Játékos 2',0,'Játékos 2','Játékos 4',2,0,NULL,NULL,'dekázás',0,13,NULL,10,0,-1,-1),(2737,'mokk2','',0,'','',2,0,NULL,NULL,'dekázás',1,13,NULL,11,0,-1,-1),(2738,'mokk2','',0,'Játékos 9','',3,0,NULL,NULL,'dekázás',0,14,NULL,12,0,-1,-1),(2739,'mokk2','',0,'Játékos 2','',3,0,NULL,NULL,'dekázás',1,14,NULL,13,0,-1,-1),(2740,'mokk2','',0,'','',4,0,NULL,NULL,'dekázás',0,29,NULL,14,0,-1,-1),(2741,'mokk2','',1,'','',1,1,NULL,NULL,'dekázás',0,19,NULL,15,0,-1,-1),(2742,'mokk2','',1,'','',1,1,NULL,NULL,'dekázás',1,20,NULL,16,0,-1,-1),(2743,'mokk2','',1,'','',1,1,NULL,NULL,'dekázás',1,21,NULL,17,0,-1,-1),(2744,'mokk2','',1,'Loser of 6','Loser of 7',1,0,NULL,NULL,'dekázás',1,22,NULL,18,0,6,7),(2745,'mokk2','Loser of 11',1,'Loser of 11','',2,0,NULL,NULL,'dekázás',0,23,NULL,19,0,11,-1),(2746,'mokk2','Játékos 4',1,'Játékos 4','',2,0,NULL,NULL,'dekázás',1,23,NULL,20,0,10,-1),(2747,'mokk2','Loser of 9',1,'Loser of 9','',2,0,NULL,NULL,'dekázás',0,24,NULL,21,0,9,-1),(2748,'mokk2','',1,'Játékos 10','',2,0,NULL,NULL,'dekázás',1,24,NULL,22,0,8,-1),(2749,'mokk2','',1,'Loser of 11','Játékos 4',3,0,NULL,NULL,'dekázás',0,25,NULL,23,0,11,10),(2750,'mokk2','',1,'Loser of 9','',3,0,NULL,NULL,'dekázás',1,26,NULL,24,0,9,-1),(2751,'mokk2','',1,'Loser of 13','',4,0,NULL,NULL,'dekázás',0,27,NULL,25,0,13,-1),(2752,'mokk2','',1,'Loser of 12','',4,0,NULL,NULL,'dekázás',1,27,NULL,26,0,12,-1),(2753,'mokk2','',1,'','',5,0,NULL,NULL,'dekázás',0,28,NULL,27,0,-1,-1),(2754,'mokk2','',1,'Loser of 14','',6,0,NULL,NULL,'dekázás',1,29,NULL,28,0,14,-1),(2755,'mokk2','',0,'Winner of Winner\'s Bracket','Winner of Loser\'s Bracket',7,0,NULL,NULL,'dekázás',0,30,NULL,29,1,-1,-1),(2756,'mokk2','',0,'Winner of 29 (if needed)','Loser of 29',8,0,NULL,NULL,'dekázás',0,-1,NULL,30,1,-1,29),(2757,'1w9sa','Játékos 3',0,'Játékos 3','',1,1,1,NULL,'sakk',0,8,NULL,0,0,-1,-1),(2758,'1w9sa','Játékos 1',0,'Játékos 1','',1,1,1,NULL,'sakk',1,8,NULL,1,0,-1,-1),(2759,'1w9sa','Játékos 10',0,'Játékos 10','',1,1,1,NULL,'sakk',0,9,NULL,2,0,-1,-1),(2760,'1w9sa','Játékos 2',0,'Játékos 2','',1,1,1,NULL,'sakk',1,9,NULL,3,0,-1,-1),(2761,'1w9sa','Játékos 9',0,'Játékos 9','',1,1,1,NULL,'sakk',0,10,NULL,4,0,-1,-1),(2762,'1w9sa','Játékos 5',0,'Játékos 5','',1,1,1,NULL,'sakk',1,10,NULL,5,0,-1,-1),(2763,'1w9sa','',0,'Játékos 8','Játékos 6',1,0,NULL,NULL,'sakk',0,11,NULL,6,0,-1,-1),(2764,'1w9sa','',0,'Játékos 7','Játékos 4',1,0,NULL,NULL,'sakk',1,11,NULL,7,0,-1,-1),(2765,'1w9sa','',0,'Játékos 3','Játékos 1',2,0,NULL,NULL,'sakk',0,12,NULL,8,0,-1,-1),(2766,'1w9sa','',0,'Játékos 10','Játékos 2',2,0,NULL,NULL,'sakk',1,12,NULL,9,0,-1,-1),(2767,'1w9sa','',0,'Játékos 9','Játékos 5',2,0,NULL,NULL,'sakk',0,13,NULL,10,0,-1,-1),(2768,'1w9sa','',0,'','',2,0,NULL,NULL,'sakk',1,13,NULL,11,0,-1,-1),(2769,'1w9sa','',0,'','',3,0,NULL,NULL,'sakk',0,14,NULL,12,0,-1,-1),(2770,'1w9sa','',0,'','',3,0,NULL,NULL,'sakk',1,14,NULL,13,0,-1,-1),(2771,'1w9sa','',0,'','',4,0,NULL,NULL,'sakk',0,29,NULL,14,0,-1,-1),(2772,'1w9sa','',1,'','',1,1,NULL,NULL,'sakk',0,19,NULL,15,0,-1,-1),(2773,'1w9sa','',1,'','',1,1,NULL,NULL,'sakk',1,20,NULL,16,0,-1,-1),(2774,'1w9sa','',1,'','',1,1,NULL,NULL,'sakk',1,21,NULL,17,0,-1,-1),(2775,'1w9sa','',1,'Loser of 6','Loser of 7',1,0,NULL,NULL,'sakk',1,22,NULL,18,0,6,7),(2776,'1w9sa','Loser of 11',1,'Loser of 11','',2,0,NULL,NULL,'sakk',0,23,NULL,19,0,11,-1),(2777,'1w9sa','Loser of 10',1,'Loser of 10','',2,0,NULL,NULL,'sakk',1,23,NULL,20,0,10,-1),(2778,'1w9sa','Loser of 9',1,'Loser of 9','',2,0,NULL,NULL,'sakk',0,24,NULL,21,0,9,-1),(2779,'1w9sa','',1,'Loser of 8','',2,0,NULL,NULL,'sakk',1,24,NULL,22,0,8,-1),(2780,'1w9sa','',1,'Loser of 11','Loser of 10',3,0,NULL,NULL,'sakk',0,25,NULL,23,0,11,10),(2781,'1w9sa','',1,'Loser of 9','',3,0,NULL,NULL,'sakk',1,26,NULL,24,0,9,-1),(2782,'1w9sa','',1,'Loser of 13','',4,0,NULL,NULL,'sakk',0,27,NULL,25,0,13,-1),(2783,'1w9sa','',1,'Loser of 12','',4,0,NULL,NULL,'sakk',1,27,NULL,26,0,12,-1),(2784,'1w9sa','',1,'','',5,0,NULL,NULL,'sakk',0,28,NULL,27,0,-1,-1),(2785,'1w9sa','',1,'Loser of 14','',6,0,NULL,NULL,'sakk',1,29,NULL,28,0,14,-1),(2786,'1w9sa','',0,'Winner of Winner\'s Bracket','Winner of Loser\'s Bracket',7,0,NULL,NULL,'sakk',0,30,NULL,29,1,-1,-1),(2787,'1w9sa','',0,'Winner of 29 (if needed)','Loser of 29',8,0,NULL,NULL,'sakk',0,-1,NULL,30,1,-1,29),(2819,'a2adg','Játékos 10',0,'Játékos 10','',1,1,1,NULL,'klask',0,8,NULL,0,0,-1,-1),(2820,'a2adg','Játékos 3',0,'Játékos 3','',1,1,1,NULL,'klask',1,8,NULL,1,0,-1,-1),(2821,'a2adg','Játékos 9',0,'Játékos 9','',1,1,1,NULL,'klask',0,9,NULL,2,0,-1,-1),(2822,'a2adg','Játékos 11',0,'Játékos 11','',1,1,1,NULL,'klask',1,9,NULL,3,0,-1,-1),(2823,'a2adg','Játékos 5',0,'Játékos 5','',1,1,1,NULL,'klask',0,10,NULL,4,0,-1,-1),(2824,'a2adg','',0,'Játékos 4','Játékos 6',1,0,NULL,NULL,'klask',1,10,NULL,5,0,-1,-1),(2825,'a2adg','',0,'Játékos 2','Játékos 8',1,0,NULL,NULL,'klask',0,11,NULL,6,0,-1,-1),(2826,'a2adg','',0,'Játékos 1','Játékos 7',1,0,NULL,NULL,'klask',1,11,NULL,7,0,-1,-1),(2827,'a2adg','Játékos 10',0,'Játékos 10','Játékos 3',2,0,NULL,NULL,'klask',0,12,NULL,8,0,-1,-1),(2828,'a2adg','',0,'Játékos 9','Játékos 11',2,0,NULL,NULL,'klask',1,12,NULL,9,0,-1,-1),(2829,'a2adg','',0,'Játékos 5','',2,0,NULL,NULL,'klask',0,13,NULL,10,0,-1,-1),(2830,'a2adg','',0,'','',2,0,NULL,NULL,'klask',1,13,NULL,11,0,-1,-1),(2831,'a2adg','',0,'Játékos 10','',3,0,NULL,NULL,'klask',0,14,NULL,12,0,-1,-1),(2832,'a2adg','',0,'','',3,0,NULL,NULL,'klask',1,14,NULL,13,0,-1,-1),(2833,'a2adg','',0,'','',4,0,NULL,NULL,'klask',0,29,NULL,14,0,-1,-1),(2834,'a2adg','',1,'','',1,1,NULL,NULL,'klask',0,19,NULL,15,0,-1,-1),(2835,'a2adg','',1,'','',1,1,NULL,NULL,'klask',1,20,NULL,16,0,-1,-1),(2836,'a2adg','Loser of 5',1,'','Loser of 5',1,1,NULL,NULL,'klask',1,21,NULL,17,0,-1,5),(2837,'a2adg','',1,'Loser of 6','Loser of 7',1,0,NULL,NULL,'klask',1,22,NULL,18,0,6,7),(2838,'a2adg','Loser of 11',1,'Loser of 11','',2,0,NULL,NULL,'klask',0,23,NULL,19,0,11,-1),(2839,'a2adg','Loser of 10',1,'Loser of 10','',2,0,NULL,NULL,'klask',1,23,NULL,20,0,10,-1),(2840,'a2adg','',1,'Loser of 9','Loser of 5',2,0,NULL,NULL,'klask',0,24,NULL,21,0,9,5),(2841,'a2adg','',1,'Játékos 3','',2,0,NULL,NULL,'klask',1,24,NULL,22,0,8,-1),(2842,'a2adg','',1,'Loser of 11','Loser of 10',3,0,NULL,NULL,'klask',0,25,NULL,23,0,11,10),(2843,'a2adg','',1,'','',3,0,NULL,NULL,'klask',1,26,NULL,24,0,-1,-1),(2844,'a2adg','',1,'Loser of 13','',4,0,NULL,NULL,'klask',0,27,NULL,25,0,13,-1),(2845,'a2adg','',1,'Loser of 12','',4,0,NULL,NULL,'klask',1,27,NULL,26,0,12,-1),(2846,'a2adg','',1,'','',5,0,NULL,NULL,'klask',0,28,NULL,27,0,-1,-1),(2847,'a2adg','',1,'Loser of 14','',6,0,NULL,NULL,'klask',1,29,NULL,28,0,14,-1),(2848,'a2adg','',0,'Winner of Winner\'s Bracket','Winner of Loser\'s Bracket',7,0,NULL,NULL,'klask',0,30,NULL,29,1,-1,-1),(2849,'a2adg','',0,'Winner of 29 (if needed)','Loser of 29',8,0,NULL,NULL,'klask',0,-1,NULL,30,1,-1,29),(2912,'fyb78','Játékos 2',0,'Játékos 2','',1,1,1,NULL,'klask',0,8,NULL,0,0,-1,-1),(2913,'fyb78','Játékos 9',0,'Játékos 9','',1,1,1,NULL,'klask',1,8,NULL,1,0,-1,-1),(2914,'fyb78','Játékos 6',0,'Játékos 6','',1,1,1,NULL,'klask',0,9,NULL,2,0,-1,-1),(2915,'fyb78','Játékos 7',0,'Játékos 7','',1,1,1,NULL,'klask',1,9,NULL,3,0,-1,-1),(2916,'fyb78','Játékos 3',0,'Játékos 3','',1,1,1,NULL,'klask',0,10,NULL,4,0,-1,-1),(2917,'fyb78','Játékos 5',0,'Játékos 5','',1,1,1,NULL,'klask',1,10,NULL,5,0,-1,-1),(2918,'fyb78','',0,'Játékos 10','Játékos 1',1,0,NULL,NULL,'klask',0,11,NULL,6,0,-1,-1),(2919,'fyb78','',0,'Játékos 4','Játékos 8',1,0,NULL,NULL,'klask',1,11,NULL,7,0,-1,-1),(2920,'fyb78','Játékos 2',0,'Játékos 2','Játékos 9',2,0,5,1,'klask',0,12,NULL,8,0,-1,-1),(2921,'fyb78','Játékos 6',0,'Játékos 6','Játékos 7',2,0,4,7,'klask',1,12,NULL,9,0,-1,-1),(2922,'fyb78','',0,'Játékos 3','Játékos 5',2,0,NULL,NULL,'klask',0,13,NULL,10,0,-1,-1),(2923,'fyb78','',0,'','',2,0,NULL,NULL,'klask',1,13,NULL,11,0,-1,-1),(2924,'fyb78','',0,'Játékos 2','Játékos 6',3,0,NULL,NULL,'klask',0,14,NULL,12,0,-1,-1),(2925,'fyb78','',0,'','',3,0,NULL,NULL,'klask',1,14,NULL,13,0,-1,-1),(2926,'fyb78','',0,'','',4,0,NULL,NULL,'klask',0,29,NULL,14,0,-1,-1),(2927,'fyb78','',1,'','',1,1,NULL,NULL,'klask',0,19,NULL,15,0,-1,-1),(2928,'fyb78','',1,'','',1,1,NULL,NULL,'klask',1,20,NULL,16,0,-1,-1),(2929,'fyb78','',1,'','',1,1,NULL,NULL,'klask',1,21,NULL,17,0,-1,-1),(2930,'fyb78','',1,'Loser of 6','Loser of 7',1,0,NULL,NULL,'klask',1,22,NULL,18,0,6,7),(2931,'fyb78','Loser of 11',1,'Loser of 11','',2,0,NULL,NULL,'klask',0,23,NULL,19,0,11,-1),(2932,'fyb78','Loser of 10',1,'Loser of 10','',2,0,NULL,NULL,'klask',1,23,NULL,20,0,10,-1),(2933,'fyb78','Játékos 7',1,'Játékos 7','',2,0,NULL,NULL,'klask',0,24,NULL,21,0,9,-1),(2934,'fyb78','',1,'Játékos 9','',2,0,NULL,NULL,'klask',1,24,NULL,22,0,8,-1),(2935,'fyb78','',1,'Loser of 11','Loser of 10',3,0,NULL,NULL,'klask',0,25,NULL,23,0,11,10),(2936,'fyb78','',1,'Játékos 7','',3,0,NULL,NULL,'klask',1,26,NULL,24,0,9,-1),(2937,'fyb78','',1,'Loser of 13','',4,0,NULL,NULL,'klask',0,27,NULL,25,0,13,-1),(2938,'fyb78','',1,'Loser of 12','',4,0,NULL,NULL,'klask',1,27,NULL,26,0,12,-1),(2939,'fyb78','',1,'','',5,0,NULL,NULL,'klask',0,28,NULL,27,0,-1,-1),(2940,'fyb78','',1,'Loser of 14','',6,0,NULL,NULL,'klask',1,29,NULL,28,0,14,-1),(2941,'fyb78','',0,'Winner of Winner\'s Bracket','Winner of Loser\'s Bracket',7,0,NULL,NULL,'klask',0,30,NULL,29,1,-1,-1),(2942,'fyb78','',0,'Winner of 29 (if needed)','Loser of 29',8,0,NULL,NULL,'klask',0,-1,NULL,30,1,-1,29);
 /*!40000 ALTER TABLE `DEMatches` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -72,18 +72,21 @@ DROP TABLE IF EXISTS `RRMatches`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `RRMatches` (
-  `ID` int NOT NULL AUTO_INCREMENT,
-  `gameName` varchar(100) DEFAULT NULL,
+  `gameName` varchar(100) NOT NULL,
   `winner` varchar(100) DEFAULT NULL,
-  `match_ID` int DEFAULT NULL,
+  `match_ID` int NOT NULL,
   `gameType` varchar(255) DEFAULT NULL,
   `round` int DEFAULT NULL,
   `bye` tinyint(1) DEFAULT NULL,
   `player1` varchar(100) DEFAULT NULL,
   `player2` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`ID`),
+  `groupMode` tinyint(1) NOT NULL DEFAULT '0',
+  `groupName` varchar(100) DEFAULT NULL,
+  `score1` int DEFAULT NULL,
+  `score2` int DEFAULT NULL,
+  PRIMARY KEY (`gameName`,`match_ID`),
   UNIQUE KEY `unique_index` (`gameName`,`match_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=149 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -92,7 +95,7 @@ CREATE TABLE `RRMatches` (
 
 LOCK TABLES `RRMatches` WRITE;
 /*!40000 ALTER TABLE `RRMatches` DISABLE KEYS */;
-INSERT INTO `RRMatches` VALUES (1,'e6c91','1. Játékos',0,'csocsó',1,1,'1. Játékos',''),(2,'e6c91','',1,'csocsó',1,0,'2. Játékos','7. Játékos'),(3,'e6c91','',2,'csocsó',1,0,'3. Játékos','6. Játékos'),(4,'e6c91','',3,'csocsó',1,0,'4. Játékos','5. Játékos'),(5,'e6c91','',4,'csocsó',2,0,'1. Játékos','2. Játékos'),(6,'e6c91','3. Játékos',5,'csocsó',2,1,'3. Játékos',''),(7,'e6c91','',6,'csocsó',2,0,'4. Játékos','7. Játékos'),(8,'e6c91','',7,'csocsó',2,0,'5. Játékos','6. Játékos'),(9,'e6c91','',8,'csocsó',3,0,'1. Játékos','3. Játékos'),(10,'e6c91','',9,'csocsó',3,0,'4. Játékos','2. Játékos'),(11,'e6c91','5. Játékos',10,'csocsó',3,1,'5. Játékos',''),(12,'e6c91','',11,'csocsó',3,0,'6. Játékos','7. Játékos'),(13,'e6c91','',12,'csocsó',4,0,'1. Játékos','4. Játékos'),(14,'e6c91','',13,'csocsó',4,0,'5. Játékos','3. Játékos'),(15,'e6c91','',14,'csocsó',4,0,'6. Játékos','2. Játékos'),(16,'e6c91','7. Játékos',15,'csocsó',4,1,'7. Játékos',''),(17,'e6c91','',16,'csocsó',5,0,'1. Játékos','5. Játékos'),(18,'e6c91','',17,'csocsó',5,0,'6. Játékos','4. Játékos'),(19,'e6c91','',18,'csocsó',5,0,'7. Játékos','3. Játékos'),(20,'e6c91','2. Játékos',19,'csocsó',5,1,'','2. Játékos'),(21,'e6c91','',20,'csocsó',6,0,'1. Játékos','6. Játékos'),(22,'e6c91','',21,'csocsó',6,0,'7. Játékos','5. Játékos'),(23,'e6c91','4. Játékos',22,'csocsó',6,1,'','4. Játékos'),(24,'e6c91','',23,'csocsó',6,0,'2. Játékos','3. Játékos'),(25,'e6c91','',24,'csocsó',7,0,'1. Játékos','7. Játékos'),(26,'e6c91','6. Játékos',25,'csocsó',7,1,'','6. Játékos'),(27,'e6c91','',26,'csocsó',7,0,'2. Játékos','5. Játékos'),(28,'e6c91','',27,'csocsó',7,0,'3. Játékos','4. Játékos'),(57,'subh3','1. Játékos',0,'csocsó',1,1,'1. Játékos',''),(58,'subh3','',1,'csocsó',1,0,'2. Játékos','7. Játékos'),(59,'subh3','',2,'csocsó',1,0,'3. Játékos','6. Játékos'),(60,'subh3','',3,'csocsó',1,0,'4. Játékos','5. Játékos'),(61,'subh3','',4,'csocsó',2,0,'1. Játékos','2. Játékos'),(62,'subh3','3. Játékos',5,'csocsó',2,1,'3. Játékos',''),(63,'subh3','',6,'csocsó',2,0,'4. Játékos','7. Játékos'),(64,'subh3','',7,'csocsó',2,0,'5. Játékos','6. Játékos'),(65,'subh3','',8,'csocsó',3,0,'1. Játékos','3. Játékos'),(66,'subh3','',9,'csocsó',3,0,'4. Játékos','2. Játékos'),(67,'subh3','5. Játékos',10,'csocsó',3,1,'5. Játékos',''),(68,'subh3','6. Játékos',11,'csocsó',3,0,'6. Játékos','7. Játékos'),(69,'subh3','',12,'csocsó',4,0,'1. Játékos','4. Játékos'),(70,'subh3','',13,'csocsó',4,0,'5. Játékos','3. Játékos'),(71,'subh3','',14,'csocsó',4,0,'6. Játékos','2. Játékos'),(72,'subh3','7. Játékos',15,'csocsó',4,1,'7. Játékos',''),(73,'subh3','',16,'csocsó',5,0,'1. Játékos','5. Játékos'),(74,'subh3','',17,'csocsó',5,0,'6. Játékos','4. Játékos'),(75,'subh3','',18,'csocsó',5,0,'7. Játékos','3. Játékos'),(76,'subh3','2. Játékos',19,'csocsó',5,1,'','2. Játékos'),(77,'subh3','',20,'csocsó',6,0,'1. Játékos','6. Játékos'),(78,'subh3','',21,'csocsó',6,0,'7. Játékos','5. Játékos'),(79,'subh3','4. Játékos',22,'csocsó',6,1,'','4. Játékos'),(80,'subh3','',23,'csocsó',6,0,'2. Játékos','3. Játékos'),(81,'subh3','',24,'csocsó',7,0,'1. Játékos','7. Játékos'),(82,'subh3','6. Játékos',25,'csocsó',7,1,'','6. Játékos'),(83,'subh3','',26,'csocsó',7,0,'2. Játékos','5. Játékos'),(84,'subh3','',27,'csocsó',7,0,'3. Játékos','4. Játékos'),(109,'tc225','Dániel',0,'röplabda',1,0,'Dániel','Máté'),(110,'tc225','Norbert',1,'röplabda',1,0,'Sándor','Norbert'),(111,'tc225','Dániel',2,'röplabda',2,0,'Dániel','Sándor'),(112,'tc225','',3,'röplabda',2,0,'Norbert','Máté'),(113,'tc225','',4,'röplabda',3,0,'Dániel','Norbert'),(114,'tc225','',5,'röplabda',3,0,'Máté','Sándor'),(115,'nwl5i','',0,'csocsó',1,0,'Dániel','Máté'),(116,'nwl5i','',1,'csocsó',1,0,'Sándor','Norbert'),(117,'nwl5i','',2,'csocsó',2,0,'Dániel','Sándor'),(118,'nwl5i','',3,'csocsó',2,0,'Norbert','Máté'),(119,'nwl5i','Dániel',4,'csocsó',3,0,'Dániel','Norbert'),(120,'nwl5i','',5,'csocsó',3,0,'Máté','Sándor'),(121,'randommeccsek','1. Játékos',0,'ping-pong-páros',1,1,'1. Játékos',''),(122,'randommeccsek','',1,'ping-pong-páros',1,0,'2. Játékos','7. Játékos'),(123,'randommeccsek','',2,'ping-pong-páros',1,0,'3. Játékos','6. Játékos'),(124,'randommeccsek','',3,'ping-pong-páros',1,0,'4. Játékos','5. Játékos'),(125,'randommeccsek','',4,'ping-pong-páros',2,0,'1. Játékos','2. Játékos'),(126,'randommeccsek','3. Játékos',5,'ping-pong-páros',2,1,'3. Játékos',''),(127,'randommeccsek','',6,'ping-pong-páros',2,0,'4. Játékos','7. Játékos'),(128,'randommeccsek','',7,'ping-pong-páros',2,0,'5. Játékos','6. Játékos'),(129,'randommeccsek','',8,'ping-pong-páros',3,0,'1. Játékos','3. Játékos'),(130,'randommeccsek','',9,'ping-pong-páros',3,0,'4. Játékos','2. Játékos'),(131,'randommeccsek','5. Játékos',10,'ping-pong-páros',3,1,'5. Játékos',''),(132,'randommeccsek','',11,'ping-pong-páros',3,0,'6. Játékos','7. Játékos'),(133,'randommeccsek','',12,'ping-pong-páros',4,0,'1. Játékos','4. Játékos'),(134,'randommeccsek','',13,'ping-pong-páros',4,0,'5. Játékos','3. Játékos'),(135,'randommeccsek','',14,'ping-pong-páros',4,0,'6. Játékos','2. Játékos'),(136,'randommeccsek','7. Játékos',15,'ping-pong-páros',4,1,'7. Játékos',''),(137,'randommeccsek','',16,'ping-pong-páros',5,0,'1. Játékos','5. Játékos'),(138,'randommeccsek','',17,'ping-pong-páros',5,0,'6. Játékos','4. Játékos'),(139,'randommeccsek','',18,'ping-pong-páros',5,0,'7. Játékos','3. Játékos'),(140,'randommeccsek','2. Játékos',19,'ping-pong-páros',5,1,'','2. Játékos'),(141,'randommeccsek','',20,'ping-pong-páros',6,0,'1. Játékos','6. Játékos'),(142,'randommeccsek','',21,'ping-pong-páros',6,0,'7. Játékos','5. Játékos'),(143,'randommeccsek','4. Játékos',22,'ping-pong-páros',6,1,'','4. Játékos'),(144,'randommeccsek','',23,'ping-pong-páros',6,0,'2. Játékos','3. Játékos'),(145,'randommeccsek','',24,'ping-pong-páros',7,0,'1. Játékos','7. Játékos'),(146,'randommeccsek','6. Játékos',25,'ping-pong-páros',7,1,'','6. Játékos'),(147,'randommeccsek','',26,'ping-pong-páros',7,0,'2. Játékos','5. Játékos'),(148,'randommeccsek','',27,'ping-pong-páros',7,0,'3. Játékos','4. Játékos');
+INSERT INTO `RRMatches` VALUES ('f3ot2','',0,'klask',1,0,'Játékos 1','Játékos 4',0,'',NULL,NULL),('f3ot2','',1,'klask',1,0,'Játékos 5','Játékos 2',0,'',NULL,NULL),('f3ot2','Játékos 6',2,'klask',1,0,'Játékos 6','Játékos 3',0,'',5,8),('f3ot2','',3,'klask',2,0,'Játékos 1','Játékos 5',0,'',NULL,NULL),('f3ot2','',4,'klask',2,0,'Játékos 6','Játékos 4',0,'',NULL,NULL),('f3ot2','',5,'klask',2,0,'Játékos 3','Játékos 2',0,'',NULL,NULL),('f3ot2','',6,'klask',3,0,'Játékos 1','Játékos 6',0,'',NULL,NULL),('f3ot2','',7,'klask',3,0,'Játékos 3','Játékos 5',0,'',NULL,NULL),('f3ot2','',8,'klask',3,0,'Játékos 2','Játékos 4',0,'',NULL,NULL),('f3ot2','',9,'klask',4,0,'Játékos 1','Játékos 3',0,'',NULL,NULL),('f3ot2','',10,'klask',4,0,'Játékos 2','Játékos 6',0,'',NULL,NULL),('f3ot2','',11,'klask',4,0,'Játékos 4','Játékos 5',0,'',NULL,NULL),('f3ot2','',12,'klask',5,0,'Játékos 1','Játékos 2',0,'',NULL,NULL),('f3ot2','',13,'klask',5,0,'Játékos 4','Játékos 3',0,'',NULL,NULL),('f3ot2','',14,'klask',5,0,'Játékos 5','Játékos 6',0,'',NULL,NULL),('qemsk','Játékos 1',0,'csocsó',1,0,'Játékos 1','Játékos 13',1,'A Csoport',4,5),('qemsk','Játékos 15',1,'csocsó',1,0,'Játékos 15','Játékos 14',1,'A Csoport',10,5),('qemsk','Játékos 1',2,'csocsó',2,0,'Játékos 1','Játékos 15',1,'A Csoport',14,3),('qemsk','Játékos 13',3,'csocsó',2,0,'Játékos 14','Játékos 13',1,'A Csoport',10,12),('qemsk','Játékos 1',4,'csocsó',3,0,'Játékos 1','Játékos 14',1,'A Csoport',4,2),('qemsk','Játékos 15',5,'csocsó',3,0,'Játékos 13','Játékos 15',1,'A Csoport',10,50),('qemsk','Játékos 4',6,'csocsó',1,0,'Játékos 4','Játékos 12',1,'B Csoport',10,NULL),('qemsk','Játékos 8',7,'csocsó',1,0,'Játékos 8','Játékos 3',1,'B Csoport',11,2),('qemsk','Játékos 4',8,'csocsó',2,0,'Játékos 4','Játékos 8',1,'B Csoport',10,0),('qemsk','',9,'csocsó',2,0,'Játékos 3','Játékos 12',1,'B Csoport',NULL,NULL),('qemsk','',10,'csocsó',3,0,'Játékos 4','Játékos 3',1,'B Csoport',NULL,NULL),('qemsk','',11,'csocsó',3,0,'Játékos 12','Játékos 8',1,'B Csoport',NULL,NULL),('qemsk','',12,'csocsó',1,0,'Játékos 11','Játékos 9',1,'C Csoport',NULL,NULL),('qemsk','',13,'csocsó',1,0,'Játékos 5','Játékos 6',1,'C Csoport',NULL,NULL),('qemsk','',14,'csocsó',2,0,'Játékos 11','Játékos 5',1,'C Csoport',NULL,NULL),('qemsk','',15,'csocsó',2,0,'Játékos 6','Játékos 9',1,'C Csoport',NULL,NULL),('qemsk','',16,'csocsó',3,0,'Játékos 11','Játékos 6',1,'C Csoport',NULL,NULL),('qemsk','',17,'csocsó',3,0,'Játékos 9','Játékos 5',1,'C Csoport',NULL,NULL),('qemsk','Játékos 10',18,'csocsó',1,1,'Játékos 10','',1,'D Csoport',NULL,NULL),('qemsk','',19,'csocsó',1,0,'Játékos 7','Játékos 2',1,'D Csoport',NULL,NULL),('qemsk','',20,'csocsó',2,0,'Játékos 10','Játékos 7',1,'D Csoport',NULL,NULL),('qemsk','Játékos 2',21,'csocsó',2,1,'Játékos 2','',1,'D Csoport',NULL,NULL),('qemsk','',22,'csocsó',3,0,'Játékos 10','Játékos 2',1,'D Csoport',NULL,NULL),('qemsk','Játékos 7',23,'csocsó',3,1,'','Játékos 7',1,'D Csoport',NULL,NULL);
 /*!40000 ALTER TABLE `RRMatches` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -119,7 +122,7 @@ CREATE TABLE `SEMatches` (
   `match_ID` int DEFAULT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `unique_index` (`gameName`,`match_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=402 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=541 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,7 +131,7 @@ CREATE TABLE `SEMatches` (
 
 LOCK TABLES `SEMatches` WRITE;
 /*!40000 ALTER TABLE `SEMatches` DISABLE KEYS */;
-INSERT INTO `SEMatches` VALUES (350,'biba8','Játékos 5','Játékos 5','',1,1,1,NULL,'sakk',0,8,0),(351,'biba8','Játékos 2','Játékos 2','',1,1,1,NULL,'sakk',1,8,1),(352,'biba8','Játékos 7','Játékos 7','',1,1,1,NULL,'sakk',0,9,2),(353,'biba8','Játékos 4','Játékos 4','',1,1,1,NULL,'sakk',1,9,3),(354,'biba8','Játékos 10','Játékos 10','',1,1,1,NULL,'sakk',0,10,4),(355,'biba8','Játékos 9','Játékos 9','',1,1,1,NULL,'sakk',1,10,5),(356,'biba8','Játékos 1','Játékos 1','Játékos 3',1,0,NULL,NULL,'sakk',0,11,6),(357,'biba8','Játékos 8','Játékos 8','Játékos 6',1,0,NULL,NULL,'sakk',1,11,7),(358,'biba8','Játékos 2','Játékos 5','Játékos 2',2,0,NULL,NULL,'sakk',0,12,8),(359,'biba8','Játékos 7','Játékos 7','Játékos 4',2,0,NULL,NULL,'sakk',1,12,9),(360,'biba8','Játékos 10','Játékos 10','Játékos 9',2,0,NULL,NULL,'sakk',0,13,10),(361,'biba8','Játékos 8','Játékos 1','Játékos 8',2,0,NULL,NULL,'sakk',1,13,11),(362,'biba8','Játékos 7','Játékos 2','Játékos 7',3,0,NULL,NULL,'sakk',0,14,12),(363,'biba8','Játékos 10','Játékos 10','Játékos 8',3,0,NULL,NULL,'sakk',1,14,13),(364,'biba8','Játékos 10','Játékos 7','Játékos 10',4,0,NULL,NULL,'sakk',0,-1,14),(365,'rtima','','Játékos 3','Játékos 8',1,0,NULL,NULL,'frizbi',0,4,0),(366,'rtima','','Játékos 6','Játékos 5',1,0,NULL,NULL,'frizbi',1,4,1),(367,'rtima','','Játékos 2','Játékos 1',1,0,NULL,NULL,'frizbi',0,5,2),(368,'rtima','','Játékos 4','Játékos 7',1,0,NULL,NULL,'frizbi',1,5,3),(369,'rtima','','','',2,0,NULL,NULL,'frizbi',0,6,4),(370,'rtima','','','',2,0,NULL,NULL,'frizbi',1,6,5),(371,'rtima','','','',3,0,NULL,NULL,'frizbi',0,-1,6),(387,'5jlki','Játékos 2','Játékos 2','',1,1,1,NULL,'ping-pong-páros',0,8,0),(388,'5jlki','Játékos 3','Játékos 3','',1,1,1,NULL,'ping-pong-páros',1,8,1),(389,'5jlki','Játékos 6','Játékos 6','',1,1,1,NULL,'ping-pong-páros',0,9,2),(390,'5jlki','Játékos 9','Játékos 9','',1,1,1,NULL,'ping-pong-páros',1,9,3),(391,'5jlki','Játékos 10','Játékos 10','',1,1,1,NULL,'ping-pong-páros',0,10,4),(392,'5jlki','Játékos 7','Játékos 7','',1,1,1,NULL,'ping-pong-páros',1,10,5),(393,'5jlki','','Játékos 5','Játékos 4',1,0,NULL,NULL,'ping-pong-páros',0,11,6),(394,'5jlki','','Játékos 8','Játékos 1',1,0,NULL,NULL,'ping-pong-páros',1,11,7),(395,'5jlki','','Játékos 2','Játékos 3',2,0,NULL,NULL,'ping-pong-páros',0,12,8),(396,'5jlki','Játékos 6','Játékos 6','Játékos 9',2,0,NULL,NULL,'ping-pong-páros',1,12,9),(397,'5jlki','','Játékos 10','Játékos 7',2,0,NULL,NULL,'ping-pong-páros',0,13,10),(398,'5jlki','','','',2,0,NULL,NULL,'ping-pong-páros',1,13,11),(399,'5jlki','','','Játékos 6',3,0,NULL,NULL,'ping-pong-páros',0,14,12),(400,'5jlki','','','',3,0,NULL,NULL,'ping-pong-páros',1,14,13),(401,'5jlki','','','',4,0,NULL,NULL,'ping-pong-páros',0,-1,14);
+INSERT INTO `SEMatches` VALUES (350,'biba8','Játékos 5','Játékos 5','',1,1,1,NULL,'sakk',0,8,0),(351,'biba8','Játékos 2','Játékos 2','',1,1,1,NULL,'sakk',1,8,1),(352,'biba8','Játékos 7','Játékos 7','',1,1,1,NULL,'sakk',0,9,2),(353,'biba8','Játékos 4','Játékos 4','',1,1,1,NULL,'sakk',1,9,3),(354,'biba8','Játékos 10','Játékos 10','',1,1,1,NULL,'sakk',0,10,4),(355,'biba8','Játékos 9','Játékos 9','',1,1,1,NULL,'sakk',1,10,5),(356,'biba8','Játékos 1','Játékos 1','Játékos 3',1,0,NULL,NULL,'sakk',0,11,6),(357,'biba8','Játékos 8','Játékos 8','Játékos 6',1,0,NULL,NULL,'sakk',1,11,7),(358,'biba8','Játékos 2','Játékos 5','Játékos 2',2,0,NULL,NULL,'sakk',0,12,8),(359,'biba8','Játékos 7','Játékos 7','Játékos 4',2,0,NULL,NULL,'sakk',1,12,9),(360,'biba8','Játékos 10','Játékos 10','Játékos 9',2,0,NULL,NULL,'sakk',0,13,10),(361,'biba8','Játékos 8','Játékos 1','Játékos 8',2,0,NULL,NULL,'sakk',1,13,11),(362,'biba8','Játékos 7','Játékos 2','Játékos 7',3,0,NULL,NULL,'sakk',0,14,12),(363,'biba8','Játékos 10','Játékos 10','Játékos 8',3,0,NULL,NULL,'sakk',1,14,13),(364,'biba8','Játékos 10','Játékos 7','Játékos 10',4,0,NULL,NULL,'sakk',0,-1,14),(365,'rtima','','Játékos 3','Játékos 8',1,0,NULL,NULL,'frizbi',0,4,0),(366,'rtima','','Játékos 6','Játékos 5',1,0,NULL,NULL,'frizbi',1,4,1),(367,'rtima','','Játékos 2','Játékos 1',1,0,NULL,NULL,'frizbi',0,5,2),(368,'rtima','','Játékos 4','Játékos 7',1,0,NULL,NULL,'frizbi',1,5,3),(369,'rtima','','','',2,0,NULL,NULL,'frizbi',0,6,4),(370,'rtima','','','',2,0,NULL,NULL,'frizbi',1,6,5),(371,'rtima','','','',3,0,NULL,NULL,'frizbi',0,-1,6),(402,'smu1j','','Játékos 17','Játékos 22',1,0,NULL,NULL,'sakk',0,16,0),(403,'smu1j','','Játékos 28','Játékos 23',1,0,NULL,NULL,'sakk',1,16,1),(404,'smu1j','','Játékos 7','Játékos 24',1,0,NULL,NULL,'sakk',0,17,2),(405,'smu1j','','Játékos 21','Játékos 2',1,0,NULL,NULL,'sakk',1,17,3),(406,'smu1j','','Játékos 26','Játékos 6',1,0,NULL,NULL,'sakk',0,18,4),(407,'smu1j','','Játékos 11','Játékos 13',1,0,NULL,NULL,'sakk',1,18,5),(408,'smu1j','','Játékos 12','Játékos 4',1,0,NULL,NULL,'sakk',0,19,6),(409,'smu1j','','Játékos 31','Játékos 14',1,0,NULL,NULL,'sakk',1,19,7),(410,'smu1j','','Játékos 5','Játékos 15',1,0,NULL,NULL,'sakk',0,20,8),(411,'smu1j','','Játékos 25','Játékos 29',1,0,NULL,NULL,'sakk',1,20,9),(412,'smu1j','','Játékos 8','Játékos 1',1,0,NULL,NULL,'sakk',0,21,10),(413,'smu1j','','Játékos 9','Játékos 30',1,0,NULL,NULL,'sakk',1,21,11),(414,'smu1j','','Játékos 19','Játékos 32',1,0,NULL,NULL,'sakk',0,22,12),(415,'smu1j','','Játékos 3','Játékos 16',1,0,NULL,NULL,'sakk',1,22,13),(416,'smu1j','','Játékos 10','Játékos 27',1,0,NULL,NULL,'sakk',0,23,14),(417,'smu1j','','Játékos 20','Játékos 18',1,0,NULL,NULL,'sakk',1,23,15),(418,'smu1j','','','',2,0,NULL,NULL,'sakk',0,24,16),(419,'smu1j','','','',2,0,NULL,NULL,'sakk',1,24,17),(420,'smu1j','','','',2,0,NULL,NULL,'sakk',0,25,18),(421,'smu1j','','','',2,0,NULL,NULL,'sakk',1,25,19),(422,'smu1j','','','',2,0,NULL,NULL,'sakk',0,26,20),(423,'smu1j','','','',2,0,NULL,NULL,'sakk',1,26,21),(424,'smu1j','','','',2,0,NULL,NULL,'sakk',0,27,22),(425,'smu1j','','','',2,0,NULL,NULL,'sakk',1,27,23),(426,'smu1j','','','',3,0,NULL,NULL,'sakk',0,28,24),(427,'smu1j','','','',3,0,NULL,NULL,'sakk',1,28,25),(428,'smu1j','','','',3,0,NULL,NULL,'sakk',0,29,26),(429,'smu1j','','','',3,0,NULL,NULL,'sakk',1,29,27),(430,'smu1j','','','',4,0,NULL,NULL,'sakk',0,30,28),(431,'smu1j','','','',4,0,NULL,NULL,'sakk',1,30,29),(432,'smu1j','','','',5,0,NULL,NULL,'sakk',0,-1,30),(433,'5jlki','Játékos 2','Játékos 2','',1,1,1,NULL,'ping-pong-páros',0,8,0),(434,'5jlki','Játékos 3','Játékos 3','',1,1,1,NULL,'ping-pong-páros',1,8,1),(435,'5jlki','Játékos 6','Játékos 6','',1,1,1,NULL,'ping-pong-páros',0,9,2),(436,'5jlki','Játékos 9','Játékos 9','',1,1,1,NULL,'ping-pong-páros',1,9,3),(437,'5jlki','Játékos 10','Játékos 10','',1,1,1,NULL,'ping-pong-páros',0,10,4),(438,'5jlki','Játékos 7','Játékos 7','',1,1,1,NULL,'ping-pong-páros',1,10,5),(439,'5jlki','','Játékos 5','Játékos 4',1,0,NULL,NULL,'ping-pong-páros',0,11,6),(440,'5jlki','','Játékos 8','Játékos 1',1,0,NULL,NULL,'ping-pong-páros',1,11,7),(441,'5jlki','','Játékos 2','Játékos 3',2,0,NULL,NULL,'ping-pong-páros',0,12,8),(442,'5jlki','Játékos 6','Játékos 6','Játékos 9',2,0,NULL,NULL,'ping-pong-páros',1,12,9),(443,'5jlki','Játékos 10','Játékos 10','Játékos 7',2,0,NULL,NULL,'ping-pong-páros',0,13,10),(444,'5jlki','','','',2,0,NULL,NULL,'ping-pong-páros',1,13,11),(445,'5jlki','','','Játékos 6',3,0,NULL,NULL,'ping-pong-páros',0,14,12),(446,'5jlki','','Játékos 10','',3,0,NULL,NULL,'ping-pong-páros',1,14,13),(447,'5jlki','','','',4,0,NULL,NULL,'ping-pong-páros',0,-1,14),(510,'0i7gu','Játékos 14','Játékos 2','Játékos 14',1,0,4,9,'klask',0,16,0),(511,'0i7gu','Játékos 26','Játékos 26','Játékos 30',1,0,NULL,NULL,'klask',1,16,1),(512,'0i7gu','','Játékos 6','Játékos 12',1,0,NULL,NULL,'klask',0,17,2),(513,'0i7gu','','Játékos 24','Játékos 27',1,0,NULL,NULL,'klask',1,17,3),(514,'0i7gu','','Játékos 5','Játékos 15',1,0,NULL,NULL,'klask',0,18,4),(515,'0i7gu','','Játékos 31','Játékos 29',1,0,NULL,NULL,'klask',1,18,5),(516,'0i7gu','','Játékos 32','Játékos 10',1,0,NULL,NULL,'klask',0,19,6),(517,'0i7gu','','Játékos 7','Játékos 17',1,0,NULL,NULL,'klask',1,19,7),(518,'0i7gu','','Játékos 13','Játékos 4',1,0,NULL,NULL,'klask',0,20,8),(519,'0i7gu','','Játékos 19','Játékos 20',1,0,NULL,NULL,'klask',1,20,9),(520,'0i7gu','','Játékos 22','Játékos 1',1,0,NULL,NULL,'klask',0,21,10),(521,'0i7gu','','Játékos 23','Játékos 21',1,0,NULL,NULL,'klask',1,21,11),(522,'0i7gu','','Játékos 25','Játékos 28',1,0,NULL,NULL,'klask',0,22,12),(523,'0i7gu','','Játékos 16','Játékos 11',1,0,NULL,NULL,'klask',1,22,13),(524,'0i7gu','','Játékos 8','Játékos 3',1,0,NULL,NULL,'klask',0,23,14),(525,'0i7gu','','Játékos 18','Játékos 9',1,0,NULL,NULL,'klask',1,23,15),(526,'0i7gu','','Játékos 14','Játékos 26',2,0,NULL,NULL,'klask',0,24,16),(527,'0i7gu','','','',2,0,NULL,NULL,'klask',1,24,17),(528,'0i7gu','','','',2,0,NULL,NULL,'klask',0,25,18),(529,'0i7gu','','','',2,0,NULL,NULL,'klask',1,25,19),(530,'0i7gu','','','',2,0,NULL,NULL,'klask',0,26,20),(531,'0i7gu','','','',2,0,NULL,NULL,'klask',1,26,21),(532,'0i7gu','','','',2,0,NULL,NULL,'klask',0,27,22),(533,'0i7gu','','','',2,0,NULL,NULL,'klask',1,27,23),(534,'0i7gu','','','',3,0,NULL,NULL,'klask',0,28,24),(535,'0i7gu','','','',3,0,NULL,NULL,'klask',1,28,25),(536,'0i7gu','','','',3,0,NULL,NULL,'klask',0,29,26),(537,'0i7gu','','','',3,0,NULL,NULL,'klask',1,29,27),(538,'0i7gu','','','',4,0,NULL,NULL,'klask',0,30,28),(539,'0i7gu','','','',4,0,NULL,NULL,'klask',1,30,29),(540,'0i7gu','','','',5,0,NULL,NULL,'klask',0,-1,30);
 /*!40000 ALTER TABLE `SEMatches` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -155,62 +158,8 @@ CREATE TABLE `cache` (
 
 LOCK TABLES `cache` WRITE;
 /*!40000 ALTER TABLE `cache` DISABLE KEYS */;
-INSERT INTO `cache` VALUES ('1w9sa','sakk','double-elimination','2022-06-29 12:50:08'),('5jlki','ping-pong-páros','single-elimination','2022-06-29 12:58:15');
+INSERT INTO `cache` VALUES ('0i7gu','klask','single-elimination','2022-07-04 14:23:54'),('f3ot2','klask','round-robin','2022-07-04 14:23:16'),('fyb78','klask','double-elimination','2022-07-04 15:14:58'),('qemsk','csocsó','group-stage','2022-07-04 15:09:01');
 /*!40000 ALTER TABLE `cache` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `chessGames`
---
-
-DROP TABLE IF EXISTS `chessGames`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8 */;
-CREATE TABLE `chessGames` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name1` varchar(255) DEFAULT NULL,
-  `name2` varchar(255) DEFAULT NULL,
-  `p1Win` double DEFAULT NULL,
-  `p1Gain` double DEFAULT NULL,
-  `p2Gain` double DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `chessGames`
---
-
-LOCK TABLES `chessGames` WRITE;
-/*!40000 ALTER TABLE `chessGames` DISABLE KEYS */;
-INSERT INTO `chessGames` VALUES (1,'ifj. Török Sándor','Török Máté',0.5,-12.219304718558988,12.219304718558988),(2,'ifj. Török Sándor','Török Máté',0,-58.86015130670762,58.86015130670762),(3,'Török Máté','ifj. Török Sándor',0,-57.9193967285064,57.9193967285064),(4,'Török Dániel','Török Dorotea',1,50,-50),(5,'Török Máté','Török Dorotea',1,47.149469267027825,-47.149469267027825),(6,'Török Dorotea','Török Dániel',1,69.9950138498782,-69.9950138498782),(7,'ifj. Török Sándor','Török Dániel',0.5,-7.169710901228086,7.169710901228086),(8,'ifj. Török Sándor','Török Máté',0,-50.86666152622968,50.866661526229564),(9,'ifj. Török Sándor','Török Máté',1,63.43569326161946,-63.43569326161946),(10,'ifj. Török Sándor','Török Dorotea',1,41.069991195892726,-41.069991195892726),(11,'ifj. Török Sándor','Török Dániel',0,-62.59791164975843,62.59791164975843),(12,'ifj. Török Sándor','Török Máté',1,48.61406543471219,-48.614065434712074),(13,'Török Dorotea','Török Máté',1,53.45123558068292,-53.45123558068292),(14,'ifj. Török Sándor','Török Dániel',1,48.146715893852615,-48.146715893852615),(15,'ifj. Török Sándor','Török Dániel',0,-65.2143568333986,65.21435683339871),(16,'Török Máté','ifj. Török Sándor',0,-30.479178788153945,30.47917878815406);
-/*!40000 ALTER TABLE `chessGames` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `chessPlayers`
---
-
-DROP TABLE IF EXISTS `chessPlayers`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8 */;
-CREATE TABLE `chessPlayers` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `rating` double DEFAULT NULL,
-  `games` int DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `chessPlayers`
---
-
-LOCK TABLES `chessPlayers` WRITE;
-/*!40000 ALTER TABLE `chessPlayers` DISABLE KEYS */;
-INSERT INTO `chessPlayers` VALUES (1,'ifj. Török Sándor',1076.067985901835,19),(2,'Török Máté',871.8649754898701,16),(3,'Török Dániel',1066.8402496406543,6),(4,'Török Dorotea',985.2267889676406,5),(5,'Török Sándor',1000,0);
-/*!40000 ALTER TABLE `chessPlayers` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -270,171 +219,87 @@ INSERT INTO `eloPlayers` VALUES (1,'sandor',1000,'ping-pong',0),(2,'peter',1014.
 UNLOCK TABLES;
 
 --
--- Table structure for table `klaskGames`
+-- Table structure for table `groupMatches`
 --
 
-DROP TABLE IF EXISTS `klaskGames`;
+DROP TABLE IF EXISTS `groupMatches`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8 */;
-CREATE TABLE `klaskGames` (
+CREATE TABLE `groupMatches` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name1` varchar(255) DEFAULT NULL,
-  `name2` varchar(255) DEFAULT NULL,
-  `p1Win` double DEFAULT NULL,
-  `p1Gain` double DEFAULT NULL,
-  `p2Gain` double DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `klaskGames`
---
-
-LOCK TABLES `klaskGames` WRITE;
-/*!40000 ALTER TABLE `klaskGames` DISABLE KEYS */;
-INSERT INTO `klaskGames` VALUES (1,'ifj. Török Sándor','player2',0.5,-14.006499980288481,14.006499980288481);
-/*!40000 ALTER TABLE `klaskGames` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `klaskPlayers`
---
-
-DROP TABLE IF EXISTS `klaskPlayers`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8 */;
-CREATE TABLE `klaskPlayers` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `rating` double DEFAULT NULL,
-  `games` int DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `klaskPlayers`
---
-
-LOCK TABLES `klaskPlayers` WRITE;
-/*!40000 ALTER TABLE `klaskPlayers` DISABLE KEYS */;
-INSERT INTO `klaskPlayers` VALUES (1,'ifj. Török Sándor',1035.9935000197115,2),(2,'player2',964.0064999802885,2),(3,'player3',1000,0),(4,'player4',1000,0),(5,'player5',1000,0);
-/*!40000 ALTER TABLE `klaskPlayers` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pingpongGames`
---
-
-DROP TABLE IF EXISTS `pingpongGames`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8 */;
-CREATE TABLE `pingpongGames` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name1` varchar(255) DEFAULT NULL,
-  `name2` varchar(255) DEFAULT NULL,
-  `p1Win` double DEFAULT NULL,
-  `p1Gain` double DEFAULT NULL,
-  `p2Gain` double DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pingpongGames`
---
-
-LOCK TABLES `pingpongGames` WRITE;
-/*!40000 ALTER TABLE `pingpongGames` DISABLE KEYS */;
-INSERT INTO `pingpongGames` VALUES (1,'Ping-Pong Mester','player3',1,50,-50),(2,'Ping-Pong Mester','player2',1,42.8536882591618,-42.8536882591618),(3,'Ping-Pong Mester','player6',1,36.946589830164385,-36.94658983016461),(4,'Ping-Pong Mester','player6',1,27.690379712270442,-27.690379712270442),(5,'Ping-Pong Mester','player6',1,21.777680478197908,-21.777680478197908),(6,'Ping-Pong Mester','player6',1,17.808233580113892,-17.808233580113892),(7,'Ping-Pong Mester','player6',1,15.002320248830529,-15.002320248830529),(8,'Ping-Pong Mester','player6',1,12.930253519386724,-12.930253519386724),(9,'Ping-Pong Mester','player6',1,11.344704177723543,-11.344704177723543),(10,'Ping-Pong Mester','player6',1,10.095888070539331,-10.095888070539331),(11,'Ping-Pong Mester','player6',1,9.088731028247139,-9.088731028247139),(12,'Ping-Pong Mester','player6',1,8.26035882552469,-8.26035882552469),(13,'Ping-Pong Mester','player6',1,7.567698943228834,-7.567698943228834),(14,'Ping-Pong Mester','player6',1,6.98033638484867,-6.98033638484867),(15,'Ping-Pong Mester','player6',0,-93.52377493091944,93.52377493091944),(16,'Ping-Pong Mester','player6',0,-83.10862908950003,83.10862908950003),(17,'Ping-Pong Mester','player6',0,-65.3966874256987,65.3966874256987),(18,'Ping-Pong Mester','player6',1,52.90634505044318,-52.90634505044318),(19,'Ping-Pong Mester','player6',1,37.92525890012507,-37.92525890012507),(20,'Ping-Pong Mester','player5',1,32.477120440997396,-32.477120440997396),(21,'Ping-Pong Mester','player4',1,28.51853465746126,-28.518534657461487),(22,'Ping-Pong Mester','ifj. Török Sándor',0,-74.70707065068882,74.70707065068905),(23,'Ping-Pong Mester','ifj. Török Sándor',0,-55.55084858920941,55.55084858920941),(24,'Ping-Pong Mester','ifj. Török Sándor',0,-39.73306598180943,39.73306598180943),(25,'player3','ifj. Török Sándor',0,-21.98792972482181,21.987929724821697),(26,'Ping-Pong Mester','ifj. Török Sándor',1,73.1179749680482,-73.1179749680482),(27,'Ping-Pong Mester','ifj. Török Sándor',1,53.962040608869984,-53.962040608869984);
-/*!40000 ALTER TABLE `pingpongGames` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pingpongPlayers`
---
-
-DROP TABLE IF EXISTS `pingpongPlayers`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8 */;
-CREATE TABLE `pingpongPlayers` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `rating` double DEFAULT NULL,
-  `games` int DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pingpongPlayers`
---
-
-LOCK TABLES `pingpongPlayers` WRITE;
-/*!40000 ALTER TABLE `pingpongPlayers` DISABLE KEYS */;
-INSERT INTO `pingpongPlayers` VALUES (1,'ifj. Török Sándor',1064.8988993696114,6),(2,'player2',957.1463117408382,1),(3,'player3',928.0120702751782,2),(4,'player4',971.4814653425385,1),(5,'player5',967.5228795590026,1),(6,'player6',965.7043126964736,17),(7,'Ping-Pong Mester',1145.2340610163571,26);
-/*!40000 ALTER TABLE `pingpongPlayers` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `volleyBallGames`
---
-
-DROP TABLE IF EXISTS `volleyBallGames`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8 */;
-CREATE TABLE `volleyBallGames` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name1` varchar(255) DEFAULT NULL,
-  `name2` varchar(255) DEFAULT NULL,
-  `p1Win` double DEFAULT NULL,
-  `score1` varchar(255) DEFAULT NULL,
-  `score2` varchar(255) DEFAULT NULL,
+  `groupGameName` varchar(100) DEFAULT NULL,
+  `bracketGameName` varchar(100) DEFAULT NULL,
+  `bracketType` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `volleyBallGames`
+-- Dumping data for table `groupMatches`
 --
 
-LOCK TABLES `volleyBallGames` WRITE;
-/*!40000 ALTER TABLE `volleyBallGames` DISABLE KEYS */;
-/*!40000 ALTER TABLE `volleyBallGames` ENABLE KEYS */;
+LOCK TABLES `groupMatches` WRITE;
+/*!40000 ALTER TABLE `groupMatches` DISABLE KEYS */;
+/*!40000 ALTER TABLE `groupMatches` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `volleyballTeams`
+-- Table structure for table `groupPlayers`
 --
 
-DROP TABLE IF EXISTS `volleyballTeams`;
+DROP TABLE IF EXISTS `groupPlayers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8 */;
-CREATE TABLE `volleyballTeams` (
+CREATE TABLE `groupPlayers` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name1` varchar(255) DEFAULT NULL,
-  `name2` varchar(255) DEFAULT NULL,
-  `name3` varchar(255) DEFAULT NULL,
-  `name4` varchar(255) DEFAULT NULL,
-  `name5` varchar(255) DEFAULT NULL,
-  `name6` varchar(255) DEFAULT NULL,
-  `name7` varchar(255) DEFAULT NULL,
-  `rating` double DEFAULT NULL,
-  `games` int DEFAULT NULL,
-  `teamName` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `playerName` varchar(100) NOT NULL,
+  `wins` int DEFAULT '0',
+  `loses` int DEFAULT '0',
+  `draws` int DEFAULT '0',
+  `last3Results` varchar(3) DEFAULT NULL,
+  `points` int DEFAULT NULL,
+  `gameName` varchar(100) DEFAULT NULL,
+  `groupName` varchar(100) NOT NULL,
+  `diff` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_index` (`gameName`,`playerName`)
+) ENGINE=InnoDB AUTO_INCREMENT=1978 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `volleyballTeams`
+-- Dumping data for table `groupPlayers`
 --
 
-LOCK TABLES `volleyballTeams` WRITE;
-/*!40000 ALTER TABLE `volleyballTeams` DISABLE KEYS */;
-INSERT INTO `volleyballTeams` VALUES (1,'p1','p2','p3','p4','p5','p6','p7',1000,0,'csapat1'),(2,'p21','p22','p23','p24','p25','p26','p27',1000,0,'csapat2'),(3,'p31','p32','p33','p34','p35','p36','p37',1000,0,'csapat3');
-/*!40000 ALTER TABLE `volleyballTeams` ENABLE KEYS */;
+LOCK TABLES `groupPlayers` WRITE;
+/*!40000 ALTER TABLE `groupPlayers` DISABLE KEYS */;
+INSERT INTO `groupPlayers` VALUES (1963,'Játékos 1',3,0,0,'WWW',9,'qemsk','A Csoport',14),(1964,'Játékos 15',2,1,0,'WLW',6,'qemsk','A Csoport',34),(1965,'Játékos 13',1,2,0,'LWL',3,'qemsk','A Csoport',-39),(1966,'Játékos 14',0,3,0,'LLL',0,'qemsk','A Csoport',-9),(1967,'Játékos 8',1,1,0,'LW',3,'qemsk','B Csoport',-1),(1968,'Játékos 4',2,0,0,'WW',6,'qemsk','B Csoport',10),(1969,'Játékos 12',0,1,0,'L',0,'qemsk','B Csoport',0),(1970,'Játékos 3',0,1,0,'L',0,'qemsk','B Csoport',-9),(1971,'Játékos 11',0,0,0,'',0,'qemsk','C Csoport',0),(1972,'Játékos 5',0,0,0,'',0,'qemsk','C Csoport',0),(1973,'Játékos 6',0,0,0,'',0,'qemsk','C Csoport',0),(1974,'Játékos 9',0,0,0,'',0,'qemsk','C Csoport',0),(1975,'Játékos 10',0,0,0,'',0,'qemsk','D Csoport',0),(1976,'Játékos 7',0,0,0,'',0,'qemsk','D Csoport',0),(1977,'Játékos 2',0,0,0,'',0,'qemsk','D Csoport',0);
+/*!40000 ALTER TABLE `groupPlayers` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `groupStage`
+--
+
+DROP TABLE IF EXISTS `groupStage`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8 */;
+CREATE TABLE `groupStage` (
+  `gameName` varchar(100) NOT NULL,
+  `qualifyNumber` int NOT NULL DEFAULT '2',
+  `gameType` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`gameName`),
+  UNIQUE KEY `gameName` (`gameName`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `groupStage`
+--
+
+LOCK TABLES `groupStage` WRITE;
+/*!40000 ALTER TABLE `groupStage` DISABLE KEYS */;
+INSERT INTO `groupStage` VALUES ('qemsk',2,'csocsó');
+/*!40000 ALTER TABLE `groupStage` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -446,4 +311,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-29 16:42:22
+-- Dump completed on 2022-07-04 21:38:11
