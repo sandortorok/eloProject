@@ -7,11 +7,11 @@
     </div>
 </header>
 <section id="bracket">
-    <div class="btn-wrapper">
-        <app-neon-button #new text="NEW BRACKET" (click)="onNewBracket()"></app-neon-button>
-        <app-neon-button #load text="LOAD" style="filter:hue-rotate(100deg);" (click)="onLoad()"></app-neon-button>
-        <app-neon-button #save text="SAVE" (click)="onSave()"></app-neon-button>
-        <app-neon-button text="PRINT" style="filter:hue-rotate(100deg);" (click)="onPrintClick()"></app-neon-button>
+    <div *ngIf="user?.privilegeType == 'Admin'" class="btn-wrapper">
+        <app-neon-button #new text="ÚJ BEOSZTÁS" (click)="onNewBracket()"></app-neon-button>
+        <app-neon-button #load text="BETÖLTÉS" style="filter:hue-rotate(100deg);" (click)="onLoad()"></app-neon-button>
+        <app-neon-button #save text="MENTÉS" (click)="onSave()"></app-neon-button>
+        <app-neon-button text="NYOMTATÁS" style="filter:hue-rotate(100deg);" (click)="onPrintClick()"></app-neon-button>
     </div>
     <app-spinner *ngIf="matches != undefined && matches.length == 0"></app-spinner>
     <div *ngIf="matches != undefined && matches.length > 0" class="split-wrap">

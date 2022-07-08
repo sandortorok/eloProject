@@ -7,16 +7,16 @@
     </div>
 </header>
 <section id="bracket">
-    <div class="btn-wrapper">
-        <app-neon-button #new text="NEW BRACKET" (click)="onNewBracket()"></app-neon-button>
-        <app-neon-button #load text="LOAD" style="filter:hue-rotate(300deg);" (click)="onLoad()"></app-neon-button>
-        <app-neon-button #save text="SAVE" (click)="onSave()"></app-neon-button>
-        <app-neon-button text="PRINT" style="filter:hue-rotate(300deg);" (click)="onPrintClick()"></app-neon-button>
+    <div *ngIf="user?.privilegeType == 'Admin'" class="btn-wrapper">
+        <app-neon-button #new text="ÚJ BEOSZTÁS" (click)="onNewBracket()"></app-neon-button>
+        <app-neon-button #load text="BETŐLTÉS" style="filter:hue-rotate(300deg);" (click)="onLoad()"></app-neon-button>
+        <app-neon-button #save text="MENTÉS" (click)="onSave()"></app-neon-button>
+        <app-neon-button text="NYOMTATÁS" style="filter:hue-rotate(300deg);" (click)="onPrintClick()"></app-neon-button>
     </div>
     <app-spinner *ngIf="matches != undefined && matches.length == 0"></app-spinner>
     <div *ngIf="matches != undefined && matches.length > 0" class="container" #container>
         <div class="split-wrap winners-bracket">
-            <h1>WINNERS BRACKET</h1>
+            <h1>EGYENES ÁG</h1>
             <div class="split">
                 <div *ngFor="let round of matches | rounds: 'winner'; let i = index" class="round round-{{i+1}}">
                     <div class="round-details">{{i+1}}. Forduló <br /><span class="date">KEDD</span></div>
@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="split-wrap losers-bracket">
-            <h1>LOSERS BRACKET</h1>
+            <h1>VIGASZÁG</h1>
             <div class="split">
                 <div *ngFor="let round of matches | rounds: 'loser'; let i = index" class="round loser-round-{{i+1}}">
                     <div class="round-details">{{i+1}}. Forduló <br /><span class="date">KEDD</span></div>
@@ -51,7 +51,7 @@
             </div>
         </div>
         <div class="split-wrap final-bracket">
-            <h1>FINALS</h1>
+            <h1>DÖNTŐK</h1>
             <div class="split">
                 <div *ngFor="let round of matches | rounds: 'final'; let i = index" class="round loser-round-{{i+1}}">
                     <div class="round-details">{{i+1}}. Forduló <br /><span class="date">KEDD</span></div>

@@ -6,13 +6,13 @@
         <table>
             <tr>
                 <th>#</th>
-                <th>Team</th>
-                <th>W</th>
+                <th>Játékos</th>
+                <th>GY</th>
                 <th>D</th>
-                <th>L</th>
-                <th>DIFF</th>
-                <th>PTS</th>
-                <th>LAST3</th>
+                <th>V</th>
+                <th>KÜL.</th>
+                <th>PONT</th>
+                <th>UTOLSÓ3</th>
             </tr>
             <tr *ngFor="let player of group.teams | sort:['points', 'diff']; let i = index" [ngClass] = "(i+1 > group.qualifyNumber)? 'pos': 'wpos'">
                 <td>{{i+1}}</td>

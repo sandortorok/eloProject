@@ -138,7 +138,7 @@ export class DEGeneratorService {
           losersFrom.push(-1)
       }
       else{
-          teams.push(`Loser of ${LoserRoundID}`)
+          teams.push(`${LoserRoundID}. Vesztese`)
           losersFrom.push(LoserRoundID);
       }
       LoserRoundID++;
@@ -148,7 +148,7 @@ export class DEGeneratorService {
           losersFrom.push(-1);
       }
       else{
-          teams.push(`Loser of ${LoserRoundID}`);
+          teams.push(`${LoserRoundID}. Vesztese`);
           losersFrom.push(LoserRoundID);
       }
       LoserRoundID++;
@@ -217,7 +217,7 @@ export class DEGeneratorService {
         let teams:string[] = [];
         let losersFrom:number[] = [];
         if(RoundNumber %2 == 0){
-          teams.push(`Loser of ${LoserRoundID}`);
+          teams.push(`${LoserRoundID}. Vesztese`);
           losersFrom.push(LoserRoundID);
           LoserRoundID--;
         }
@@ -225,7 +225,7 @@ export class DEGeneratorService {
         if(prevHasWinner){
           prevMatches.forEach(m=>{
             teams.push(m.Gyoztes!);
-            if(m.Gyoztes?.includes('Loser of')){
+            if(m.Gyoztes?.includes('Vesztese')){
               losersFrom.push(parseInt(m.Gyoztes!.match(/(\d+)/)![0]))
             }
           })
@@ -259,12 +259,12 @@ export class DEGeneratorService {
     let lastMatchofWinners:Match = this.GeneratedGames[this.GeneratedGames.length-1];
     lastMatchofWinners.nextRoundID = (nextRoundID) //Utolsó Winner meccs megkeresése és nextRound-jának beállítása
     nextRoundID++;
-    let finalGame1 = {Meccs_id: matchID, loser: false, final: true, bye: false, Csapatok: ["Winner of Winner's Bracket", "Winner of Loser's Bracket"],
+    let finalGame1 = {Meccs_id: matchID, loser: false, final: true, bye: false, Csapatok: ["Egyenes ág Győztese", "Vigaszág Győztese"],
           Gyoztes: "", Round: RoundNumber, score0: null, score1: null, bottom: 0, nextRoundID: nextRoundID}
     matchID++;
     nextRoundID++;
     RoundNumber++;
-    let finalGame2 = {Meccs_id: matchID, loser: false, final: true, bye: false, Csapatok: [`Winner of ${matchID-1} (if needed)`, `Loser of ${matchID-1}`],
+    let finalGame2 = {Meccs_id: matchID, loser: false, final: true, bye: false, Csapatok: [`${matchID-1}. Győztese (ha kell)`, `${matchID-1}. Vesztese`],
           Gyoztes: "", Round: RoundNumber, score0: null, score1: null, bottom: 0, nextRoundID: -1, losersFrom: [-1, matchID-1]}
     
     loserGames.forEach(m=>{

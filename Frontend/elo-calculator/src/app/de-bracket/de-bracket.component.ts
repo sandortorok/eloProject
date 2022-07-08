@@ -1,3 +1,4 @@
+import { User, UserService } from './../services/user-service.service';
 import { WinModal } from '../modals/win-modal/win-modal.component';
 import { SaveModal } from '../modals/save-modal/save-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -18,12 +19,20 @@ export class DEBracketComponent implements OnInit {
   @ViewChild('container') container;
   matches:Match[];
   gameName:string = "";
+  user:User;
   @Input() gameType:string;
   private subscriptions: Array<Subscription> = [];
 
-  constructor(private bracket: DEGeneratorService, private modalService: NgbModal, private httpservice: HttpService) {}
+  constructor(
+    private bracket: DEGeneratorService, 
+    private modalService: NgbModal, 
+    private httpservice: HttpService, 
+    private userservice: UserService) {}
+
   ngOnInit(): void {
     this.loadCache();
+    this.user = this.userservice.loggedUser;
+    this.subscriptions.push(this.sub2UserChange());
     this.subscriptions.push(this.sub2Generated());
   }
   giveEffects(){
@@ -73,7 +82,7 @@ export class DEBracketComponent implements OnInit {
         }
       });
       let match;
-      if (playerName.includes('Loser of') || playerName.includes('Winner of')){
+      if (playerName.includes('Vesztese') || playerName.includes('Győztese')){
         if(playerName.match(/(\d+)/)){
           let id = parseInt(playerName.match(/(\d+)/)![0]); //STRINGBEN LÉVŐ SZÁM (MATCHID)
           match = this.container.nativeElement.querySelector(`[id='match ${id}']`)
@@ -142,15 +151,15 @@ export class DEBracketComponent implements OnInit {
     })
   }
   onTeamClick(event){
+    if(this.user.privilegeType=='Guest') return;
     event.target.parentNode.id;
     let matchID = event.target.parentNode.id.match(/(\d+)/)![0];
     let thisMatch = this.matches.filter(m =>{ return m.Meccs_id == matchID})[0];
     if (!thisMatch) return;
     if(thisMatch.Gyoztes != "") return;
     if (thisMatch.Csapatok[0] == "" || thisMatch.Csapatok![1] == "") return;
-    if (thisMatch.Csapatok[0].includes('Winner of') || thisMatch.Csapatok[1].includes('Winner of')) return;
-    if (thisMatch.Csapatok[0].includes('Loser of') || thisMatch.Csapatok[1].includes('Loser of')) return;
-
+    if (thisMatch.Csapatok[0].includes('Győztese') || thisMatch.Csapatok[1].includes('Győztese')) return;
+    if (thisMatch.Csapatok[0].includes('Vesztese') || thisMatch.Csapatok[1].includes('Vesztese')) return;
     const modalRef = this.modalService.open(WinModal, { centered: true });
     modalRef.componentInstance.match = thisMatch;
     modalRef.componentInstance.updateEvent.subscribe((updatedMatch:Match)=>{
@@ -179,7 +188,7 @@ export class DEBracketComponent implements OnInit {
         let nextMatch:Match;
         nextMatch = this.matches.filter(m=>{return m.Meccs_id == nextID})[0]
         let nextTeam = nextMatch.Csapatok[thisMatch.bottom]
-        if(nextTeam == "" || nextTeam.includes('Winner of')){
+        if(nextTeam == "" || nextTeam.includes('Győztese')){
           nextMatch.Csapatok[thisMatch.bottom] = thisMatch.Gyoztes; //Kövi meccs feltöltése
         }
         else{
@@ -232,8 +241,12 @@ export class DEBracketComponent implements OnInit {
         this.httpservice.saveDEGame({body: this.matches, name: this.gameName, type: this.gameType}).subscribe({})
         this.saveCache();
         this.giveEffects();
-        console.log(this.matches);
     })
+  }
+  sub2UserChange(){
+    return this.userservice.userChanged.subscribe(()=>{
+      this.user = this.userservice.loggedUser
+    });
   }
   ngOnDestroy(){
     this.subscriptions.forEach((sub:Subscription) => {

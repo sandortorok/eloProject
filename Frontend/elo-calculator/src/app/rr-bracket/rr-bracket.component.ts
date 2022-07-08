@@ -1,3 +1,4 @@
+import { User, UserService } from './../services/user-service.service';
 import { RRHelperService } from './rr-helper.service';
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -21,6 +22,7 @@ export interface playerScore{
   styleUrls: ['./rr-bracket.component.scss']
 })
 export class RRBracketComponent implements OnInit {
+  user:User;
   @ViewChild('container') container;
   @Input() matches: Match[];
   ngOnChanges(changes: SimpleChanges) {
@@ -40,9 +42,11 @@ export class RRBracketComponent implements OnInit {
   private subscriptions: Array<Subscription> = [];
 
   //GROUP STUFF END
-  constructor(private bracket: RRGeneratorService, private modalService: NgbModal, private rrhelper: RRHelperService) { }
+  constructor(private bracket: RRGeneratorService, private modalService: NgbModal, private rrhelper: RRHelperService, private userservice:UserService) { }
   ngOnInit(): void {
     if(!this.groupMode){ //HA RENDES ÜZEMMMÓDBAN VAN
+      this.user = this.userservice.loggedUser;
+      this.subscriptions.push(this.sub2UserChange());
       this.subscriptions.push(this.sub2Generated());
       this.subscriptions.push(this.sub2Load());
       this.loadCache();
@@ -114,9 +118,9 @@ export class RRBracketComponent implements OnInit {
     });
   }
   onTeamClick(event){
+    if(this.user.privilegeType=='Guest') return;
     let matchID = event.target.parentNode.id.match(/(\d+)/)![0];
     let thisMatch = this.matches.filter(m =>{ return m.Meccs_id == matchID})[0];
-    console.log(thisMatch);
     if (!thisMatch) return;
     if(thisMatch.Gyoztes != "") return;
     if (thisMatch.Csapatok[0] == "" || thisMatch.Csapatok![1] == "") return;
@@ -202,6 +206,11 @@ export class RRBracketComponent implements OnInit {
       this.loadPlayerStats();
       this.giveEffects();
     })
+  }
+  sub2UserChange(){
+    return this.userservice.userChanged.subscribe(()=>{
+      this.user = this.userservice.loggedUser
+    });
   }
   onNewBracket(){
     if(this.groupMode){

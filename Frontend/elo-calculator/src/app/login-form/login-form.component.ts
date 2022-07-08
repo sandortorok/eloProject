@@ -24,7 +24,7 @@ export class LoginFormComponent implements OnInit {
   userFocusCheck(){
     if(this.username == ""){
       this.usernameError = true;
-      this.usernameErrorMessage = "Username is required"
+      this.usernameErrorMessage = "Felhasználónév kitöltése szükséges"
     }
     else{
       this.usernameError = false;
@@ -41,7 +41,7 @@ export class LoginFormComponent implements OnInit {
   passFocusCheck(){
     if(this.password == ""){
       this.passwordError = true;
-      this.passwordErrorMessage = "Password is required"
+      this.passwordErrorMessage = "Jelszó kitöltése szükséges"
     }
     else{
       this.passwordError = false;
@@ -86,9 +86,9 @@ export class LoginFormComponent implements OnInit {
   }
   validationFailed(){
     this.usernameError = true;
-    this.usernameErrorMessage = "Wrong username or password"
+    this.usernameErrorMessage = "Rossz felhasználónév vagy jelszó"
     this.passwordError = true;
-    this.passwordErrorMessage = "Wrong username or password"
+    this.passwordErrorMessage = "Rossz felhasználónév vagy jelszó"
     this.loading = false;
   }
 }

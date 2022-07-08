@@ -1,13 +1,13 @@
 
 <div class="btn-wrapper">
-    <app-neon-button text="GROUPS" style="filter:hue-rotate(100deg);" (click)="groupstage.select(1)"></app-neon-button>
-    <app-neon-button text="MATCHES" style="filter:hue-rotate(100deg);" (click)="groupstage.select(2)"></app-neon-button>
+    <app-neon-button text="CSOPORTOK" style="filter:hue-rotate(100deg);" (click)="groupstage.select(1)"></app-neon-button>
+    <app-neon-button text="MECCSEK" style="filter:hue-rotate(100deg);" (click)="groupstage.select(2)"></app-neon-button>
 </div>
-<div class="btn-wrapper">
-    <app-neon-button #new text="NEW GROUP" (click)="onNewGroup()"></app-neon-button>
-    <app-neon-button #load text="LOAD" style="filter:hue-rotate(300deg);" (click)="onLoad()"></app-neon-button>
-    <app-neon-button #save text="SAVE" (click)="onSave()"></app-neon-button>
-    <app-neon-button text="PRINT" style="filter:hue-rotate(300deg);" (click)="onPrintClick()"></app-neon-button>
+<div *ngIf="user?.privilegeType == 'Admin'" class="btn-wrapper">
+    <app-neon-button #new text="ÚJ CSOPORTOK" (click)="onNewGroup()"></app-neon-button>
+    <app-neon-button #load text="BETÖLTÉS" style="filter:hue-rotate(300deg);" (click)="onLoad()"></app-neon-button>
+    <app-neon-button #save text="MENTÉS" (click)="onSave()"></app-neon-button>
+    <app-neon-button text="NYOMTATÁS" style="filter:hue-rotate(300deg);" (click)="onPrintClick()"></app-neon-button>
 </div>
 <header class="hero">
     <div class="hero-wrap">

@@ -1,3 +1,4 @@
+import { User, UserService } from './../services/user-service.service';
 import { HttpService } from 'src/app/services/http.service';
 import { SaveModal } from '../modals/save-modal/save-modal.component';
 import { Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
@@ -18,16 +19,19 @@ export class SEBracketComponent implements OnInit {
   @ViewChild('container') container;
   matches:Match[];
   gameName:string = "";
+  user:User;
   @Input() gameType;
   private subscriptions: Array<Subscription> = [];
 
-  constructor(private bracket: SEGeneratorService, private modalService: NgbModal, private httpservice: HttpService) {}
+  constructor(private bracket: SEGeneratorService, private modalService: NgbModal, private httpservice: HttpService, private userservice: UserService) {}
   ngOnInit(): void {
     this.loadCache();
+    this.user = this.userservice.loggedUser;
+    this.subscriptions.push(this.sub2UserChange());
     this.subscriptions.push(this.sub2Generated());
   }
   onTeamClick(event) {
-
+    if(this.user.privilegeType=='Guest') return;
     let matchID = event.target.parentNode.id.match(/(\d+)/)![0];
     let thisMatch = this.matches.filter(m =>{ return m.Meccs_id == matchID})[0];
     if (!thisMatch) return;
@@ -170,9 +174,7 @@ export class SEBracketComponent implements OnInit {
       if(this.gameName != ""){
         this.matches = [];
         this.httpservice.getSEMatch(this.gameName).subscribe(data=>{
-          console.log('loading data', data);
           this.loadMatchesFromDataObject(data);
-          console.log('giving effects');
           this.giveEffects();
         })
       }
@@ -186,8 +188,12 @@ export class SEBracketComponent implements OnInit {
         this.httpservice.saveSEGame({body: this.matches, name: this.gameName, type: this.gameType}).subscribe({})
         this.saveCache();
         this.giveEffects();
-        console.log(this.matches);
     })
+  }
+  sub2UserChange(){
+    return this.userservice.userChanged.subscribe(()=>{
+      this.user = this.userservice.loggedUser
+    });
   }
   onPrintClick(){
     window.print();
@@ -196,8 +202,5 @@ export class SEBracketComponent implements OnInit {
     this.subscriptions.forEach((sub:Subscription) => {
       sub.unsubscribe();
     });  
-  }
-  ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
   }
 }

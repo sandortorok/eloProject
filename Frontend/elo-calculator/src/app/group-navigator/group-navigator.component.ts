@@ -1,3 +1,4 @@
+import { User, UserService } from './../services/user-service.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GroupGeneratorService } from './group-generator.service';
 import { GroupHelperService } from './group-helper.service';
@@ -20,17 +21,21 @@ export class GroupNavigatorComponent implements OnInit {
   matches:Match[];
   @Input() gameType:string;
   gameName: string;
+  user:User;
   private subscriptions: Array<Subscription> = [];
   constructor(
     private groupHelper: GroupHelperService, 
     private generator: GroupGeneratorService, 
     private modalService: NgbModal, 
     private rrhelper: RRHelperService,
-    private rrGenerator: RRGeneratorService
+    private rrGenerator: RRGeneratorService,
+    private userservice: UserService
   ) { }
 
   ngOnInit(): void {
     this.loadCache();
+    this.user = this.userservice.loggedUser;
+    this.subscriptions.push(this.sub2UserChange())
     this.subscriptions.push(this.groupGeneratedSub());
     this.subscriptions.push(this.groupHelperSub());
     this.subscriptions.push(this.RRHelperSub());
@@ -103,6 +108,11 @@ export class GroupNavigatorComponent implements OnInit {
       this.groupHelper.saveGroups(this.gameName, this.gameType, this.groups);
       this.saveCache();
     })
+  }
+  sub2UserChange(){
+    return this.userservice.userChanged.subscribe(()=>{
+      this.user = this.userservice.loggedUser
+    });
   }
   RRBracketUpdate(obj:{groups:Group[], matches:Match[]}){
     this.groups = obj.groups;
