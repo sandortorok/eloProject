@@ -6,7 +6,7 @@
         <p>{{gameName}}</p>
     </div>
 </header>
-<section *ngIf="matches!=undefined" id="bracket">
+<section *ngIf="user?.privilegeType == 'Admin' || matches!=undefined" id="bracket">
     <app-spinner *ngIf="matches != undefined && matches.length == 0"></app-spinner>
     <div *ngIf="!groupMode && user?.privilegeType == 'Admin'" class="btn-wrapper">
         <app-neon-button #new text="ÚJ BEOSZTÁS" (click)="onNewBracket()"></app-neon-button>

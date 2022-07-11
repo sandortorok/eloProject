@@ -76,46 +76,7 @@ export class RRBracketComponent implements OnInit {
   }
   giveHoverEffect() {
     let teamElements = this.container.nativeElement.querySelectorAll('li.team');
-    teamElements.forEach(el => {
-      if (el.onmouseover != null) el.onmouseover = null;
-      if (el.onmouseleave != null) el.onmouseleave = null;
-    });
-    let players:string[] = []
-    this.matches.forEach(match=>{
-      let p1 = match.Csapatok[0];
-      let p2 = match.Csapatok[1];
-      if(p1 != "" && !players.includes(p1)){
-        players.push(p1);
-      }
-      if(p2 != "" && !players.includes(p2)){
-        players.push(p2);
-      }
-    })
-    players.forEach(playerName => {
-      let samePlayer: any[] = []
-      teamElements.forEach(el => {
-        if (el.firstChild.textContent.trim() == playerName) {
-          samePlayer.push(el)
-        }
-      });
-      samePlayer.forEach(e => {
-        e.onmouseover = () => {
-          samePlayer.forEach(same => {
-            same.style.border = "1px solid rgb(71, 228, 9)";
-            same.style.opacity = 1;
-            same.style.boxShadow = "0 0 5px rgb(71, 228, 9), 0 0 25px rgb(71, 228, 9)"
-          })
-        }
-        e.onmouseleave = () => {
-          samePlayer.forEach(same => {
-            same.style.border = "";
-            same.style.opacity = "";
-            same.style.boxShadow = ""
-
-          })
-        }
-      })
-    });
+    this.rrhelper.giveHoverEffect(teamElements, this.matches)
   }
   onTeamClick(event){
     if(this.user.privilegeType=='Guest') return;
@@ -146,36 +107,7 @@ export class RRBracketComponent implements OnInit {
     })
   }
   updateGroups(updatedMatch:Match){
-    let p1 = updatedMatch.Csapatok[0];
-    let p2 = updatedMatch.Csapatok[1];
-    let winner = updatedMatch.Gyoztes;
-    let diff = 0;
-    if(updatedMatch.score0!=null && updatedMatch.score1!=null){
-      diff = Math.abs(updatedMatch.score0-updatedMatch.score1);
-    }
-    this.groups.forEach(group=>{
-      group.teams.forEach(team=>{
-        if(team.name == p1 || team.name == p2){
-          if(team.name == winner){
-            team.wins+=1;
-            team.points+=3;
-            team.last3Results.unshift('W');
-            team.diff += diff
-            if(team.last3Results.length > 3){
-              team.last3Results.pop();
-            }
-          }
-          else{
-            team.loses+=1;
-            team.diff -= diff
-            team.last3Results.unshift('L');
-            if(team.last3Results.length > 3){
-              team.last3Results.pop();
-            }
-          }
-        }
-      })
-    })
+    this.groups = this.rrhelper.updateGroups(this.groups, updatedMatch)
   }
   loadPlayerStats(){
     this.players = this.rrhelper.loadPlayerStats(this.matches)

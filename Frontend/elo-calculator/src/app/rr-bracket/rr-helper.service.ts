@@ -1,4 +1,6 @@
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EventEmitter, Injectable, Output } from '@angular/core';
+import { LoadModal } from '../modals/load-modal/load-modal.component';
 import { CacheElement, Group, Match } from '../services/data.service';
 import { HttpService } from '../services/http.service';
 import { playerScore } from './rr-bracket.component';
@@ -59,7 +61,7 @@ export class RRHelperService {
     this.httpservice.saveRRGame({body: matches, name: gameName, type:gameType, groupMode:groupMode}).subscribe({});
   }
   loadPlayerStats(matches:Match[]){
-    let players:playerScore[] = [];
+    let playerScores:playerScore[] = [];
     let playerNames:string[] = []
     matches.forEach(m=>{
       if(m.Csapatok[0]!= "" && !playerNames.includes(m.Csapatok[0])){
@@ -81,8 +83,82 @@ export class RRHelperService {
           }
         }
       })
-      players.push(newPlayerScore);
+      playerScores.push(newPlayerScore);
     });
-    return players;
+    return playerScores;
+  }
+  updateGroups(groups:Group[], updatedMatch:Match): Group[]{
+    let p1 = updatedMatch.Csapatok[0];
+    let p2 = updatedMatch.Csapatok[1];
+    let winner = updatedMatch.Gyoztes;
+    let diff = 0;
+    if(updatedMatch.score0!=null && updatedMatch.score1!=null){
+      diff = Math.abs(updatedMatch.score0-updatedMatch.score1);
+    }
+    groups.forEach(group=>{
+      group.teams.forEach(team=>{
+        if(team.name == p1 || team.name == p2){
+          if(team.name == winner){
+            team.wins+=1;
+            team.points+=3;
+            team.last3Results.unshift('W');
+            team.diff += diff
+            if(team.last3Results.length > 3){
+              team.last3Results.pop();
+            }
+          }
+          else{
+            team.loses+=1;
+            team.diff -= diff
+            team.last3Results.unshift('L');
+            if(team.last3Results.length > 3){
+              team.last3Results.pop();
+            }
+          }
+        }
+      })
+    })
+    return groups
+  }
+  giveHoverEffect(teamElements, matches){
+    teamElements.forEach(el => {
+      if (el.onmouseover != null) el.onmouseover = null;
+      if (el.onmouseleave != null) el.onmouseleave = null;
+    });
+    let players:string[] = []
+    matches.forEach(match=>{
+      let p1 = match.Csapatok[0];
+      let p2 = match.Csapatok[1];
+      if(p1 != "" && !players.includes(p1)){
+        players.push(p1);
+      }
+      if(p2 != "" && !players.includes(p2)){
+        players.push(p2);
+      }
+    })
+    players.forEach(playerName => {
+      let samePlayer: any[] = []
+      teamElements.forEach(el => {
+        if (el.firstChild.textContent.trim() == playerName) {
+          samePlayer.push(el)
+        }
+      });
+      samePlayer.forEach(e => {
+        e.onmouseover = () => {
+          samePlayer.forEach(same => {
+            same.style.border = "1px solid rgb(71, 228, 9)";
+            same.style.opacity = 1;
+            same.style.boxShadow = "0 0 5px rgb(71, 228, 9), 0 0 25px rgb(71, 228, 9)"
+          })
+        }
+        e.onmouseleave = () => {
+          samePlayer.forEach(same => {
+            same.style.border = "";
+            same.style.opacity = "";
+            same.style.boxShadow = ""
+          })
+        }
+      })
+    });
   }
 }

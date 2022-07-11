@@ -11,11 +11,16 @@ export class MenuComponent implements OnInit {
   @ViewChild('bracketnav') bracketnav;
   @Input() gamePlayed:string = ""
   @Input() mainNav;
+  se:boolean = false;
+  de:boolean = false;
+  rr:boolean = false;
+  gp:boolean = false;
   constructor(private httpservice: HttpService) { }
 
   ngOnInit(): void {
     this.httpservice.getCacheFromGame(this.gamePlayed).subscribe((res)=>{
       let myarray:Array<CacheElement> = Object.values(res);
+      this.setVariables(myarray)
       if(myarray.length > 0){
         let type =  myarray[0].bracketType;
         if (type == 'double-elimination'){
@@ -36,5 +41,26 @@ export class MenuComponent implements OnInit {
       }
     })
   }
-
+  colorHexes(){
+    this.httpservice.getCacheFromGame(this.gamePlayed).subscribe((res)=>{
+      let myarray:Array<CacheElement> = Object.values(res);
+      this.setVariables(myarray);
+    })
+  }
+  setVariables(arr:Array<CacheElement>){
+    arr.forEach(el=>{
+      if (el.bracketType == 'single-elimination'){
+        this.se = true;
+      }
+      if (el.bracketType == 'double-elimination'){
+        this.de = true;
+      }
+      if (el.bracketType == 'round-robin'){
+        this.rr = true;
+      }
+      if (el.bracketType == 'group-stage'){
+        this.gp = true;
+      }
+    })
+  }
 }

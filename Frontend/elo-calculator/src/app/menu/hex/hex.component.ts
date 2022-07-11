@@ -9,7 +9,10 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 export class HexComponent implements OnInit {
   @Input() icon = "";
   @Input() text = "";
-  constructor() { }
+
+  constructor() {
+    
+  }
 
   ngOnInit(): void {
   }

@@ -1,4 +1,10 @@
-$darkblue: #003688;
+::ng-deep :root {
+  --hexColor-inner: #003688;
+  --hexColor-outter: #ff0037;
+  --hexColor-inner-custom: #46237A;
+  --hexColor-outter-custom: #ff0037;
+} // we can also define variables with JavaScript,
+
 
 a {
   color: inherit;
@@ -80,7 +86,11 @@ a:focus {
 
 .hexagon-item:hover .hex-item div::before,
 .hexagon-item:hover .hex-item div::after {
-  background-color: #ff0037;
+  background-color: var(--hexColor-outter);
+}
+:host-context(.customHex) .hexagon-item:hover .hex-item div::before,
+:host-context(.customHex) .hexagon-item:hover .hex-item div::after {
+  background-color: var(--hexColor-outter-custom) !important;
 }
 
 .hexagon-item:hover .hex-content svg {
@@ -132,7 +142,7 @@ a:focus {
 
 .hex-item div::before,
 .hex-item div::after {
-  background-color: $darkblue;
+  background-color: var(--hexColor-inner);
   content: "";
   position: absolute;
   width: 100%;
@@ -141,6 +151,10 @@ a:focus {
   -moz-transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) 0s;
   -o-transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) 0s;
   transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) 0s;
+}
+:host-context(.customHex) .hex-item div::before,
+:host-context(.customHex) .hex-item div::after {
+  background-color: var(--hexColor-inner-custom) !important;
 }
 
 .hex-item div:before {
@@ -243,11 +257,12 @@ a:focus {
 
 
 .hexagon-item:hover .icon i {
-  color: #ff0037;
+  color: var(--hexColor-outter);
   transition: 0.6s;
-
 }
-
+:host-context(.customHex) .hexagon-item:hover .icon i {
+  color: var(--hexColor-outter-custom) !important;
+}
 
 .hexagon-item:hover .title {
   -webkit-animation: focus-in-contract 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
@@ -285,6 +300,14 @@ a:focus {
     opacity: 1;
   }
 }
+
+path{
+  fill: var(--hexColor-inner)
+}
+:host-context(.customHex) path{
+  fill: var(--hexColor-inner-custom) !important
+}
+
 
 
 

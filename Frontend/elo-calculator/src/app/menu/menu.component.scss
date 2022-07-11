@@ -60,6 +60,10 @@ $background: #003688;
     flex-wrap: wrap;
     margin-top: 5rem;
 }
+
+.rotated{
+    filter:hue-rotate(325deg);
+}
 @media screen and (max-width: 500px) {
     .arrow-container {
         top: 330px;

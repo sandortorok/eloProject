@@ -1,5 +1,5 @@
 <div class="arrow-container">
-    <div class="arrow-2" (click)="bracketnav.activeId != 0 ? bracketnav.select(0): mainNav.select(0)">
+    <div class="arrow-2" (click)="bracketnav.activeId != 0 ? bracketnav.select(0): mainNav.select(0); colorHexes()">
       <i class="fa fa-angle-left"></i>
     </div>
 </div>
@@ -8,11 +8,11 @@
         <a ngbNavLink>HOME</a>
         <ng-template ngbNavContent>
             <div class="hex-wrapper">
-                <app-hex icon="fa-users" text = "Csoport mérkőzések" (click)="bracketnav.select(1)"></app-hex>
-                <app-hex icon="fa-user" text = "Elo Pontok" (click)="bracketnav.select(5)"></app-hex>
-                <app-hex icon="fa-angle-right" text = "Egyenes kiesés" (click)="bracketnav.select(2)"></app-hex>
-                <app-hex icon="fa-angle-double-right" text = "Vigaszágas kiesés" (click)="bracketnav.select(3)"></app-hex>
-                <app-hex icon="fa-rotate-right" text = "Körmérkőzés" (click)="bracketnav.select(4)"></app-hex>
+                <app-hex icon="fa-users" text = "Csoport mérkőzések" (click)="bracketnav.select(1)" [class.customHex]="gp"></app-hex>
+                <app-hex icon="fa-user" text = "Elo Pontok" (click)="bracketnav.select(5)" class="customHex"></app-hex>
+                <app-hex icon="fa-angle-right" text = "Egyenes kiesés" (click)="bracketnav.select(2)" [class.customHex]="se"></app-hex>
+                <app-hex icon="fa-angle-double-right" text = "Vigaszágas kiesés" (click)="bracketnav.select(3)" [class.customHex]="de"></app-hex>
+                <app-hex icon="fa-rotate-right" text = "Körmérkőzés" (click)="bracketnav.select(4)" [class.customHex]="rr"></app-hex>
             </div>
         </ng-template>
     </li>

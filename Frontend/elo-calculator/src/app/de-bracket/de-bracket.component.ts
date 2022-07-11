@@ -200,7 +200,7 @@ export class DEBracketComponent implements OnInit {
           nextMatch.Csapatok[1-thisMatch.bottom] = thisMatch.Gyoztes; //Ha már foglalt a hely berakjuk a másikba
         }
       }
-      this.httpservice.saveDEGame({body: this.matches, name: this.gameName, type:this.gameType}).subscribe({})
+      this.saveDEGame();
       this.saveCache();
       this.giveEffects();
     })
@@ -211,9 +211,10 @@ export class DEBracketComponent implements OnInit {
   saveCache(){
     this.httpservice.saveCache({gameName: this.gameName, bracketType:'double-elimination', gameType:this.gameType}).subscribe({})
   }
-  onPrintClick(){
-    window.print()
+  saveDEGame(){
+    this.httpservice.saveDEGame({body: this.matches, name: this.gameName, type:this.gameType}).subscribe({})
   }
+
   loadMatchesFromDataObject(data){
     let myarray = Object.values(data);
     myarray.forEach((match:any)=>{
@@ -258,6 +259,9 @@ export class DEBracketComponent implements OnInit {
   }
   viewChange(){
     this.desktopView = !this.desktopView;
+  }
+  onPrintClick(){
+    window.print()
   }
   ngOnDestroy(){
     this.subscriptions.forEach((sub:Subscription) => {
