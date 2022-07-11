@@ -50,7 +50,16 @@ $background: #003688;
     text-align: center;
     color: $border;
 }
-
+.hex-wrapper{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    margin: 0;
+    height: 300px;
+    text-align: start;
+    flex-wrap: wrap;
+    margin-top: 5rem;
+}
 @media screen and (max-width: 500px) {
     .arrow-container {
         top: 330px;

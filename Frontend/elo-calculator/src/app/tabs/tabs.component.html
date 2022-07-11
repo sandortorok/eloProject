@@ -1,92 +1,98 @@
 
-<div class="logout">
-    <p style="text-align: center;">{{user?.username}}</p>
-    <button class="bn29" (click)="logoutEvent.emit()">KILÉPÉS</button>
+<div [style]="desktopView? 'min-width: 1800px':''">
+    <div class="logout">
+        <p style="text-align: center;">{{user?.username}}</p>
+        <button class="bn29" (click)="logoutEvent.emit()">KILÉPÉS</button>
+    </div>
+    <button class="myheader" (click)="mynav.select(0)">
+        <img src="assets/header3.png">
+    </button>
+    <ul ngbNav #mynav="ngbNav" style="display: none;">
+        <li [ngbNavItem] = "0">
+            <a ngbNavLink>HOME</a>
+            <ng-template ngbNavContent>
+                <button class = "icon icon1" (click)="mynav.select(1)">
+                    <img src="assets/chess_icon2.png">
+                    <span style="margin-top: 20px;">Sakk</span>
+                </button>
+                <button class = "icon icon2" (click)="mynav.select(2)">
+                    <img src="assets/pingpong_icon5.png">
+                    <span style="margin-top: 20px;">Ping-Pong</span>
+                </button>
+                <button class = "icon icon6" (click)="mynav.select(6)">
+                    <img src="assets/pingpong_icon5.png">
+                    <span style="margin-top: 20px;">Páros</span>
+                </button>
+                <button class = "icon icon3" (click)="mynav.select(3)">
+                    <img src="assets/klask_icon2.png">
+                    <span style="margin-top: 20px;">Klask</span>
+                </button>
+                <button class = "icon icon5" (click)="mynav.select(5)">
+                    <img src="assets/csocso_icon2.png">
+                    <span style="margin-top: 20px;">Csocsó</span>
+                </button>
+                <button class = "icon icon4" (click)="mynav.select(4)">
+                    <img src="assets/volley_icon3.png">
+                    <span style="margin-top: 20px;">Röplabda</span>
+                </button>
+                <button class = "icon icon7" (click)="mynav.select(7)">
+                    <img src="assets/frizbi_icon2.png">
+                    <span style="margin-top: 20px;">Frizbi</span>
+                </button>
+                <button class = "icon icon8" (click)="mynav.select(8)">
+                    <img src="assets/basketball_icon2.png">
+                    <span style="margin-top: 20px;">Kosárlabda</span>
+                </button>
+                <button class = "icon icon9" (click)="mynav.select(9)">
+                    <img src="assets/football_icon2.png">
+                    <span style="margin-top: 20px;">Dekázás</span>
+                </button>
+            </ng-template>
+        </li>
+        <li [ngbNavItem] = "1" >
+            <a ngbNavLink>Sakk</a>
+            <ng-template ngbNavContent><app-menu gamePlayed="sakk" [mainNav]="mynav"></app-menu></ng-template>
+        </li>
+        <li [ngbNavItem] = "2" >
+            <a ngbNavLink>Ping-Pong</a>
+            <ng-template ngbNavContent><app-menu gamePlayed="ping-pong" [mainNav]="mynav"></app-menu></ng-template>
+        </li>
+        
+        <li [ngbNavItem] = "3" >
+            <a ngbNavLink>Klask</a>
+            <ng-template ngbNavContent><app-menu gamePlayed="klask" [mainNav]="mynav"></app-menu></ng-template>
+        </li>
+        <li [ngbNavItem] = "4">
+            <a ngbNavLink>Röplabda</a>
+            <ng-template ngbNavContent><app-menu gamePlayed="röplabda" [mainNav]="mynav"></app-menu></ng-template>
+        </li>
+        <li [ngbNavItem] = "5">
+            <a ngbNavLink>Csocsó</a>
+            <ng-template ngbNavContent><app-menu gamePlayed="csocsó" [mainNav]="mynav"></app-menu></ng-template>
+        </li>
+        <li [ngbNavItem] = "6">
+            <a ngbNavLink>Ping-Pong Páros</a>
+            <ng-template ngbNavContent><app-menu gamePlayed="ping-pong-páros" [mainNav]="mynav"></app-menu></ng-template>
+        </li>
+        <li [ngbNavItem] = "7">
+            <a ngbNavLink>frizbi</a>
+            <ng-template ngbNavContent><app-menu gamePlayed="frizbi" [mainNav]="mynav"></app-menu></ng-template>
+        </li>
+        <li [ngbNavItem] = "8">
+            <a ngbNavLink>kosárlabda</a>
+            <ng-template ngbNavContent><app-menu gamePlayed="kosárlabda" [mainNav]="mynav"></app-menu></ng-template>
+        </li>
+        <li [ngbNavItem] = "9">
+            <a ngbNavLink>dekázás</a>
+            <ng-template ngbNavContent><app-menu gamePlayed="dekázás" [mainNav]="mynav"></app-menu></ng-template>
+        </li>
+    </ul>
+    <div [ngbNavOutlet]="mynav" class="items"></div>
+    <div style="display: flex; align-items:center; justify-content:center; margin-top:5rem">
+        <div class="switch-button">
+            <input class="switch-button-checkbox" type="checkbox" (change)="viewChange()">
+            <label class="switch-button-label" for=""><span class="switch-button-label-span">Normal</span></label>
+        </div>
+    </div>
+    <!-- /#wrapper -->
 </div>
-<button class="myheader" (click)="mynav.select(0)">
-    <img src="assets/header3.png">
-</button>
-<ul ngbNav #mynav="ngbNav" style="display: none;">
-    <li [ngbNavItem] = "0">
-        <a ngbNavLink>HOME</a>
-        <ng-template ngbNavContent>
-            <button class = "icon icon1" (click)="mynav.select(1)">
-                <img src="assets/chess_icon2.png">
-                <span style="margin-top: 20px;">Sakk</span>
-            </button>
-            <button class = "icon icon2" (click)="mynav.select(2)">
-                <img src="assets/pingpong_icon5.png">
-                <span style="margin-top: 20px;">Ping-Pong</span>
-            </button>
-            <button class = "icon icon6" (click)="mynav.select(6)">
-                <img src="assets/pingpong_icon5.png">
-                <span style="margin-top: 20px;">Páros</span>
-            </button>
-            <button class = "icon icon3" (click)="mynav.select(3)">
-                <img src="assets/klask_icon2.png">
-                <span style="margin-top: 20px;">Klask</span>
-            </button>
-            <button class = "icon icon5" (click)="mynav.select(5)">
-                <img src="assets/csocso_icon2.png">
-                <span style="margin-top: 20px;">Csocsó</span>
-            </button>
-            <button class = "icon icon4" (click)="mynav.select(4)">
-                <img src="assets/volley_icon3.png">
-                <span style="margin-top: 20px;">Röplabda</span>
-            </button>
-            <button class = "icon icon7" (click)="mynav.select(7)">
-                <img src="assets/frizbi_icon2.png">
-                <span style="margin-top: 20px;">Frizbi</span>
-            </button>
-            <button class = "icon icon8" (click)="mynav.select(8)">
-                <img src="assets/basketball_icon2.png">
-                <span style="margin-top: 20px;">Kosárlabda</span>
-            </button>
-            <button class = "icon icon9" (click)="mynav.select(9)">
-                <img src="assets/football_icon2.png">
-                <span style="margin-top: 20px;">Dekázás</span>
-            </button>
-        </ng-template>
-    </li>
-    <li [ngbNavItem] = "1" >
-        <a ngbNavLink>Sakk</a>
-        <ng-template ngbNavContent><app-menu gamePlayed="sakk" [mainNav]="mynav"></app-menu></ng-template>
-    </li>
-    <li [ngbNavItem] = "2" >
-        <a ngbNavLink>Ping-Pong</a>
-        <ng-template ngbNavContent><app-menu gamePlayed="ping-pong" [mainNav]="mynav"></app-menu></ng-template>
-    </li>
-
-    <li [ngbNavItem] = "3" >
-        <a ngbNavLink>Klask</a>
-        <ng-template ngbNavContent><app-menu gamePlayed="klask" [mainNav]="mynav"></app-menu></ng-template>
-    </li>
-    <li [ngbNavItem] = "4">
-        <a ngbNavLink>Röplabda</a>
-        <ng-template ngbNavContent><app-menu gamePlayed="röplabda" [mainNav]="mynav"></app-menu></ng-template>
-    </li>
-    <li [ngbNavItem] = "5">
-        <a ngbNavLink>Csocsó</a>
-        <ng-template ngbNavContent><app-menu gamePlayed="csocsó" [mainNav]="mynav"></app-menu></ng-template>
-    </li>
-    <li [ngbNavItem] = "6">
-        <a ngbNavLink>Ping-Pong Páros</a>
-        <ng-template ngbNavContent><app-menu gamePlayed="ping-pong-páros" [mainNav]="mynav"></app-menu></ng-template>
-    </li>
-    <li [ngbNavItem] = "7">
-        <a ngbNavLink>frizbi</a>
-        <ng-template ngbNavContent><app-menu gamePlayed="frizbi" [mainNav]="mynav"></app-menu></ng-template>
-    </li>
-    <li [ngbNavItem] = "8">
-        <a ngbNavLink>kosárlabda</a>
-        <ng-template ngbNavContent><app-menu gamePlayed="kosárlabda" [mainNav]="mynav"></app-menu></ng-template>
-    </li>
-    <li [ngbNavItem] = "9">
-        <a ngbNavLink>dekázás</a>
-        <ng-template ngbNavContent><app-menu gamePlayed="dekázás" [mainNav]="mynav"></app-menu></ng-template>
-    </li>
-</ul>
-  
-
-<div [ngbNavOutlet]="mynav" class="items"></div>
-<!-- /#wrapper -->

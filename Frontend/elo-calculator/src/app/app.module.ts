@@ -31,6 +31,7 @@ import { GroupNavigatorComponent } from './group-navigator/group-navigator.compo
 import { GroupPipe } from './pipes/group.pipe';
 import { GroupNamePipe } from './pipes/group-name.pipe';
 import { LoginFormComponent } from './login-form/login-form.component';
+import { InfoModal } from './modals/info-modal/info-modal.component';
 
 
 @NgModule({
@@ -59,6 +60,7 @@ import { LoginFormComponent } from './login-form/login-form.component';
     GroupPipe,
     GroupNamePipe,
     LoginFormComponent,
+    InfoModal,
 
   ],
   imports: [

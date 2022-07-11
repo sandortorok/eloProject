@@ -5,23 +5,24 @@
 <link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Istok+Web|Roboto+Condensed:700' rel='stylesheet' type='text/css'>
 
+<div >
+    <ul ngbNav #loginNav="ngbNav" style="display: none;">
+        <li [ngbNavItem] = "1">
+            <a ngbNavLink>GROUPS</a>
+            <ng-template ngbNavContent>
+                <app-login-form (loginEvent)="loginNav.select(2)" (loginEvent)="login($event)"></app-login-form>
+            </ng-template>
+        </li>
+        <li [ngbNavItem] = "2" >
+            <a ngbNavLink>Matches</a>
+            <ng-template ngbNavContent>
+                <app-tabs (logoutEvent)="loginNav.select(1)"></app-tabs>
+            </ng-template>
+        </li>
+    </ul>
 
-<ul ngbNav #loginNav="ngbNav" style="display: none;">
-    <li [ngbNavItem] = "1">
-        <a ngbNavLink>GROUPS</a>
-        <ng-template ngbNavContent>
-            <app-login-form (loginEvent)="loginNav.select(2)" (loginEvent)="login($event)"></app-login-form>
-        </ng-template>
-    </li>
-    <li [ngbNavItem] = "2" >
-        <a ngbNavLink>Matches</a>
-        <ng-template ngbNavContent>
-            <app-tabs (logoutEvent)="loginNav.select(1)"></app-tabs>
-        </ng-template>
-    </li>
-</ul>
-
-<div [ngbNavOutlet]="loginNav" class="items"></div>
+    <div [ngbNavOutlet]="loginNav" class="items"></div>
+</div>
 
 <router-outlet></router-outlet>
 <!-- <app-tabs></app-tabs> -->

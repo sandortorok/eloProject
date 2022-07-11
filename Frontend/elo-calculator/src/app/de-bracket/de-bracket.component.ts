@@ -1,3 +1,4 @@
+import { InfoModal } from './../modals/info-modal/info-modal.component';
 import { User, UserService } from './../services/user-service.service';
 import { WinModal } from '../modals/win-modal/win-modal.component';
 import { SaveModal } from '../modals/save-modal/save-modal.component';
@@ -151,7 +152,10 @@ export class DEBracketComponent implements OnInit {
     })
   }
   onTeamClick(event){
-    if(this.user.privilegeType=='Guest') return;
+    if(this.user.privilegeType=='Guest'){
+      this.openInfoModal()
+      return;
+    };
     event.target.parentNode.id;
     let matchID = event.target.parentNode.id.match(/(\d+)/)![0];
     let thisMatch = this.matches.filter(m =>{ return m.Meccs_id == matchID})[0];
@@ -199,6 +203,9 @@ export class DEBracketComponent implements OnInit {
       this.saveCache();
       this.giveEffects();
     })
+  }
+  openInfoModal(){
+    const modalRef = this.modalService.open(InfoModal, { centered: true });
   }
   saveCache(){
     this.httpservice.saveCache({gameName: this.gameName, bracketType:'double-elimination', gameType:this.gameType}).subscribe({})

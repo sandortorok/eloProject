@@ -20,4 +20,5 @@ export class AppComponent {
   logout(){
     // this.userservice.loggedUser = undefined;
   }
+
 }
