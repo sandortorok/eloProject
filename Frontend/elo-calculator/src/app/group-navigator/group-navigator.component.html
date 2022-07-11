@@ -1,5 +1,5 @@
 
-<div class="btn-wrapper">
+<div *ngIf="matches!=undefined" class="btn-wrapper">
     <app-neon-button text="CSOPORTOK" style="filter:hue-rotate(100deg);" (click)="groupstage.select(1)"></app-neon-button>
     <app-neon-button text="MECCSEK" style="filter:hue-rotate(100deg);" (click)="groupstage.select(2)"></app-neon-button>
 </div>
@@ -9,7 +9,7 @@
     <app-neon-button #save text="MENTÉS" (click)="onSave()"></app-neon-button>
     <app-neon-button text="NYOMTATÁS" style="filter:hue-rotate(300deg);" (click)="onPrintClick()"></app-neon-button>
 </div>
-<header class="hero">
+<header *ngIf="matches!=undefined" class="hero">
     <div class="hero-wrap">
         <p class="intro" id="intro" style="margin-bottom: 0;">Pányok</p>
         <h1 id="headline">{{gameType| gameType}} Bajnokság</h1>
@@ -41,3 +41,4 @@
 </ul>
 
 <div [ngbNavOutlet]="groupstage" class="items"></div>
+<app-wait-screen *ngIf="user?.privilegeType != 'Admin' && matches == undefined"></app-wait-screen>

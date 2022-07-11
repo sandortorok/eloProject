@@ -22,6 +22,7 @@ export class DEBracketComponent implements OnInit {
   gameName:string = "";
   user:User;
   @Input() gameType:string;
+  desktopView:boolean = false;
   private subscriptions: Array<Subscription> = [];
 
   constructor(
@@ -254,6 +255,9 @@ export class DEBracketComponent implements OnInit {
     return this.userservice.userChanged.subscribe(()=>{
       this.user = this.userservice.loggedUser
     });
+  }
+  viewChange(){
+    this.desktopView = !this.desktopView;
   }
   ngOnDestroy(){
     this.subscriptions.forEach((sub:Subscription) => {

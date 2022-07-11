@@ -1,5 +1,4 @@
 
-<div [style]="desktopView? 'min-width: 1800px':''">
     <div class="logout">
         <p style="text-align: center;">{{user?.username}}</p>
         <button class="bn29" (click)="logoutEvent.emit()">KILÉPÉS</button>
@@ -88,11 +87,5 @@
         </li>
     </ul>
     <div [ngbNavOutlet]="mynav" class="items"></div>
-    <div style="display: flex; align-items:center; justify-content:center; margin-top:5rem">
-        <div class="switch-button">
-            <input class="switch-button-checkbox" type="checkbox" (change)="viewChange()">
-            <label class="switch-button-label" for=""><span class="switch-button-label-span">Normal</span></label>
-        </div>
-    </div>
+
     <!-- /#wrapper -->
-</div>

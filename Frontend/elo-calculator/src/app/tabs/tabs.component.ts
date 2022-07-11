@@ -10,7 +10,6 @@ import { SEGeneratorService } from '../se-bracket/se-generator.service';
 export class TabsComponent implements OnInit {
   @Output() logoutEvent = new EventEmitter();
   user:User;
-  desktopView:boolean = false;
 
   constructor(private userservice: UserService) { }
 
@@ -19,7 +18,5 @@ export class TabsComponent implements OnInit {
       this.user = this.userservice.loggedUser
     });
   }
-  viewChange(){
-    this.desktopView = !this.desktopView;
-  }
+
 }

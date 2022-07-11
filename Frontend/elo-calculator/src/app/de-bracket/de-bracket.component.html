@@ -1,72 +1,82 @@
-<header class="hero">
-    <div class="hero-wrap">
-        <p class="intro" id="intro" style="margin-bottom: 0;">Pányok</p>
-        <h1 id="headline">{{gameType | gameType}} Bajnokság</h1>
-        <p class="year"><i class="fa fa-star"></i> 2022 <i class="fa fa-star"></i></p>
-        <p>{{gameName}}</p>
-    </div>
-</header>
-<section id="bracket">
-    <div *ngIf="user?.privilegeType == 'Admin'" class="btn-wrapper">
-        <app-neon-button #new text="ÚJ BEOSZTÁS" (click)="onNewBracket()"></app-neon-button>
-        <app-neon-button #load text="BETŐLTÉS" style="filter:hue-rotate(300deg);" (click)="onLoad()"></app-neon-button>
-        <app-neon-button #save text="MENTÉS" (click)="onSave()"></app-neon-button>
-        <app-neon-button text="NYOMTATÁS" style="filter:hue-rotate(300deg);" (click)="onPrintClick()"></app-neon-button>
-    </div>
-    <app-spinner *ngIf="matches != undefined && matches.length == 0"></app-spinner>
-    <div *ngIf="matches != undefined && matches.length > 0" class="container" #container>
-        <div class="split-wrap winners-bracket">
-            <h1>EGYENES ÁG</h1>
-            <div class="split">
-                <div *ngFor="let round of matches | rounds: 'winner'; let i = index" class="round round-{{i+1}}">
-                    <div class="round-details">{{i+1}}. Forduló <br /><span class="date">KEDD</span></div>
-                    <ul *ngFor="let match of round" class="matchup" id="match {{match.Meccs_id}}">
-                        <span class="matchNumber">{{match.Meccs_id}}</span>
-                        <li class="team" (click)="onTeamClick($event)"
-                            [class.win]="match.Csapatok![0]==match.Gyoztes && match.Gyoztes.length > 0">
-                            {{match.Csapatok![0]}}<span class="score">{{match.score0}}</span></li>
-                        <li class="team" (click)="onTeamClick($event)"
-                            [class.win]="match.Csapatok![1]==match.Gyoztes  && match.Gyoztes.length > 0">
-                            {{match.Csapatok![1]}}<span class="score">{{match.score1}}</span></li>
-                    </ul>
-                </div> <!-- END ROUND ONE -->
-            </div>
+<div [style]="desktopView? 'min-width: 1800px':''">
+    <header *ngIf="matches != undefined" class="hero">
+        <div class="hero-wrap">
+            <p class="intro" id="intro" style="margin-bottom: 0;">Pányok</p>
+            <h1 id="headline">{{gameType | gameType}} Bajnokság</h1>
+            <p class="year"><i class="fa fa-star"></i> 2022 <i class="fa fa-star"></i></p>
+            <p>{{gameName}}</p>
         </div>
-        <div class="split-wrap losers-bracket">
-            <h1>VIGASZÁG</h1>
-            <div class="split">
-                <div *ngFor="let round of matches | rounds: 'loser'; let i = index" class="round loser-round-{{i+1}}">
-                    <div class="round-details">{{i+1}}. Forduló <br /><span class="date">KEDD</span></div>
-                    <ul *ngFor="let match of round" class="matchup loser-matchup" id="match {{match.Meccs_id}}"
-                        [class.bye]="match.Csapatok![0].length <= 0 && match.Csapatok![1].length <=0 && i == 0">
-                        <span class="matchNumber" style="display: hidden"></span>
-                        <li class="team" (click)="onTeamClick($event)"
-                            [class.win]="match.Csapatok![0]==match.Gyoztes && match.Gyoztes.length > 0">
-                            {{match.Csapatok![0]}}<span class="score">{{match.score0}}</span></li>
-                        <li class="team" (click)="onTeamClick($event)"
-                            [class.win]="match.Csapatok![1]==match.Gyoztes  && match.Gyoztes.length > 0">
-                            {{match.Csapatok![1]}}<span class="score">{{match.score1}}</span></li>
-                    </ul>
+    </header>
+    <section *ngIf="user?.privilegeType == 'Admin' || matches != undefined" id="bracket">
+        <div *ngIf="user?.privilegeType == 'Admin'" class="btn-wrapper">
+            <app-neon-button #new text="ÚJ BEOSZTÁS" (click)="onNewBracket()"></app-neon-button>
+            <app-neon-button #load text="BETŐLTÉS" style="filter:hue-rotate(300deg);" (click)="onLoad()"></app-neon-button>
+            <app-neon-button #save text="MENTÉS" (click)="onSave()"></app-neon-button>
+            <app-neon-button text="NYOMTATÁS" style="filter:hue-rotate(300deg);" (click)="onPrintClick()"></app-neon-button>
+        </div>
+        <app-spinner *ngIf="matches != undefined && matches.length == 0"></app-spinner>
+        <div *ngIf="matches != undefined && matches.length > 0" class="container" #container>
+            <div class="split-wrap winners-bracket">
+                <h1>EGYENES ÁG</h1>
+                <div class="split">
+                    <div *ngFor="let round of matches | rounds: 'winner'; let i = index" class="round round-{{i+1}}">
+                        <div class="round-details">{{i+1}}. Forduló <br /><span class="date">KEDD</span></div>
+                        <ul *ngFor="let match of round" class="matchup" id="match {{match.Meccs_id}}">
+                            <span class="matchNumber">{{match.Meccs_id}}</span>
+                            <li class="team" (click)="onTeamClick($event)"
+                                [class.win]="match.Csapatok![0]==match.Gyoztes && match.Gyoztes.length > 0">
+                                {{match.Csapatok![0]}}<span class="score">{{match.score0}}</span></li>
+                            <li class="team" (click)="onTeamClick($event)"
+                                [class.win]="match.Csapatok![1]==match.Gyoztes  && match.Gyoztes.length > 0">
+                                {{match.Csapatok![1]}}<span class="score">{{match.score1}}</span></li>
+                        </ul>
+                    </div> <!-- END ROUND ONE -->
+                </div>
+            </div>
+            <div class="split-wrap losers-bracket">
+                <h1>VIGASZÁG</h1>
+                <div class="split">
+                    <div *ngFor="let round of matches | rounds: 'loser'; let i = index" class="round loser-round-{{i+1}}">
+                        <div class="round-details">{{i+1}}. Forduló <br /><span class="date">KEDD</span></div>
+                        <ul *ngFor="let match of round" class="matchup loser-matchup" id="match {{match.Meccs_id}}"
+                            [class.bye]="match.Csapatok![0].length <= 0 && match.Csapatok![1].length <=0 && i == 0">
+                            <span class="matchNumber" style="display: hidden"></span>
+                            <li class="team" (click)="onTeamClick($event)"
+                                [class.win]="match.Csapatok![0]==match.Gyoztes && match.Gyoztes.length > 0">
+                                {{match.Csapatok![0]}}<span class="score">{{match.score0}}</span></li>
+                            <li class="team" (click)="onTeamClick($event)"
+                                [class.win]="match.Csapatok![1]==match.Gyoztes  && match.Gyoztes.length > 0">
+                                {{match.Csapatok![1]}}<span class="score">{{match.score1}}</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="split-wrap final-bracket">
+                <h1>DÖNTŐK</h1>
+                <div class="split">
+                    <div *ngFor="let round of matches | rounds: 'final'; let i = index" class="round loser-round-{{i+1}}">
+                        <div class="round-details">{{i+1}}. Forduló <br /><span class="date">KEDD</span></div>
+                        <ul *ngFor="let match of round" class="matchup loser-matchup" id="match {{match.Meccs_id}}"
+                            [class.bye]="match.Csapatok![0].length <= 0 && match.Csapatok![1].length <=0 && i == 0">
+                            <span class="matchNumber" style="display: hidden"></span>
+                            <li class="team" (click)="onTeamClick($event)"
+                                [class.win]="match.Csapatok![0]==match.Gyoztes && match.Gyoztes.length > 0">
+                                {{match.Csapatok![0]}}<span class="score">{{match.score0}}</span></li>
+                            <li class="team" (click)="onTeamClick($event)"
+                                [class.win]="match.Csapatok![1]==match.Gyoztes  && match.Gyoztes.length > 0">
+                                {{match.Csapatok![1]}}<span class="score">{{match.score1}}</span></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="split-wrap final-bracket">
-            <h1>DÖNTŐK</h1>
-            <div class="split">
-                <div *ngFor="let round of matches | rounds: 'final'; let i = index" class="round loser-round-{{i+1}}">
-                    <div class="round-details">{{i+1}}. Forduló <br /><span class="date">KEDD</span></div>
-                    <ul *ngFor="let match of round" class="matchup loser-matchup" id="match {{match.Meccs_id}}"
-                        [class.bye]="match.Csapatok![0].length <= 0 && match.Csapatok![1].length <=0 && i == 0">
-                        <span class="matchNumber" style="display: hidden"></span>
-                        <li class="team" (click)="onTeamClick($event)"
-                            [class.win]="match.Csapatok![0]==match.Gyoztes && match.Gyoztes.length > 0">
-                            {{match.Csapatok![0]}}<span class="score">{{match.score0}}</span></li>
-                        <li class="team" (click)="onTeamClick($event)"
-                            [class.win]="match.Csapatok![1]==match.Gyoztes  && match.Gyoztes.length > 0">
-                            {{match.Csapatok![1]}}<span class="score">{{match.score1}}</span></li>
-                    </ul>
-                </div>
-            </div>
+    </section>
+    <div *ngIf="matches != undefined && matches.length > 0" style="display: flex; align-items:center; justify-content:center; margin-top:5rem">
+        <div class="switch-button">
+            <input class="switch-button-checkbox" type="checkbox" (change)="viewChange()">
+            <label class="switch-button-label" for=""><span class="switch-button-label-span">Normal</span></label>
         </div>
     </div>
-</section>
+</div>
+
+<app-wait-screen *ngIf="user?.privilegeType != 'Admin' && matches == undefined"></app-wait-screen>

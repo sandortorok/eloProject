@@ -4,6 +4,7 @@
     overflow: hidden;
     color: #fcfcfc;
 }
+
 .hero h1 {
     font-family: "Holtwood One SC", serif;
     font-weight: normal;
@@ -13,6 +14,7 @@
     text-transform: uppercase;
     letter-spacing: -1px;
 }
+
 .hero p {
     font-family: "Abel", sans-serif;
     text-transform: uppercase;
@@ -21,9 +23,11 @@
     text-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
     font-size: 1.2em;
 }
+
 .hero-wrap {
     padding: 3.5em 10px;
 }
+
 .hero p.intro {
     font-family: "Holtwood One SC", serif;
     text-transform: uppercase;
@@ -31,16 +35,19 @@
     font-size: 3em;
     margin-bottom: -40px;
 }
+
 .hero p.year {
     color: #fff;
     letter-spacing: 20px;
     font-size: 34px;
     margin: -25px 0 25px;
 }
+
 .hero p.year i {
     font-size: 14px;
     vertical-align: middle;
 }
+
 #bracket {
 
     overflow: hidden;
@@ -102,7 +109,7 @@
 }
 
 .team {
-    color:black;
+    color: black;
     padding: 0 5px;
     margin: 3px 0;
     height: 25px;
@@ -267,8 +274,6 @@ h1 {
     background-color: rgb(71, 228, 9) !important;
 }
 
-
-
 .btn-wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -280,6 +285,77 @@ h1 {
 .btn-wrapper>* {
     margin-right: 5%;
     margin-left: 5%;
+}
+
+.switch-button {
+    background: rgba(255, 255, 255, 0.56);
+    border-radius: 30px;
+    overflow: hidden;
+    width: 240px;
+    text-align: center;
+    font-size: 18px;
+    letter-spacing: 1px;
+    color: #155FFF;
+    position: relative;
+    padding-right: 120px;
+    position: relative;
+    box-sizing: border-box;
+    &:before {
+        content: "Desktop";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        width: 120px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 3;
+        pointer-events: none;
+    }
+
+    &-checkbox {
+        cursor: pointer;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        padding:0;
+        z-index: 2;
+
+        &:checked+.switch-button-label:before {
+            transform: translateX(120px);
+            transition: transform 300ms linear;
+        }
+
+        &+.switch-button-label {
+            position: relative;
+            margin:0;
+            padding: 15px 0;
+            display: block;
+            user-select: none;
+            pointer-events: none;
+            &:before {
+                content: "";
+                background: #fff;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                left: 0;
+                top: 0;
+                border-radius: 30px;
+                transform: translateX(0);
+                transition: transform 300ms;
+            }
+
+            .switch-button-label-span {
+                position: relative;
+            }
+        }
+    }
 }
 
 @media screen and (max-width: 1500px) {

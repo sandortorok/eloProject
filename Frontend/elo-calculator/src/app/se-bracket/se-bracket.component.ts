@@ -21,6 +21,8 @@ export class SEBracketComponent implements OnInit {
   gameName:string = "";
   user:User;
   @Input() gameType;
+  desktopView:boolean = false;
+
   private subscriptions: Array<Subscription> = [];
 
   constructor(private bracket: SEGeneratorService, private modalService: NgbModal, private httpservice: HttpService, private userservice: UserService) {}
@@ -197,6 +199,9 @@ export class SEBracketComponent implements OnInit {
   }
   onPrintClick(){
     window.print();
+  }
+  viewChange(){
+    this.desktopView = !this.desktopView;
   }
   ngOnDestroy(){
     this.subscriptions.forEach((sub:Subscription) => {

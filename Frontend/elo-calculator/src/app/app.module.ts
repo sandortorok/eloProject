@@ -32,6 +32,7 @@ import { GroupPipe } from './pipes/group.pipe';
 import { GroupNamePipe } from './pipes/group-name.pipe';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { InfoModal } from './modals/info-modal/info-modal.component';
+import { WaitScreenComponent } from './wait-screen/wait-screen.component';
 
 
 @NgModule({
@@ -61,6 +62,7 @@ import { InfoModal } from './modals/info-modal/info-modal.component';
     GroupNamePipe,
     LoginFormComponent,
     InfoModal,
+    WaitScreenComponent,
 
   ],
   imports: [
