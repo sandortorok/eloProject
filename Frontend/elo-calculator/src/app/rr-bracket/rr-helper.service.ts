@@ -1,3 +1,4 @@
+import { DataService } from './../services/data.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { LoadModal } from '../modals/load-modal/load-modal.component';
@@ -11,7 +12,7 @@ import { playerScore } from './rr-bracket.component';
 export class RRHelperService {
   @Output() matchesLoaded = new EventEmitter<{matches: Match[], gameName:string}>();
 
-  constructor(private httpservice: HttpService) { }
+  constructor(private httpservice: HttpService, private dataservice: DataService) { }
   loadCache(gameType){
     this.httpservice.getCacheFromGame(gameType).subscribe(res=>{
       let myarray:Array<CacheElement> = Object.values(res);
@@ -23,42 +24,24 @@ export class RRHelperService {
         }
       })
       if(gameName == "") return;
-      this.httpservice.getRRMatch(gameName).subscribe(data=>{
-        this.loadMatchesFromDataObject(data, gameName);
-      })
+      this.getMatch(gameName);
     })
   }
-  loadGroupMatches(gameName:string){
+  getMatch(gameName:string){
     this.httpservice.getRRMatch(gameName).subscribe(data=>{
-      this.loadMatchesFromDataObject(data, gameName);
+      let matches = this.dataservice.loadMatchesFromDataObject(data)
+      this.matchesLoaded.emit({matches: matches, gameName: gameName})
     })
   }
-  loadMatchesFromDataObject(data, gameName){
-    let matches:Match[] = []
-    let myarray = Object.values(data);
-    myarray.forEach((match:any)=>{
-      let newMatch:Match = {
-        Csapatok: [match.player1, match.player2], Gyoztes: match.winner, bye: match.bye, Meccs_id: match.match_ID, Round: match.round,
-        nextRoundID: -1,
-        bottom: 0,
-        score0: match.score1,
-        score1: match.score2
-      };
-      if(match.groupName){
-        newMatch['groupName'] = match.groupName;
-      }
-      matches.push(newMatch);
-    })
-    this.matchesLoaded.emit({matches: matches, gameName: gameName});
-  }
+
   saveCache(gameName:string, gameType:string){
     this.httpservice.saveCache({gameName: gameName, bracketType:'round-robin', gameType:gameType}).subscribe({})
   }
   saveGroupCache(gameName:string, gameType:string){
     this.httpservice.saveCache({gameName: gameName, bracketType:'group-stage', gameType:gameType}).subscribe({})
   }
-  saveRRGame(gameName:string, gameType:string, matches:Match[], groupMode = false){
-    this.httpservice.saveRRGame({body: matches, name: gameName, type:gameType, groupMode:groupMode}).subscribe({});
+  saveRRGame(gameName:string, gameType:string, matches:Match[]){
+    this.httpservice.saveRRGame({body: matches, name: gameName, type:gameType}).subscribe({});
   }
   loadPlayerStats(matches:Match[]){
     let playerScores:playerScore[] = [];

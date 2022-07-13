@@ -18,7 +18,7 @@ export class RRGeneratorService {
         this.generateMatches(this.exampleTeams);
         break;
       case 'withNames':
-        this.generateMatches(players);
+        this.generateMatches(players!);
         break;
       default:
         this.loadExampleTeams(players_length);
@@ -26,7 +26,7 @@ export class RRGeneratorService {
         break;
     }
   }
-  generateMatches(input){
+  generateMatches(input:string[]){
     this.GeneratedGames = [];
     if(input.length %2 == 1){
       input.push('')
@@ -104,7 +104,7 @@ export class RRGeneratorService {
     })
     return GeneratedGames;
   }
-  loadExampleTeams(how_many){
+  loadExampleTeams(how_many:number){
     this.exampleTeams = [];
     for (let i = 0; i < how_many; i++) {
       this.exampleTeams.push(`${i + 1}. Játékos`);

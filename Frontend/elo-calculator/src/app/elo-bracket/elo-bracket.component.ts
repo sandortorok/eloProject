@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Player, DataService } from '../services/data.service';
+import { eloPlayer, DataService } from '../services/data.service';
 import { HttpService } from '../services/http.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { HttpService } from '../services/http.service';
 })
 export class EloBracketComponent implements OnInit {
   @Input() gameType:string;
-  players:Player[] = [];
+  players:eloPlayer[] = [];
   playing:string[] = [];
   
   player1Selected:boolean = false;
@@ -153,8 +153,8 @@ export class EloBracketComponent implements OnInit {
     data['p1Win'] = p1Win;
     if (p1Win == -1) return;
     let result = this.dataservice.match(p1.rating, p2.rating, p1Win);
-    data['newP1'] = result['1'];
-    data['newP2'] = result['2'];
+    data['newP1'] = result['newRatingA'];
+    data['newP2'] = result['newRatingB'];
     return data;
   }  
   openModal(content){

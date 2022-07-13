@@ -64,6 +64,7 @@ export class GroupNavigatorComponent implements OnInit {
     modalRef.componentInstance.loadGroupEvent.subscribe((loadData:{name:string})=>{
       this.gameName = loadData.name;
       this.groupHelper.loadGroup(this.gameName);
+      this.saveCache();
     })
   }
   onSave() {
@@ -76,7 +77,7 @@ export class GroupNavigatorComponent implements OnInit {
     if (this.gameName != '') modalRef.componentInstance.IN_gameID = this.gameName;
     modalRef.componentInstance.saveEvent.subscribe(name => {
       this.gameName = name;
-      this.rrhelper.saveRRGame(this.gameName, this.gameType, this.matches, true);
+      this.rrhelper.saveRRGame(this.gameName, this.gameType, this.matches);
       this.groupHelper.saveGroups(this.gameName, this.gameType, this.groups);
       this.saveCache();
     })
@@ -95,7 +96,7 @@ export class GroupNavigatorComponent implements OnInit {
       if (obj.groups.length > 0) {
         this.groups = obj.groups;
         this.gameName = obj.gameName;
-        this.rrhelper.loadGroupMatches(this.gameName);
+        this.rrhelper.getMatch(this.gameName);
       }
     })
   }
@@ -104,7 +105,7 @@ export class GroupNavigatorComponent implements OnInit {
       this.groups = this.generator.GeneratedGroups;
       this.gameName = Math.random().toString(36).slice(2, 7);
       this.matches = this.rrGenerator.generateGroupMatches(this.groups);
-      this.rrhelper.saveRRGame(this.gameName, this.gameType, this.matches, true);
+      this.rrhelper.saveRRGame(this.gameName, this.gameType, this.matches);
       this.groupHelper.saveGroups(this.gameName, this.gameType, this.groups);
       this.saveCache();
     })
@@ -118,7 +119,7 @@ export class GroupNavigatorComponent implements OnInit {
     this.groups = obj.groups;
     this.matches = obj.matches;
     this.groupHelper.saveGroups(this.gameName, this.gameType, this.groups);
-    this.rrhelper.saveRRGame(this.gameName, this.gameType, this.matches, true);
+    this.rrhelper.saveRRGame(this.gameName, this.gameType, this.matches);
     this.saveCache();
   }
   ngOnDestroy() {

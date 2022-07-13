@@ -33,6 +33,7 @@ import { GroupNamePipe } from './pipes/group-name.pipe';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { InfoModal } from './modals/info-modal/info-modal.component';
 import { WaitScreenComponent } from './wait-screen/wait-screen.component';
+import { SwissBracketComponent } from './swiss-bracket/swiss-bracket.component';
 
 
 @NgModule({
@@ -47,6 +48,7 @@ import { WaitScreenComponent } from './wait-screen/wait-screen.component';
     SaveModal,
     LoadModal,
     NewModal,
+    InfoModal,
     DEBracketComponent,
     MenuComponent,
     HexComponent,
@@ -61,8 +63,8 @@ import { WaitScreenComponent } from './wait-screen/wait-screen.component';
     GroupPipe,
     GroupNamePipe,
     LoginFormComponent,
-    InfoModal,
     WaitScreenComponent,
+    SwissBracketComponent,
 
   ],
   imports: [

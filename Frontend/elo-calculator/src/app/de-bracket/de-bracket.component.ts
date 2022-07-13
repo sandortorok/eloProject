@@ -1,3 +1,4 @@
+import { DataService } from './../services/data.service';
 import { InfoModal } from './../modals/info-modal/info-modal.component';
 import { User, UserService } from './../services/user-service.service';
 import { WinModal } from '../modals/win-modal/win-modal.component';
@@ -29,6 +30,7 @@ export class DEBracketComponent implements OnInit {
     private bracket: DEGeneratorService, 
     private modalService: NgbModal, 
     private httpservice: HttpService, 
+    private dataservice: DataService,
     private userservice: UserService) {}
 
   ngOnInit(): void {
@@ -214,16 +216,6 @@ export class DEBracketComponent implements OnInit {
   saveDEGame(){
     this.httpservice.saveDEGame({body: this.matches, name: this.gameName, type:this.gameType}).subscribe({})
   }
-
-  loadMatchesFromDataObject(data){
-    let myarray = Object.values(data);
-    myarray.forEach((match:any)=>{
-      let newMatch:Match = {Csapatok: [match.player1, match.player2], Gyoztes:match.winner, bye: match.bye, Meccs_id:match.match_ID,
-      nextRoundID: match.nextMatch_ID, bottom: match.bottom, score0: match.score1, score1:match.score2, Round: match.round,
-       final: match.final, loser:match.loser, losersFrom:[match.loserFrom1, match.loserFrom2]};
-      this.matches.push(newMatch);
-    })
-  }
   loadCache(){
     this.httpservice.getCacheFromGame(this.gameType).subscribe(res=>{
       let myarray:Array<CacheElement> = Object.values(res);
@@ -236,7 +228,7 @@ export class DEBracketComponent implements OnInit {
       if(this.gameName != ""){
         this.matches = [];
         this.httpservice.getDEMatch(this.gameName).subscribe(data=>{
-          this.loadMatchesFromDataObject(data);
+          this.matches = this.dataservice.loadMatchesFromDataObject(data);
           this.giveEffects();
         })
       }

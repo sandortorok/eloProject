@@ -1,3 +1,4 @@
+import { DataService } from './../services/data.service';
 import { User, UserService } from './../services/user-service.service';
 import { HttpService } from 'src/app/services/http.service';
 import { SaveModal } from '../modals/save-modal/save-modal.component';
@@ -25,7 +26,7 @@ export class SEBracketComponent implements OnInit {
 
   private subscriptions: Array<Subscription> = [];
 
-  constructor(private bracket: SEGeneratorService, private modalService: NgbModal, private httpservice: HttpService, private userservice: UserService) {}
+  constructor(private bracket: SEGeneratorService, private modalService: NgbModal, private httpservice: HttpService, private userservice: UserService, private dataservice: DataService) {}
   ngOnInit(): void {
     this.loadCache();
     this.user = this.userservice.loggedUser;
@@ -153,14 +154,7 @@ export class SEBracketComponent implements OnInit {
       }
     });
   }
-  loadMatchesFromDataObject(data){
-    let myarray = Object.values(data);
-    myarray.forEach((match:any)=>{
-      let newMatch:Match = {Csapatok: [match.player1, match.player2], Gyoztes:match.winner, bye: match.bye, Meccs_id:match.match_ID,
-      nextRoundID: match.nextMatch_ID, bottom: match.bottom, score0: match.score1, score1:match.score2, Round: match.round};
-      this.matches.push(newMatch);
-    })
-  }
+
   saveCache(){
     this.httpservice.saveCache({gameName: this.gameName, bracketType:'single-elimination', gameType:this.gameType}).subscribe({})
   }
@@ -176,7 +170,7 @@ export class SEBracketComponent implements OnInit {
       if(this.gameName != ""){
         this.matches = [];
         this.httpservice.getSEMatch(this.gameName).subscribe(data=>{
-          this.loadMatchesFromDataObject(data);
+          this.matches = this.dataservice.loadMatchesFromDataObject(data);
           this.giveEffects();
         })
       }

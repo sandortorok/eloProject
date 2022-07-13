@@ -1,3 +1,4 @@
+import { DataService } from './services/data.service';
 import { User, UserService } from './services/user-service.service';
 import { Component } from '@angular/core';
 import { NgbNav } from '@ng-bootstrap/ng-bootstrap';
@@ -10,7 +11,7 @@ import { NgbNav } from '@ng-bootstrap/ng-bootstrap';
 export class AppComponent {
   title = 'elo-calculator';
   navigator:NgbNav;
-  constructor(private userservice: UserService){
+  constructor(private userservice: UserService, private data: DataService){
 
   }
   login(user: User){

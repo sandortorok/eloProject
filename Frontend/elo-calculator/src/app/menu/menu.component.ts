@@ -15,6 +15,7 @@ export class MenuComponent implements OnInit {
   de:boolean = false;
   rr:boolean = false;
   gp:boolean = false;
+  sw:boolean = false;
   constructor(private httpservice: HttpService) { }
 
   ngOnInit(): void {
@@ -38,6 +39,9 @@ export class MenuComponent implements OnInit {
         if (type == 'elo-system'){
           this.bracketnav.select(5);
         }
+        if (type == 'swiss'){
+          this.bracketnav.select(6);
+        }
       }
     })
   }
@@ -60,6 +64,9 @@ export class MenuComponent implements OnInit {
       }
       if (el.bracketType == 'group-stage'){
         this.gp = true;
+      }
+      if (el.bracketType == 'swiss'){
+        this.sw = true;
       }
     })
   }

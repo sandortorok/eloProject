@@ -21,7 +21,6 @@ export class SaveModal implements OnInit {
   save() {
     if (this.IN_gameID.length < 5) return; 
     if (this.matches == undefined) return;
-
     if(this.saveMode == 'single-elimination'){
       this.httpservice.getSEMatchNames()
       .subscribe(names =>{
@@ -55,6 +54,15 @@ export class SaveModal implements OnInit {
         this.saveEvent.emit(this.IN_gameID);//EZT A NAVIGATOR-BAN MENTJÜK EL
         this.activeModal.close()
 
+      })
+    }
+    if(this.saveMode == 'swiss'){
+      this.httpservice.getSWMatchNames()
+      .subscribe(names =>{
+        this.httpservice.saveSWGame({body: this.matches, name: this.IN_gameID, type: this.gameType}).subscribe(()=>{
+          this.saveEvent.emit(this.IN_gameID);
+          this.activeModal.close();
+        })
       })
     }
   }

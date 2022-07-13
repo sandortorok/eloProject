@@ -44,9 +44,9 @@ export class RRBracketComponent implements OnInit {
   //GROUP STUFF END
   constructor(private bracket: RRGeneratorService, private modalService: NgbModal, private rrhelper: RRHelperService, private userservice:UserService) { }
   ngOnInit(): void {
+    this.subscriptions.push(this.sub2UserChange());
+    this.user = this.userservice.loggedUser;
     if(!this.groupMode){ //HA RENDES ÜZEMMMÓDBAN VAN
-      this.user = this.userservice.loggedUser;
-      this.subscriptions.push(this.sub2UserChange());
       this.subscriptions.push(this.sub2Generated());
       this.subscriptions.push(this.sub2Load());
       this.loadCache();
@@ -125,7 +125,7 @@ export class RRBracketComponent implements OnInit {
     return this.bracket.generated.subscribe((newMatches)=>{
         this.matches = newMatches;
         this.gameName = Math.random().toString(36).slice(2, 7);
-        this.rrhelper.saveRRGame(this.gameName, this.gameType, this.matches, this.groupMode);
+        this.rrhelper.saveRRGame(this.gameName, this.gameType, this.matches);
         this.saveCache();
         this.loadPlayerStats();
         this.giveEffects();

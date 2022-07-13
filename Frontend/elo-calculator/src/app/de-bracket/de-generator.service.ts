@@ -1,4 +1,4 @@
-import { DataService, Match } from '../services/data.service';
+import { Match } from '../services/data.service';
 import { Injectable, Output, EventEmitter } from '@angular/core';
 
 
@@ -6,7 +6,7 @@ import { Injectable, Output, EventEmitter } from '@angular/core';
   providedIn: 'root'
 })
 export class DEGeneratorService {
-  constructor(private data: DataService) {
+  constructor() {
   }
   
   GeneratedGames:Match[] = [];

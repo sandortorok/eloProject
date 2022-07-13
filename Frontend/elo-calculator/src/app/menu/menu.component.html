@@ -13,6 +13,7 @@
                 <app-hex icon="fa-angle-right" text = "Egyenes kiesés" (click)="bracketnav.select(2)" [class.customHex]="se"></app-hex>
                 <app-hex icon="fa-angle-double-right" text = "Vigaszágas kiesés" (click)="bracketnav.select(3)" [class.customHex]="de"></app-hex>
                 <app-hex icon="fa-rotate-right" text = "Körmérkőzés" (click)="bracketnav.select(4)" [class.customHex]="rr"></app-hex>
+                <app-hex icon="fa-plus-square" text = "Svájci Rendszer" (click)="bracketnav.select(6)" [class.customHex]="sw"></app-hex>
             </div>
         </ng-template>
     </li>
@@ -31,12 +32,16 @@
     </li>
 
     <li [ngbNavItem] = "4">
-        <a ngbNavLink>ROUND ROBIN</a>
+        <a ngbNavLink>Round Robin</a>
         <ng-template ngbNavContent><app-rr-bracket gameType="{{gamePlayed}}" [groupMode]="false"></app-rr-bracket></ng-template>
     </li>
     <li [ngbNavItem] = "5">
         <a ngbNavLink>Elo Rating</a>
         <ng-template ngbNavContent><app-elo-bracket gameType = "{{gamePlayed}}"></app-elo-bracket></ng-template>
+    </li>
+    <li [ngbNavItem] = "6">
+        <a ngbNavLink>Swiss System</a>
+        <ng-template ngbNavContent><app-swiss-bracket gameType = "{{gamePlayed}}"></app-swiss-bracket></ng-template>
     </li>
 </ul>
   

@@ -97,6 +97,53 @@ app.post('/elogames', (req, res) => {
 })
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////SWMATCHES////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+app.get('/swmatches', (req, res) => {
+    let sql = `SELECT * FROM SWMatches`;
+    runQuery(sql, res);
+})
+app.get('/swmatches/names', (req, res) => {
+    let sql = `SELECT DISTINCT gameName FROM SWMatches`;
+    runQuery(sql, res);
+})
+app.post('/swgame', (req, res) => {
+    let msg = req.body.body;
+    let gameName = req.body.name;
+    let gameType = req.body.type;
+    let sql = 'REPLACE INTO SWMatches (gameName, winner, player1, player2, round, bye, score1, score2, bottom, nextMatch_ID, match_ID, gameType) VALUES '
+    let first = true;
+    for (el of msg){
+        let player1 = el.Csapatok[0];
+        let player2 = el.Csapatok[1];
+        let winner = el.Gyoztes;
+        let match_ID = el.Meccs_id;
+        let nextMatch_ID = el.nextRoundID;
+        let round = el.Round;
+        let bottom = el.bottom;
+        let bye = el.bye;
+        let score0 = el.score0;
+        let score1 = el.score1;
+        if(first){
+            first = false;
+        }
+        else{
+            sql += ','
+        }
+        sql += `('${gameName}', '${winner}', '${player1}',
+        '${player2}', ${round}, ${bye}, ${score0},
+        ${score1}, ${bottom}, ${nextMatch_ID}, ${match_ID}, '${gameType}')`;
+    }
+    let query = pool.query(sql, (err, result) => {
+        if(err) throw err;
+    })
+    res.send({msg: 'hey'})
+})
+app.get('/swmatch/:name', (req, res) => {
+    let sql = `SELECT * FROM SWMatches WHERE gameName = '${req.params.name}'`;
+    runQuery(sql, res);
+})
+/////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////SEMATCHES////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////
 app.get('/sematches', (req, res) => {
@@ -221,7 +268,6 @@ app.post('/rrgame', (req, res) => {
     let msg = req.body.body;
     let gameName = req.body.name;
     let gameType = req.body.type;
-    let groupMode = req.body.groupMode;
     let sql = 'REPLACE INTO RRMatches (gameName, winner, player1, player2, round, bye, match_ID, gameType, groupMode, groupName, score1, score2) VALUES '
     let first = true;
     let groupName = ""
@@ -234,8 +280,10 @@ app.post('/rrgame', (req, res) => {
         let bye = el.bye;
         let score1 = el.score0;
         let score2 = el.score1;
-        if(groupMode){
+        let groupMode = false;
+        if(el.groupName != undefined){
             groupName = el.groupName;
+            groupMode = true;
         }
         if(first){first = false;}
         else{sql += ','}

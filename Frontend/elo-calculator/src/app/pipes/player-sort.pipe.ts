@@ -1,5 +1,4 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Player } from '../services/data.service';
 
 @Pipe({
   name: 'sort'

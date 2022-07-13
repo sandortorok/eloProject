@@ -1,5 +1,7 @@
+import { DataService } from './../../services/data.service';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs/internal/Observable';
 import { Group, Match } from 'src/app/services/data.service';
 import { HttpService } from 'src/app/services/http.service';
 
@@ -16,74 +18,22 @@ export class LoadModal implements OnInit {
   loadMode = "single-elimination"
   @Output() loadEvent = new EventEmitter<Object>();
   @Output() loadGroupEvent = new EventEmitter<Object>();
-  constructor(public activeModal: NgbActiveModal, private httpservice: HttpService) {    }
+  constructor(public activeModal: NgbActiveModal, private httpservice: HttpService, private dataservice: DataService) {    }
   load() {
     if (this.selGame == "Bajnokság neve") return;
     let matches: Match[] = [];
     switch(this.loadMode){
       case 'single-elimination':
-        this.httpservice.getSEMatch(this.selGame).subscribe(data=>{
-          let myarray = Object.values(data);
-          myarray.forEach((match)=>{
-            let newMatch:Match = {
-              Csapatok: [match.player1, match.player2],
-              Round: match.round,
-              nextRoundID: match.nextMatch_ID,
-              Gyoztes: match.winner,
-              Meccs_id: match.match_ID,
-              bye: match.bye,
-              bottom: match.bottom,
-              score0:match.score1,
-              score1:match.score2
-            };
-            newMatch['score0'] = match.score1
-            newMatch['score1'] = match.score2
-            matches.push(newMatch);
-          })
-          this.loadEvent.emit({matches:matches, name: this.selGame})
-        });
+        this.loadMatches(this.httpservice.getSEMatch(this.selGame))
         break;
       case 'double-elimination':
-        this.httpservice.getDEMatch(this.selGame).subscribe(data=>{
-          let myarray = Object.values(data);
-          myarray.forEach((match)=>{
-            let newMatch:Match = {
-              Csapatok: [match.player1, match.player2],
-              Round: match.round,
-              nextRoundID: match.nextMatch_ID,
-              Gyoztes: match.winner,
-              Meccs_id: match.match_ID,
-              bye: match.bye,
-              bottom: match.bottom,
-              score0: match.score1,
-              score1: match.score2
-            };
-            newMatch['final'] = match.final
-            newMatch['loser'] = match.loser
-            matches.push(newMatch);
-          })
-          this.loadEvent.emit({matches:matches, name: this.selGame})
-        });
+        this.loadMatches(this.httpservice.getDEMatch(this.selGame))
         break;
       case 'round-robin':
-        this.httpservice.getRRMatch(this.selGame).subscribe(data=>{
-          let myarray = Object.values(data);
-          myarray.forEach((match)=>{
-            let newMatch:Match = {
-              Csapatok: [match.player1, match.player2],
-              Round: match.round,
-              nextRoundID: -1,
-              Gyoztes: match.winner,
-              Meccs_id: match.match_ID,
-              bye: match.bye,
-              bottom: 0,
-              score0:null,
-              score1:null
-            };
-            matches.push(newMatch);
-          })
-          this.loadEvent.emit({matches:matches, name: this.selGame})
-        });
+        this.loadMatches(this.httpservice.getRRMatch(this.selGame))
+        break;
+      case 'swiss':
+        this.loadMatches(this.httpservice.getSWMatch(this.selGame))
         break;
       case 'group-stage':
         this.loadGroupEvent.emit({name: this.selGame})
@@ -98,51 +48,41 @@ export class LoadModal implements OnInit {
   }
   ngOnInit(): void {
     if(this.loadMode == 'single-elimination'){
-      this.httpservice.getSEMatches()
-      .subscribe(data =>{
-        let myarray = Object.values(data);
-        myarray.forEach(el =>{
-          if (!this.names.includes(el.gameName) && el.gameType == this.gameType){
-            this.names.push(el.gameName);
-          }
-        })
-      })
+      this.loadNames(this.httpservice.getSEMatches());
     }
     if(this.loadMode == 'double-elimination'){
-      this.httpservice.getDEMatches()
-      .subscribe(data =>{
-        let myarray = Object.values(data);
-        console.log(myarray);
-        myarray.forEach(el =>{
-          if (!this.names.includes(el.gameName) && el.gameType == this.gameType){
-            this.names.push(el.gameName);
-          }
-        })
-      })
+      this.loadNames(this.httpservice.getDEMatches());
     }
     if(this.loadMode == 'round-robin'){
-      this.httpservice.getRRMatches()
-      .subscribe(data =>{
-        let myarray = Object.values(data);
-        console.log(myarray);
-        myarray.forEach(el =>{
-          if (!this.names.includes(el.gameName) && el.gameType == this.gameType){
-            this.names.push(el.gameName);
-          }
-        })
-      })
+      this.loadNames(this.httpservice.getRRMatches());
     }
     if(this.loadMode == 'group-stage'){
-      this.httpservice.getGroupStages()
-      .subscribe(data =>{
-        let myarray = Object.values(data);
-        console.log(myarray);
-        myarray.forEach(el =>{
-          if (!this.names.includes(el.gameName) && el.gameType == this.gameType){
-            this.names.push(el.gameName);
-          }
-        })
-      })
+      this.loadNames(this.httpservice.getGroupStages());
+    }
+    if(this.loadMode == 'swiss'){
+      this.loadNames(this.httpservice.getSWMatches());
     }
   }
+  loadNames(observable: Observable<Object>){
+    observable.subscribe(data =>{
+      let myarray = Object.values(data);
+      myarray.forEach(el =>{
+        if (!this.names.includes(el.gameName) && el.gameType == this.gameType){
+          if(el.groupMode == undefined || el.groupMode == 0){
+            this.names.push(el.gameName);
+          }
+        }
+      })
+    })
+  }
+  loadMatches(observable:Observable<Object>){
+    observable.subscribe(data =>{
+      let matches = this.dataservice.loadMatchesFromDataObject(data);
+      this.loadEvent.emit({matches:matches, name: this.selGame})
+    })
+  }
+  loadGames(){
+
+  }
+
 }
