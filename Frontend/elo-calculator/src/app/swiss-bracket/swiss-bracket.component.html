@@ -9,10 +9,11 @@
 <section *ngIf="user?.privilegeType == 'Admin' || matches!=undefined" id="bracket">
     <div *ngIf="user?.privilegeType == 'Admin'" class="btn-wrapper">
         <app-neon-button #new text="ÚJ BEOSZTÁS" (click)="onNewBracket()"></app-neon-button>
-        <app-neon-button #new text="Következő forduló" (click)="onNext()"></app-neon-button>
         <app-neon-button #load text="BETÖLTÉS" style="filter:hue-rotate(300deg);" (click)="onLoad()"></app-neon-button>
         <app-neon-button #save text="MENTÉS" (click)="onSave()"></app-neon-button>
         <app-neon-button text="NYOMTATÁS" style="filter:hue-rotate(300deg);" (click)="onPrintClick()"></app-neon-button>
+        <app-neon-button text="KÖVETKEZŐ KÖR" style="filter:hue-rotate(300deg);" (click)="onGenerateNext()"></app-neon-button>
+
     </div>
     <app-spinner *ngIf="matches != undefined && matches.length == 0"></app-spinner>
     <div *ngIf="matches != undefined && matches.length > 0" class="container" #container>
@@ -22,12 +23,23 @@
                 <ul *ngFor="let match of round" class="matchup" id="match {{match.Meccs_id}}">
                     <span class="matchNumber">{{match.Meccs_id}}</span>
                     <li class="team" (click)="onTeamClick($event)"
-                        [class.win]="match.Csapatok![0]==match.Gyoztes && match.Gyoztes.length > 0">
-                        {{match.Csapatok![0]}}<span class="score">{{match.score0}}</span></li>
+                        [class.win]="match.Csapatok[0] == match.Gyoztes && match.Gyoztes.length > 0"
+                        [class.lose]="match.Csapatok[0] != match.Gyoztes && match.Gyoztes.length > 0 && match.Gyoztes != 'draw' && match.Csapatok[0]!=''"
+                        [class.draw]="match.Gyoztes=='draw'">
+                        <span class="name">{{match.Csapatok[0]}}</span><span class="score">{{match.score0}}</span></li>
                     <li class="team" (click)="onTeamClick($event)"
-                        [class.win]="match.Csapatok![1]==match.Gyoztes  && match.Gyoztes.length > 0">
-                        {{match.Csapatok![1]}}<span class="score">{{match.score1}}</span></li>
+                        [class.win]="match.Csapatok[1] == match.Gyoztes  && match.Gyoztes.length > 0"
+                        [class.lose]="match.Csapatok[1] != match.Gyoztes && match.Gyoztes.length > 0 && match.Gyoztes != 'draw' && match.Csapatok[1]!=''"
+                        [class.draw]="match.Gyoztes=='draw'">
+                        <span class="name">{{match.Csapatok[1]}}</span><span class="score">{{match.score1}}</span></li>
                 </ul>
+            </div>
+        </div>
+        <div class="scoreBoard">
+            <h1>EREDMÉNYEK</h1>
+            <div class="round" style="width:50%; align-self:center;">
+                <li *ngFor="let player of players | sort: ['points', '!byes']" class="team current">
+                    <span class="name">{{player.name}}</span><span class="score">{{player.blackWhiteHistory}}, {{player.points}}</span></li>
             </div>
         </div>
     </div>

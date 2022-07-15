@@ -1,7 +1,7 @@
 import { HttpService } from 'src/app/services/http.service';
 import { CacheElement, Match, swissPlayer, DataService } from './../services/data.service';
 import { SwissGeneratorService } from './swiss-generator.service';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, PipeTransform } from '@angular/core';
 import { User, UserService } from '../services/user-service.service';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { NewModal } from '../modals/new-modal/new-modal.component';
@@ -9,6 +9,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SaveModal } from '../modals/save-modal/save-modal.component';
 import { LoadModal } from '../modals/load-modal/load-modal.component';
 import { WinModal } from '../modals/win-modal/win-modal.component';
+import { SortPipe } from '../pipes/sort.pipe';
 
 @Component({
   selector: 'app-swiss-bracket',
@@ -24,7 +25,14 @@ export class SwissBracketComponent implements OnInit {
   matches:Match[];
   private subscriptions: Array<Subscription> = [];
 
-  constructor(private generator:SwissGeneratorService, private userservice:UserService, private httpservice: HttpService, private modalService: NgbModal, private dataservice:DataService) { }
+  constructor(
+    private generator:SwissGeneratorService, 
+    private userservice:UserService, 
+    private httpservice: HttpService, 
+    private modalService: NgbModal, 
+    private dataservice:DataService,
+    private mypipe:SortPipe
+    ) { }
   
   ngOnInit(): void {
     this.loadCache();
@@ -35,19 +43,19 @@ export class SwissBracketComponent implements OnInit {
   giveEffects(){
     setTimeout(() => {
       if (this.container != undefined){
-        this.giveHoverEffect();
         this.giveCurrentClass();
+        this.giveHoverEffect();
       }
     });
   }
   giveCurrentClass() {
     let matchups = this.container.nativeElement.querySelectorAll('ul');
     matchups.forEach(m => {
-      if(!m.innerHTML.includes('win')){
-        m.classList.add('current');
+      if(m.innerHTML.includes('win') || m.innerHTML.includes('draw')){
+        m.classList.remove('current')
       }
       else{
-        m.classList.remove('current')
+        m.classList.add('current');
       }
     });
   }
@@ -78,9 +86,10 @@ export class SwissBracketComponent implements OnInit {
       samePlayer.forEach(e => {
         e.onmouseover = () => {
           samePlayer.forEach(same => {
-            same.style.border = "1px solid rgb(71, 228, 9)";
+            let color = window.getComputedStyle( same,null).getPropertyValue('background-color')
+            same.style.border = `1px solid ${color}`;
             same.style.opacity = 1;
-            same.style.boxShadow = "0 0 5px rgb(71, 228, 9), 0 0 25px rgb(71, 228, 9)"
+            same.style.boxShadow = `0 0 5px ${color}, 0 0 25px ${color}`
           })
         }
         e.onmouseleave = () => {
@@ -88,7 +97,6 @@ export class SwissBracketComponent implements OnInit {
             same.style.border = "";
             same.style.opacity = "";
             same.style.boxShadow = ""
-
           })
         }
       })
@@ -128,15 +136,21 @@ export class SwissBracketComponent implements OnInit {
         this.matches = []
         this.matches = loadData.matches;
         this.saveCache();
+        this.loadPlayerStats();
         this.giveEffects();
       }, 1000);
       //meg kell várni míg renderel a view
     })
   }
-  onNext(){}
   onTeamClick(event){
     if(this.user.privilegeType=='Guest') return;
-    let matchID = event.target.parentNode.id.match(/(\d+)/)![0];
+    let matchID = -1;
+    if (event.target.parentNode.tagName == 'LI'){
+      matchID = event.target.parentNode.parentNode.id.match(/(\d+)/)![0];
+    }
+    else{
+      matchID = event.target.parentNode.id.match(/(\d+)/)![0];
+    }
     let thisMatch = this.matches.filter(m =>{ return m.Meccs_id == matchID})[0];
     if (!thisMatch) return;
     if (thisMatch.Gyoztes != "") return;
@@ -147,6 +161,7 @@ export class SwissBracketComponent implements OnInit {
       thisMatch = updatedMatch;
       this.httpservice.saveSWGame({body: this.matches, name: this.gameName, type:this.gameType}).subscribe({})
       this.saveCache();
+      this.loadPlayerStats();
       this.giveEffects();
     })
   }
@@ -161,6 +176,7 @@ export class SwissBracketComponent implements OnInit {
         this.matches = newMatches;
         this.httpservice.saveSWGame({body: this.matches, name: this.gameName, type: this.gameType}).subscribe({})
         this.saveCache();
+        this.loadPlayerStats();
         this.giveEffects();
     })
   }
@@ -180,10 +196,59 @@ export class SwissBracketComponent implements OnInit {
         this.matches = [];
         this.httpservice.getSWMatch(this.gameName).subscribe(data=>{
           this.matches = this.dataservice.loadMatchesFromDataObject(data);
+          this.loadPlayerStats();
           this.giveEffects();
         })
       }
     })
+  }
+  loadPlayerStats(){
+    let playerScores:swissPlayer[] = [];
+    let playerNames:string[] = []
+    this.matches.forEach(m=>{
+      m.Csapatok.forEach(csapat=>{
+        if(csapat != "" && !playerNames.includes(csapat)){
+          playerNames.push(csapat)
+        }
+      })
+    })
+    playerNames.forEach(pName=>{
+      let newPlayerScore:swissPlayer = {name: pName,eloRating: 0,games: 0,gameType: this.gameType,gameName: this.gameName,points: 0, byes:0, blackWhiteHistory:[]}
+      this.matches.forEach(m=>{
+        if(m.Csapatok.includes(pName)){
+          if(m.Gyoztes == 'draw'){
+            newPlayerScore.points += 0.5;
+          }
+          else if(m.Gyoztes == pName){
+            newPlayerScore.points+=1;
+            if (m.bye == true) {newPlayerScore.byes+=1}
+          }
+          newPlayerScore.games+=1
+          if(this.gameType == "sakk"){
+            if(m.bye){
+              newPlayerScore.blackWhiteHistory!.unshift('-')
+            }
+            else if(m.Csapatok[m.white!] == pName){
+              newPlayerScore.blackWhiteHistory!.unshift('W')
+            }
+            else{
+              newPlayerScore.blackWhiteHistory!.unshift('B')
+            }
+          }
+        }
+      })
+      playerScores.push(newPlayerScore);
+    })
+  playerScores = this.mypipe.transform(playerScores, ['points', '!byes']);
+  this.players = playerScores
+  }
+  onGenerateNext(){
+    let newMatches = this.generator.generateNextRound(this.matches, this.players);
+    if(newMatches != undefined){
+      this.matches = newMatches;
+    }
+    this.loadPlayerStats();
+    this.giveEffects();
   }
   ngOnDestroy(){
     this.subscriptions.forEach((sub:Subscription) => {

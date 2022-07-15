@@ -13,12 +13,19 @@
         </label>
         <label>
             <input type="radio" name="radio" />
+            <div class="back-end box" (click)="onSelect('draw')">
+                <span>Döntetlen</span>
+            </div>
+        </label>
+        <label>
+            <input type="radio" name="radio" />
             <div class="back-end box" (click)="onSelect(match.Csapatok![1])">
                 <span>{{match.Csapatok![1]}}</span>
             </div>
         </label>
         <input type="number" style="width: 50%; margin-left:25%; display: inline-block; margin-bottom: 1rem; box-sizing: border-box;"
         class="form-control" min="1" max="100" [(ngModel)] = "score1"/>
+        <div style="visibility: hidden"></div>
         <input type="number" style="width: 50%; margin-left:25%; display: inline-block; margin-bottom: 1rem; box-sizing: border-box;"
         class="form-control" min="1" max="100" [(ngModel)] = "score2"/>
         <div class="mybtn" (click)="updateWinner()">Kiválasztás</div>

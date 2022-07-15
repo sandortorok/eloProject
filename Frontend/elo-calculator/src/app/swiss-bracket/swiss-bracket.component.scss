@@ -107,8 +107,11 @@
     box-sizing: border-box;
     transition: all 0.3s ease-in-out;
     opacity: 0.3;
+    text-align: start;
 }
-
+.team p{
+    padding-left: 20px
+}
 .round {
     display: block;
     float: left;
@@ -188,9 +191,17 @@ h1{
     font-family: "Istok Web", sans-serif;
     color: rgb(71, 228, 9);
 }
-
+.name {
+    padding-left:10px;
+}
 .win {
     background-color: rgb(71, 228, 9) !important;
+}
+.lose{
+    background-color: rgba(189, 40, 40) !important;
+}
+.draw{
+    background-color: #1fa9b1 !important;
 }
 
 
@@ -252,8 +263,6 @@ h1{
         padding-left: 0;
     }
     .team{
-        font-size: 10px;
-        padding: 0;
         border-radius: 50px;
         text-align: center;
     }

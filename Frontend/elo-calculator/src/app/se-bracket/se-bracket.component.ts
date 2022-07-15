@@ -43,6 +43,7 @@ export class SEBracketComponent implements OnInit {
     const modalRef = this.modalService.open(WinModal, { centered: true });
     modalRef.componentInstance.match = thisMatch;
     modalRef.componentInstance.updateEvent.subscribe((updatedMatch:Match)=>{
+      if (updatedMatch.Gyoztes == 'draw') return;
       thisMatch = updatedMatch;
       let nextID = thisMatch.nextRoundID
       if(nextID >= 0){

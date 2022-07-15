@@ -82,7 +82,7 @@ export class LoginFormComponent implements OnInit {
     })
   }
   guestLogin(){
-    this.loginEvent.emit({username:'Guest', privilegeType: Privilege.Guest})
+    this.loginEvent.emit({username:'Guest', privilegeType: Privilege.Admin})
   }
   validationFailed(){
     this.usernameError = true;

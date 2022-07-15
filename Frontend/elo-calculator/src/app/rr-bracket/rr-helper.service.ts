@@ -47,18 +47,20 @@ export class RRHelperService {
     let playerScores:playerScore[] = [];
     let playerNames:string[] = []
     matches.forEach(m=>{
-      if(m.Csapatok[0]!= "" && !playerNames.includes(m.Csapatok[0])){
-        playerNames.push(m.Csapatok[0])
-      }
-      if(m.Csapatok[1]!= "" && !playerNames.includes(m.Csapatok[1])){
-        playerNames.push(m.Csapatok[1])
-      }
+      m.Csapatok.forEach(csapat=>{
+        if(csapat != "" && !playerNames.includes(csapat)){
+          playerNames.push(csapat)
+        }
+      })
     })
     playerNames.forEach(player => {
-      let newPlayerScore:playerScore = {name: player,wins: 0,loses: 0}
+      let newPlayerScore:playerScore = {name: player,wins: 0,loses: 0, draws:0}
       matches.forEach(m=>{
-        if(m.bye != true && m.Gyoztes!="" && m.Csapatok.includes(player)){
-          if(m.Gyoztes == player){
+        if (m.Gyoztes == "draw" && m.Csapatok.includes(player)){
+          newPlayerScore.draws+=1
+        }
+        else if (m.bye != true && m.Gyoztes!="" && m.Csapatok.includes(player)){
+          if (m.Gyoztes == player){
             newPlayerScore.wins+=1;
           }
           else {
@@ -81,23 +83,24 @@ export class RRHelperService {
     groups.forEach(group=>{
       group.teams.forEach(team=>{
         if(team.name == p1 || team.name == p2){
-          if(team.name == winner){
+          if (winner == 'draw'){
+            team.draws +=1;
+            team.points+=1
+            team.last3Results.unshift('D');
+          }
+          else if (team.name == winner){
             team.wins+=1;
             team.points+=3;
             team.last3Results.unshift('W');
             team.diff += diff
-            if(team.last3Results.length > 3){
-              team.last3Results.pop();
-            }
+
           }
           else{
             team.loses+=1;
             team.diff -= diff
             team.last3Results.unshift('L');
-            if(team.last3Results.length > 3){
-              team.last3Results.pop();
-            }
           }
+          if(team.last3Results.length > 3) {team.last3Results.pop();}
         }
       })
     })

@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TabsComponent } from './tabs/tabs.component';
 import { HttpClientModule } from '@angular/common/http';
-import { PlayerSortPipe } from './pipes/player-sort.pipe';
+import { SortPipe } from './pipes/sort.pipe';
 import { FormsModule } from '@angular/forms';
 import { SEBracketComponent } from './se-bracket/se-bracket.component';
 import { DEBracketComponent } from './de-bracket/de-bracket.component';
@@ -40,7 +40,7 @@ import { SwissBracketComponent } from './swiss-bracket/swiss-bracket.component';
   declarations: [
     AppComponent,
     TabsComponent,
-    PlayerSortPipe,
+    SortPipe,
     SpinnerComponent,
     NeonButtonComponent,
     SEBracketComponent,
@@ -65,7 +65,6 @@ import { SwissBracketComponent } from './swiss-bracket/swiss-bracket.component';
     LoginFormComponent,
     WaitScreenComponent,
     SwissBracketComponent,
-
   ],
   imports: [
     BrowserModule,
@@ -75,7 +74,7 @@ import { SwissBracketComponent } from './swiss-bracket/swiss-bracket.component';
     FormsModule,
     CommonModule
   ],
-  providers: [HttpService, DataService],
+  providers: [HttpService, DataService, SortPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

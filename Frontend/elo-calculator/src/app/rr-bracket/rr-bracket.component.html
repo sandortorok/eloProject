@@ -21,10 +21,12 @@
                 <ul *ngFor="let match of round" class="matchup" id="match {{match.Meccs_id}}">
                     <span class="matchNumber">{{match.Meccs_id}}</span>
                     <li class="team" (click)="onTeamClick($event)"
-                        [class.win]="match.Csapatok![0]==match.Gyoztes && match.Gyoztes.length > 0">
+                        [class.win]="match.Csapatok![0]==match.Gyoztes && match.Gyoztes.length > 0"
+                        [class.draw]="match.Gyoztes=='draw'">
                         {{match.Csapatok![0]}}<span class="score">{{match.score0}}</span></li>
                     <li class="team" (click)="onTeamClick($event)"
-                        [class.win]="match.Csapatok![1]==match.Gyoztes  && match.Gyoztes.length > 0">
+                        [class.win]="match.Csapatok![1]==match.Gyoztes  && match.Gyoztes.length > 0"
+                        [class.draw]="match.Gyoztes=='draw'">
                         {{match.Csapatok![1]}}<span class="score">{{match.score1}}</span></li>
                 </ul>
             </div>
@@ -47,10 +49,12 @@
                     <ul *ngFor="let match of round" class="matchup" id="match {{match.Meccs_id}}">
                         <span class="matchNumber">{{match.Meccs_id}}</span>
                         <li class="team" (click)="onTeamClick($event)"
-                            [class.win]="match.Csapatok![0]==match.Gyoztes && match.Gyoztes.length > 0">
+                            [class.win]="match.Csapatok![0]==match.Gyoztes && match.Gyoztes.length > 0"
+                            [class.draw]="match.Gyoztes=='draw'">
                             {{match.Csapatok![0]}}<span class="score">{{match.score0}}</span></li>
                         <li class="team" (click)="onTeamClick($event)"
-                            [class.win]="match.Csapatok![1]==match.Gyoztes  && match.Gyoztes.length > 0">
+                            [class.win]="match.Csapatok![1]==match.Gyoztes  && match.Gyoztes.length > 0"
+                            [class.draw]="match.Gyoztes=='draw'">
                             {{match.Csapatok![1]}}<span class="score">{{match.score1}}</span></li>
                     </ul>
                 </div>

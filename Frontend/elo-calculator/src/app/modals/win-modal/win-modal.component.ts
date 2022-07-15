@@ -24,13 +24,40 @@ export class WinModal {
       if (this.selPlayer == "Győztes") return;
       if (this.clicked > 0) return;
       if (this.score1 > 100 || this.score2 > 100 || this.score1 < 0 || this.score2 < 0) return;
+      if (this.selPlayer == 'draw'){
+        if (this.score1 != this.score2) return;
+          this.match.Gyoztes = 'draw';
+          if(this.score1 == 0){
+            this.match.score0 = 0.5;
+            this.match.score1 = 0.5;
+          }
+          else{
+            this.match.score0 = this.score1
+            this.match.score1 = this.score2
+          }
+          this.updateEvent.emit(this.match);
+          this.activeModal.close();
+          this.clicked++;
+          return;
+      }
       let p1 = this.match.Csapatok[0];
       let p2 = this.match.Csapatok[1];
       if(this.selPlayer == p1 && this.score2 > this.score1) return;
       if(this.selPlayer == p2 && this.score2 < this.score1) return;
-      if(this.score1 == 0 && this.score2 == 0) return;
-      this.match.score0 = this.score1;
-      this.match.score1 = this.score2;
+      if(this.score1 == 0 && this.score2 == 0) {
+        if(this.match.Csapatok[0] == this.selPlayer){
+          this.match.score0 = 1;
+          this.match.score1 = 0
+        }
+        else if(this.match.Csapatok[1] == this.selPlayer){
+          this.match.score0 = 0;
+          this.match.score1 = 1;
+        }
+      }
+      else {
+        this.match.score0 = this.score1;
+        this.match.score1 = this.score2;
+      }
       this.match.Gyoztes = this.selPlayer;
       this.updateEvent.emit(this.match);
       this.activeModal.close();

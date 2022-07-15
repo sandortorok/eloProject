@@ -3,6 +3,7 @@ const cors = require("cors")
 const express = require("express");
 const app = express();
 const server = require('http').createServer(app)
+var munkres = require('munkres-js');
 
 app.use(cors());
 app.use(express.json())
@@ -111,8 +112,9 @@ app.post('/swgame', (req, res) => {
     let msg = req.body.body;
     let gameName = req.body.name;
     let gameType = req.body.type;
-    let sql = 'REPLACE INTO SWMatches (gameName, winner, player1, player2, round, bye, score1, score2, bottom, nextMatch_ID, match_ID, gameType) VALUES '
+    let sql = 'REPLACE INTO SWMatches (gameName, winner, player1, player2, round, bye, score1, score2, bottom, nextMatch_ID, match_ID, gameType, white) VALUES '
     let first = true;
+    let white = null
     for (el of msg){
         let player1 = el.Csapatok[0];
         let player2 = el.Csapatok[1];
@@ -124,6 +126,8 @@ app.post('/swgame', (req, res) => {
         let bye = el.bye;
         let score0 = el.score0;
         let score1 = el.score1;
+        if(el.white!=undefined) white = el.white;
+        console.log(white);
         if(first){
             first = false;
         }
@@ -132,7 +136,7 @@ app.post('/swgame', (req, res) => {
         }
         sql += `('${gameName}', '${winner}', '${player1}',
         '${player2}', ${round}, ${bye}, ${score0},
-        ${score1}, ${bottom}, ${nextMatch_ID}, ${match_ID}, '${gameType}')`;
+        ${score1}, ${bottom}, ${nextMatch_ID}, ${match_ID}, '${gameType}', ${white})`;
     }
     let query = pool.query(sql, (err, result) => {
         if(err) throw err;
@@ -389,8 +393,15 @@ app.get('/user/:name', (req, res) => {
     let sql = `SELECT * FROM users WHERE username = '${req.params.name}'`;
     runQuery(sql, res);
 })
-
-
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////MUNKRES/////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+app.post('/munkres', (req, res) => {
+    let msg = req.body;
+    let matrix = msg.matrix;
+    result = munkres(matrix);
+    res.send(result)
+})
 
 
 

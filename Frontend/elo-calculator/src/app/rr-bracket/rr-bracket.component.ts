@@ -15,6 +15,7 @@ export interface playerScore{
   name:string,
   wins:number,
   loses:number,
+  draws:number
 }
 @Component({
   selector: 'app-rr-bracket',
@@ -66,11 +67,11 @@ export class RRBracketComponent implements OnInit {
   giveCurrentClass() {
     let matchups = this.container.nativeElement.querySelectorAll('ul');
     matchups.forEach(m => {
-      if(!m.innerHTML.includes('win')){
-        m.classList.add('current');
+      if(m.innerHTML.includes('win') || m.innerHTML.includes('draw')){
+        m.classList.remove('current');
       }
       else{
-        m.classList.remove('current')
+        m.classList.add('current');
       }
     });
   }
@@ -89,11 +90,6 @@ export class RRBracketComponent implements OnInit {
     modalRef.componentInstance.match = thisMatch;
     modalRef.componentInstance.updateEvent.subscribe((updatedMatch:Match)=>{
       thisMatch = updatedMatch;
-      let nextID = thisMatch.nextRoundID
-      if(nextID >= 0){
-        let nextMatch:Match = this.matches.filter(m=>{return m.Meccs_id == nextID})[0]
-        nextMatch.Csapatok[thisMatch.bottom] = thisMatch.Gyoztes;
-      }
       if(!this.groupMode){
         this.rrhelper.saveRRGame(this.gameName, this.gameType, this.matches);
         this.saveCache();

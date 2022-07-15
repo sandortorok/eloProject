@@ -17,7 +17,7 @@ export interface Match{
   losersFrom?: number[];
   groupName?:string;
   gameName?:string;
-  white?:boolean;
+  white?:number;
 }
 interface MYSQL_MATCH{
   player1:string;
@@ -35,6 +35,7 @@ interface MYSQL_MATCH{
   loserFrom1?:number;
   loserFrom2?:number;
   groupName?:string;
+  white?: number;
 }
 export interface CacheElement {
   gameName: string;
@@ -55,7 +56,8 @@ export interface swissPlayer{
   gameType:string;
   gameName:string;
   points:number;
-  blackWhiteHistory?: string;
+  byes: number;
+  blackWhiteHistory?: string[];
 }
 export interface Group{
   groupName:string;
@@ -95,6 +97,9 @@ export class DataService {;
         newMatch['final'] = match.final
         newMatch['losersFrom'] = [match.loserFrom1!, match.loserFrom2!]
         newMatch['loser'] = match.loser
+      }
+      if(match.white!= undefined && match.white!=null){
+        newMatch['white'] = match.white;
       }
       if(match.groupName){
         newMatch['groupName'] = match.groupName;

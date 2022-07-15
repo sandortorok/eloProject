@@ -163,13 +163,14 @@ export class DEBracketComponent implements OnInit {
     let matchID = event.target.parentNode.id.match(/(\d+)/)![0];
     let thisMatch = this.matches.filter(m =>{ return m.Meccs_id == matchID})[0];
     if (!thisMatch) return;
-    if(thisMatch.Gyoztes != "") return;
+    if (thisMatch.Gyoztes != "") return;
     if (thisMatch.Csapatok[0] == "" || thisMatch.Csapatok![1] == "") return;
     if (thisMatch.Csapatok[0].includes('Győztese') || thisMatch.Csapatok[1].includes('Győztese')) return;
     if (thisMatch.Csapatok[0].includes('Vesztese') || thisMatch.Csapatok[1].includes('Vesztese')) return;
     const modalRef = this.modalService.open(WinModal, { centered: true });
     modalRef.componentInstance.match = thisMatch;
     modalRef.componentInstance.updateEvent.subscribe((updatedMatch:Match)=>{
+      if(updatedMatch.Gyoztes == 'draw') return;
       thisMatch = updatedMatch;
       let vesztes: string;
       if(thisMatch.Csapatok[0] == thisMatch.Gyoztes){
