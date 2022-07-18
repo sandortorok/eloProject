@@ -38,6 +38,8 @@ export class SwissBracketComponent implements OnInit {
     this.loadCache();
     this.subscriptions.push(this.sub2UserChange());
     this.subscriptions.push(this.sub2Generated());
+    this.subscriptions.push(this.sub2Next());
+
     this.user = this.userservice.loggedUser;
   }
   giveEffects(){
@@ -170,6 +172,15 @@ export class SwissBracketComponent implements OnInit {
       this.user = this.userservice.loggedUser
     });
   }
+  sub2Next(){
+    return this.generator.generatedNext.subscribe((newMatches)=>{
+      this.matches = newMatches
+      this.httpservice.saveSWGame({body: this.matches, name: this.gameName, type: this.gameType}).subscribe({})
+      this.saveCache();
+      this.loadPlayerStats();
+      this.giveEffects();
+    })
+  }
   sub2Generated(){
     return this.generator.generated.subscribe((newMatches)=>{
         this.gameName = Math.random().toString(36).slice(2, 7);
@@ -243,12 +254,7 @@ export class SwissBracketComponent implements OnInit {
   this.players = playerScores
   }
   onGenerateNext(){
-    let newMatches = this.generator.generateNextRound(this.matches, this.players);
-    if(newMatches != undefined){
-      this.matches = newMatches;
-    }
-    this.loadPlayerStats();
-    this.giveEffects();
+    this.generator.generateNextRound(this.matches, this.players);
   }
   ngOnDestroy(){
     this.subscriptions.forEach((sub:Subscription) => {

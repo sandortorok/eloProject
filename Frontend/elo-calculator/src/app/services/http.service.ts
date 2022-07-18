@@ -181,8 +181,16 @@ saveSWGame(body){
 /////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////MUNKRES//////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////
+  generateSwissNextRound(body){
+    return this.http.post(this.url + '/swissNext',body)
+    .pipe(catchError(this.handleError));
+  }
   generateMunkres(body){
     return this.http.post(this.url + '/munkres',body)
+    .pipe(catchError(this.handleError));
+  }
+  generateEdmond(body){
+    return this.http.post(this.url + '/edmond',body)
     .pipe(catchError(this.handleError));
   }
 }

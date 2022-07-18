@@ -106,7 +106,7 @@
     width: 95%;
     box-sizing: border-box;
     transition: all 0.3s ease-in-out;
-    opacity: 0.3;
+    opacity: 1;
     text-align: start;
 }
 .team p{
@@ -161,6 +161,7 @@ h1{
     color:white;
     grid-row: span 2;
     font-weight: bolder;
+    visibility: hidden;
 }
 
 .round li {
@@ -198,7 +199,9 @@ h1{
     background-color: rgb(71, 228, 9) !important;
 }
 .lose{
-    background-color: rgba(189, 40, 40) !important;
+    opacity: 0.3;
+    background-color: rgb(221, 31, 31) !important;
+    color:white;
 }
 .draw{
     background-color: #1fa9b1 !important;

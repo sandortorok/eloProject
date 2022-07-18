@@ -3,7 +3,9 @@ const cors = require("cors")
 const express = require("express");
 const app = express();
 const server = require('http').createServer(app)
+const edmond = require('./swissScriptGenerator/edmond')
 var munkres = require('munkres-js');
+var blossom = require('edmonds-blossom');
 
 app.use(cors());
 app.use(express.json())
@@ -127,7 +129,6 @@ app.post('/swgame', (req, res) => {
         let score0 = el.score0;
         let score1 = el.score1;
         if(el.white!=undefined) white = el.white;
-        console.log(white);
         if(first){
             first = false;
         }
@@ -394,12 +395,18 @@ app.get('/user/:name', (req, res) => {
     runQuery(sql, res);
 })
 /////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////MUNKRES/////////////////////////////////////////////
+/////////////////////////////////////////////ALGO/////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////
 app.post('/munkres', (req, res) => {
     let msg = req.body;
     let matrix = msg.matrix;
     result = munkres(matrix);
+    res.send(result)
+})
+app.post('/edmond', (req, res) => {
+    let msg = req.body;
+    let matrix = msg.matrix;
+    let result = blossom(matrix)
     res.send(result)
 })
 
@@ -413,3 +420,8 @@ app.get("/", (req, res) => {
 server.listen(3000, () => {
     console.log('server started at http://localhost:3000')
 })
+
+
+
+
+
