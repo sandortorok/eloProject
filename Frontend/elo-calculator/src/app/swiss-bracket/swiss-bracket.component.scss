@@ -131,7 +131,6 @@
     grid-template-columns: 10px min(90%, 300px);
     width: min(90%, 300px);
     place-items: center;
-    margin: 0 auto;
     padding: 10px 0;
     height: 60px;
     -webkit-transition: all 0.3s;
@@ -197,11 +196,11 @@ h1{
 }
 .win {
     background-color: rgb(71, 228, 9) !important;
+    font-weight: bold;
 }
 .lose{
-    opacity: 0.3;
+    opacity: 0.5;
     background-color: rgb(221, 31, 31) !important;
-    color:white;
 }
 .draw{
     background-color: #1fa9b1 !important;
@@ -253,6 +252,9 @@ h1{
 
 
 @media screen and (max-width: 550px) {
+    .hero{
+        font-size:8.5px;
+    }
     #bracket{
         margin-left: 0;
         margin-right: 0;

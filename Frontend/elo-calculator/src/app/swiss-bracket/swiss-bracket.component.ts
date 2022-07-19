@@ -42,7 +42,31 @@ export class SwissBracketComponent implements OnInit {
 
     this.user = this.userservice.loggedUser;
   }
+  myfunc(name:string){
+    let a = this.players.filter(p =>{return p.name == name})
+    if(a){
+      console.log(a[0].points);
+      return a[0].points
+    }
+    return ''
+  }
+  gridColumns(matches){
+    if(matches.filter(m=>{return m.Round > 3}).length > 0){
+      return {'grid-template-columns':'1fr 1fr 1fr 1fr'}
+    }
+    else if(matches.filter(m=>{return m.Round > 2}).length > 0){
+      return {'grid-template-columns':'1fr 1fr 1fr 1fr'}
+    }
+    else if(matches.filter(m=>{return m.Round > 1}).length > 0){
+      return {'grid-template-columns':'1fr 1fr 1fr'}
+    }
+    else if(matches.filter(m=>{return m.Round == 1}).length > 0){
+      return {'grid-template-columns':'1fr 1fr'}
+    }
+    return {'grid-template-columns':'1fr 1fr'}
+  }
   giveEffects(){
+    this.matches.filter(m=>{return m.Round> 1}).length > 0
     setTimeout(() => {
       if (this.container != undefined){
         this.giveCurrentClass();

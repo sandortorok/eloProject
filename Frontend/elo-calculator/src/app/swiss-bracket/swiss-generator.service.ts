@@ -166,7 +166,7 @@ export class SwissGeneratorService {
             }
           }
           let diff = Math.abs(p.points-p2.points);
-          newPairing.penalty += diff*100;
+          newPairing.penalty += diff*diff*100;
           possiblePairs.push(newPairing);
         }
       })

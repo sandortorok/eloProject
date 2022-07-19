@@ -27,7 +27,7 @@
   width: 100%;
   background-color: #007e90;
   color: white;
-  grid-column: span 3;
+  grid-column: span 2;
   cursor: pointer;
   font-weight: bold;
   font-size: 2em;
@@ -67,7 +67,7 @@ html {
   width: 100%;
   text-align: center;
   display:grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   justify-content: center;
   align-content: center;
   gap: 10px;

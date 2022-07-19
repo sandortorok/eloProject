@@ -16,7 +16,7 @@
 
     </div>
     <app-spinner *ngIf="matches != undefined && matches.length == 0"></app-spinner>
-    <div *ngIf="matches != undefined && matches.length > 0" class="container" #container>
+    <div *ngIf="matches != undefined && matches.length > 0" class="container" #container [ngStyle]="gridColumns(matches)">
     <div *ngFor="let round of matches | rounds; let i = index" class="split-wrap">
             <h1>{{i+1}}. Forduló</h1>
             <div class="round">
@@ -26,12 +26,12 @@
                         [class.win]="match.Csapatok[0] == match.Gyoztes && match.Gyoztes.length > 0"
                         [class.lose]="match.Csapatok[0] != match.Gyoztes && match.Gyoztes.length > 0 && match.Gyoztes != 'draw' && match.Csapatok[0]!=''"
                         [class.draw]="match.Gyoztes=='draw'">
-                        <span class="name">{{match.Csapatok[0]}}</span><span class="score">{{match.score0}}</span></li>
+                        <span class="name">{{match.Csapatok[0]}}</span><span class="score">{{myfunc(match.Csapatok[0])}}</span></li>
                     <li class="team" (click)="onTeamClick($event)"
                         [class.win]="match.Csapatok[1] == match.Gyoztes  && match.Gyoztes.length > 0"
                         [class.lose]="match.Csapatok[1] != match.Gyoztes && match.Gyoztes.length > 0 && match.Gyoztes != 'draw' && match.Csapatok[1]!=''"
                         [class.draw]="match.Gyoztes=='draw'">
-                        <span class="name">{{match.Csapatok[1]}}</span><span class="score">{{match.score1}}</span></li>
+                        <span class="name">{{match.Csapatok[1]}}</span><span class="score">{{myfunc(match.Csapatok[1])}}</span></li>
                 </ul>
             </div>
         </div>
