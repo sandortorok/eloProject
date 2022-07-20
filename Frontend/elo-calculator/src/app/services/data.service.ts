@@ -18,6 +18,12 @@ export interface Match{
   groupName?:string;
   gameName?:string;
   white?:number;
+  thirdPlace?:boolean;
+}
+export interface DEMatch extends Match {
+  loser: boolean;
+  final: boolean;
+  losersFrom: number[];
 }
 interface MYSQL_MATCH{
   player1:string;
@@ -36,6 +42,7 @@ interface MYSQL_MATCH{
   loserFrom2?:number;
   groupName?:string;
   white?: number;
+  thirdPlace?:boolean;
 }
 export interface CacheElement {
   gameName: string;
@@ -104,8 +111,12 @@ export class DataService {;
       if(match.groupName){
         newMatch['groupName'] = match.groupName;
       }
+      if(match.thirdPlace != undefined){
+        newMatch['thirdPlace'] = match.thirdPlace;
+      }
       matches.push(newMatch);
     })
+    console.log(matches);
     return matches
   }
   loadEloPlayers(){

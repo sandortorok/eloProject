@@ -1,4 +1,4 @@
-<div [style]="desktopView? 'min-width: 1800px':''">
+<div [style] ="desktopView? 'min-width: 1800px':''">
     <header *ngIf="matches != undefined" class="hero">
         <div class="hero-wrap">
             <p class="intro" id="intro" style="margin-bottom: 0;">Pányok</p>
@@ -24,11 +24,11 @@
                         <ul *ngFor="let match of round" class="matchup" id="match {{match.Meccs_id}}">
                             <span class="matchNumber">{{match.Meccs_id}}</span>
                             <li class="team" (click)="onTeamClick($event)"
-                                [class.win]="match.Csapatok![0]==match.Gyoztes && match.Gyoztes.length > 0">
-                                {{match.Csapatok![0]}}<span class="score">{{match.score0}}</span></li>
+                                [class.win]="match.Csapatok[0]==match.Gyoztes && match.Gyoztes.length > 0">
+                                {{match.Csapatok[0]}}<span class="score">{{match.score0}}</span></li>
                             <li class="team" (click)="onTeamClick($event)"
-                                [class.win]="match.Csapatok![1]==match.Gyoztes  && match.Gyoztes.length > 0">
-                                {{match.Csapatok![1]}}<span class="score">{{match.score1}}</span></li>
+                                [class.win]="match.Csapatok[1]==match.Gyoztes  && match.Gyoztes.length > 0">
+                                {{match.Csapatok[1]}}<span class="score">{{match.score1}}</span></li>
                         </ul>
                     </div> <!-- END ROUND ONE -->
                 </div>
@@ -39,14 +39,16 @@
                     <div *ngFor="let round of matches | rounds: 'loser'; let i = index" class="round loser-round-{{i+1}}">
                         <div class="round-details">{{i+1}}. Forduló <br /><span class="date">KEDD</span></div>
                         <ul *ngFor="let match of round" class="matchup loser-matchup" id="match {{match.Meccs_id}}"
-                            [class.bye]="match.Csapatok![0].length <= 0 && match.Csapatok![1].length <=0 && i == 0">
+                            [class.bye]="match.Csapatok[0].length <= 0 && match.Csapatok[1].length <=0 && i == 0">
                             <span class="matchNumber" style="display: hidden"></span>
                             <li class="team" (click)="onTeamClick($event)"
-                                [class.win]="match.Csapatok![0]==match.Gyoztes && match.Gyoztes.length > 0">
-                                {{match.Csapatok![0]}}<span class="score">{{match.score0}}</span></li>
+                                [class.win]="match.Csapatok[0] == match.Gyoztes && match.Gyoztes.length > 0"
+                                [class.lose]="match.Csapatok[0] != match.Gyoztes && match.Gyoztes.length > 0 && match.Gyoztes != 'draw' && match.Csapatok[0]!=''">
+                                {{match.Csapatok[0]}}<span class="score">{{match.score0}}</span></li>
                             <li class="team" (click)="onTeamClick($event)"
-                                [class.win]="match.Csapatok![1]==match.Gyoztes  && match.Gyoztes.length > 0">
-                                {{match.Csapatok![1]}}<span class="score">{{match.score1}}</span></li>
+                                [class.win]="match.Csapatok[1] == match.Gyoztes  && match.Gyoztes.length > 0"
+                                [class.lose]="match.Csapatok[1] != match.Gyoztes && match.Gyoztes.length > 0 && match.Gyoztes != 'draw' && match.Csapatok[1]!=''">
+                                {{match.Csapatok[1]}}<span class="score">{{match.score1}}</span></li>
                         </ul>
                     </div>
                 </div>
@@ -55,16 +57,18 @@
                 <h1>DÖNTŐK</h1>
                 <div class="split">
                     <div *ngFor="let round of matches | rounds: 'final'; let i = index" class="round loser-round-{{i+1}}">
-                        <div class="round-details">{{i+1}}. Forduló <br /><span class="date">KEDD</span></div>
+                        <div class="round-details">{{i+1}}. Döntő<br /><span class="date">KEDD</span></div>
                         <ul *ngFor="let match of round" class="matchup loser-matchup" id="match {{match.Meccs_id}}"
-                            [class.bye]="match.Csapatok![0].length <= 0 && match.Csapatok![1].length <=0 && i == 0">
+                            [class.bye]="match.Csapatok[0].length <= 0 && match.Csapatok[1].length <=0 && i == 0">
                             <span class="matchNumber" style="display: hidden"></span>
                             <li class="team" (click)="onTeamClick($event)"
-                                [class.win]="match.Csapatok![0]==match.Gyoztes && match.Gyoztes.length > 0">
-                                {{match.Csapatok![0]}}<span class="score">{{match.score0}}</span></li>
+                                [class.win]="match.Csapatok[0]==match.Gyoztes && match.Gyoztes.length > 0"
+                                [class.lose]="match.Csapatok[0] != match.Gyoztes && match.Gyoztes.length > 0 && match.Gyoztes != 'draw' && match.Csapatok[0]!=''">
+                                {{match.Csapatok[0]}}<span class="score">{{match.score0}}</span></li>
                             <li class="team" (click)="onTeamClick($event)"
-                                [class.win]="match.Csapatok![1]==match.Gyoztes  && match.Gyoztes.length > 0">
-                                {{match.Csapatok![1]}}<span class="score">{{match.score1}}</span></li>
+                                [class.win]="match.Csapatok[1]==match.Gyoztes  && match.Gyoztes.length > 0"
+                                [class.lose]="match.Csapatok[1] != match.Gyoztes && match.Gyoztes.length > 0 && match.Gyoztes != 'draw' && match.Csapatok[1]!=''">
+                                {{match.Csapatok[1]}}<span class="score">{{match.score1}}</span></li>
                         </ul>
                     </div>
                 </div>

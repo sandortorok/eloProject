@@ -74,16 +74,16 @@
 }
 
 .champion {
-    float: left;
-    display: block;
-    width: 16%;
-    -webkit-flex-direction: row;
-    flex-direction: row;
-    -webkit-align-self: center;
+    display: flex;
+    width: 30%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
     align-self: center;
-    margin-top: -15px;
     text-align: center;
     padding: 230px 0\9;
+    margin-top:60px;
 }
 
 .champion i {
@@ -91,7 +91,12 @@
     font-size: 45px;
     padding: 10px 0;
 }
-
+.final{
+    margin:4.5em 0;
+}
+.thirdPlace{
+    margin:4.5em 0;
+}
 
 .split-one .round {
     margin: 0 2.5% 0 0;
@@ -124,7 +129,7 @@
     cursor: pointer;
     width: min(90%, 300px);
     box-sizing: border-box;
-    transition: all 0.5s ease-in-out;
+    transition: all 0.3s ease-in-out;
     opacity: 0.3;
 }
 
@@ -204,11 +209,6 @@
 }
 
 
-
-.final {
-    margin: 4.5em 0;
-}
-
 .date {
     font-size: 10px;
     letter-spacing: 2px;
@@ -216,8 +216,9 @@
     color: rgb(71, 228, 9);
 }
 
-.win {
-    background-color: rgb(71, 228, 9) !important;
+.matchup .win {
+    background-color: rgb(71, 228, 9);
+    font-weight: bold;
 }
 .split-wrap {
     background-color: #141414;
@@ -348,6 +349,21 @@ h1 {
     }
 }
 
+.final .matchup .lose{
+    background-color: silver;
+    opacity: 1;
+}
+.final .matchup .win{
+    background-color: gold;
+    opacity: 1;
+}
+.thirdPlace .matchup .win{
+    background-color: #CD7F32;
+    opacity: 1;
+}
+.thirdPlace .fa-trophy{
+    color:#CD7F32 !important;
+}
 @media screen and (max-width: 980px) {
     .btn-wrapper>*{
         margin-bottom: 10%;

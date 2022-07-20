@@ -95,8 +95,10 @@ export class DEBracketComponent implements OnInit {
       samePlayer.forEach(e => {
         e.onmouseover = () => {
           samePlayer.forEach(same => {
+            let color = window.getComputedStyle( same,null).getPropertyValue('background-color')
+            same.style.border = `1px solid ${color}`;
             same.style.opacity = 1;
-            same.style.boxShadow = "0 0 5px rgb(71, 228, 9), 0 0 25px rgb(71, 228, 9)"
+            same.style.boxShadow = `0 0 5px ${color}, 0 0 25px ${color}`
           })
           if (match){
             match.style.opacity = 1;
@@ -155,10 +157,6 @@ export class DEBracketComponent implements OnInit {
     })
   }
   onTeamClick(event){
-    if(this.user.privilegeType=='Guest'){
-      this.openInfoModal()
-      return;
-    };
     event.target.parentNode.id;
     let matchID = event.target.parentNode.id.match(/(\d+)/)![0];
     let thisMatch = this.matches.filter(m =>{ return m.Meccs_id == matchID})[0];
@@ -167,32 +165,56 @@ export class DEBracketComponent implements OnInit {
     if (thisMatch.Csapatok[0] == "" || thisMatch.Csapatok![1] == "") return;
     if (thisMatch.Csapatok[0].includes('Győztese') || thisMatch.Csapatok[1].includes('Győztese')) return;
     if (thisMatch.Csapatok[0].includes('Vesztese') || thisMatch.Csapatok[1].includes('Vesztese')) return;
+    if(this.user.privilegeType=='Guest'){
+      this.modalService.open(InfoModal, { centered: true });
+      return;
+    };
     const modalRef = this.modalService.open(WinModal, { centered: true });
     modalRef.componentInstance.match = thisMatch;
     modalRef.componentInstance.updateEvent.subscribe((updatedMatch:Match)=>{
       if(updatedMatch.Gyoztes == 'draw') return;
       thisMatch = updatedMatch;
+      
+
       let vesztes: string;
       if(thisMatch.Csapatok[0] == thisMatch.Gyoztes){
         vesztes = thisMatch.Csapatok[1];
       }
       else { vesztes = thisMatch.Csapatok[0] }
-      let changedFrom = "randomname987654321xyzqwerty"
       this.matches.forEach(match=>{
           if(match.losersFrom  && match.losersFrom[0] == thisMatch.Meccs_id){
-            changedFrom = match.Csapatok[0];
+            let changedFrom = match.Csapatok[0];
             match.Csapatok[0] = vesztes;
+            if(match.Gyoztes == changedFrom){ match.Gyoztes = vesztes }
           }
-          if(match.losersFrom  && match.losersFrom[1] == thisMatch.Meccs_id){
-            changedFrom = match.Csapatok[0];
+          if(match.losersFrom  && (match.losersFrom[1] == thisMatch.Meccs_id)){
+            let changedFrom = match.Csapatok[1];
             match.Csapatok[1] = vesztes;
-          }
-          if(match.Gyoztes == changedFrom){
-            match.Gyoztes = vesztes
+            if(match.Gyoztes == changedFrom){ match.Gyoztes = vesztes }
           }
       })
       let nextID = thisMatch.nextRoundID
-      if (nextID >= 0){
+      let finals = this.matches.filter(m=>{return m.final==true});
+      let final1 = finals[0];
+      let deleted = false;
+      if(thisMatch.Meccs_id == final1.Meccs_id){
+        let thisWinner = thisMatch.Gyoztes
+        let lostCount = 0;
+        this.matches.forEach(m=>{
+          if(m.Csapatok.includes(thisWinner) && m.Gyoztes != thisWinner){
+            lostCount++;
+            console.log('lost', m);
+          }
+        })
+        if(lostCount == 0){
+          let newMatches:Match[] = JSON.parse(JSON.stringify(this.matches));
+          let popped = newMatches.pop()!;
+          this.matches = newMatches;
+          deleted = true;
+          this.httpservice.deleteDEMatch({gameName: this.gameName, match_ID:popped.Meccs_id}).subscribe(a=>{});
+        }
+      }
+      if (nextID >= 0 && !deleted){
         let nextMatch:Match;
         nextMatch = this.matches.filter(m=>{return m.Meccs_id == nextID})[0]
         let nextTeam = nextMatch.Csapatok[thisMatch.bottom]
@@ -207,9 +229,6 @@ export class DEBracketComponent implements OnInit {
       this.saveCache();
       this.giveEffects();
     })
-  }
-  openInfoModal(){
-    const modalRef = this.modalService.open(InfoModal, { centered: true });
   }
   saveCache(){
     this.httpservice.saveCache({gameName: this.gameName, bracketType:'double-elimination', gameType:this.gameType}).subscribe({})
@@ -229,8 +248,10 @@ export class DEBracketComponent implements OnInit {
       if(this.gameName != ""){
         this.matches = [];
         this.httpservice.getDEMatch(this.gameName).subscribe(data=>{
+          console.log(data);
           this.matches = this.dataservice.loadMatchesFromDataObject(data);
           this.giveEffects();
+          console.log(this.matches);
         })
       }
     })
@@ -240,6 +261,7 @@ export class DEBracketComponent implements OnInit {
         this.matches = [];
         this.matches = this.bracket.GeneratedGames
         this.gameName = Math.random().toString(36).slice(2, 7);
+        console.log(this.matches);
         this.httpservice.saveDEGame({body: this.matches, name: this.gameName, type: this.gameType}).subscribe({})
         this.saveCache();
         this.giveEffects();

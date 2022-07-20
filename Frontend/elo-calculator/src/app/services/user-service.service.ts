@@ -2,8 +2,8 @@ import { EventEmitter, Injectable, Output } from '@angular/core';
 
 export enum Privilege {
   Admin = "Admin",
-  Normal = "Normal",
-  Guest = "Guest"
+  Guest = "Guest",
+  Normal = "Normal"
 }
 export interface User{
   username:string;

@@ -93,6 +93,15 @@
     display:flex; 
     flex-direction: column;
 }
+.scoreBoard .team:first-child{
+    background-color: gold;
+}
+.scoreBoard .team:nth-child(2){
+    background-color: silver;
+}
+.scoreBoard .team:nth-child(3){
+    background-color: #CD7F32;
+}
 .team {
     color:#000000;
     padding: 0 5px;
@@ -106,7 +115,7 @@
     width: 95%;
     box-sizing: border-box;
     transition: all 0.3s ease-in-out;
-    opacity: 1;
+    opacity: 0.3;
     text-align: start;
 }
 .team p{
@@ -197,10 +206,6 @@ h1{
 .win {
     background-color: rgb(71, 228, 9) !important;
     font-weight: bold;
-}
-.lose{
-    opacity: 0.5;
-    background-color: rgb(221, 31, 31) !important;
 }
 .draw{
     background-color: #1fa9b1 !important;

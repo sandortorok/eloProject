@@ -10,6 +10,7 @@ import { SaveModal } from '../modals/save-modal/save-modal.component';
 import { LoadModal } from '../modals/load-modal/load-modal.component';
 import { WinModal } from '../modals/win-modal/win-modal.component';
 import { SortPipe } from '../pipes/sort.pipe';
+import { InfoModal } from '../modals/info-modal/info-modal.component';
 
 @Component({
   selector: 'app-swiss-bracket',
@@ -45,7 +46,6 @@ export class SwissBracketComponent implements OnInit {
   myfunc(name:string){
     let a = this.players.filter(p =>{return p.name == name})
     if(a){
-      console.log(a[0].points);
       return a[0].points
     }
     return ''
@@ -152,7 +152,7 @@ export class SwissBracketComponent implements OnInit {
   onLoad(){
     const modalRef = this.modalService.open(LoadModal, { centered: true });
     modalRef.componentInstance.matches = this.matches;
-    modalRef.componentInstance.loadMode = 'swiss';
+    modalRef.componentInstance.loadMode = 'swiss-system';
     modalRef.componentInstance.gameType = this.gameType;
     modalRef.componentInstance.loadEvent.subscribe((loadData)=>{
       this.gameName = loadData.name
@@ -169,7 +169,6 @@ export class SwissBracketComponent implements OnInit {
     })
   }
   onTeamClick(event){
-    if(this.user.privilegeType=='Guest') return;
     let matchID = -1;
     if (event.target.parentNode.tagName == 'LI'){
       matchID = event.target.parentNode.parentNode.id.match(/(\d+)/)![0];
@@ -181,7 +180,12 @@ export class SwissBracketComponent implements OnInit {
     if (!thisMatch) return;
     if (thisMatch.Gyoztes != "") return;
     if (thisMatch.Csapatok[0] == "" || thisMatch.Csapatok![1] == "") return;
+    if(this.user.privilegeType=='Guest'){
+      this.modalService.open(InfoModal, { centered: true });
+      return;
+    };
     const modalRef = this.modalService.open(WinModal, { centered: true });
+    modalRef.componentInstance.bracketType = 'swiss';
     modalRef.componentInstance.match = thisMatch;
     modalRef.componentInstance.updateEvent.subscribe((updatedMatch:Match)=>{
       thisMatch = updatedMatch;

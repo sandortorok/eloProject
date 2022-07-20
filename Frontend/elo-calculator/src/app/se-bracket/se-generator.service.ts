@@ -9,7 +9,7 @@ export class SEGeneratorService {
   constructor() {
   }
   
-  GeneratedGames:any[] = [];
+  GeneratedGames:Match[] = [];
   exampleTeams:string[] = []
   @Output() generated = new EventEmitter();
 
@@ -49,24 +49,13 @@ export class SEGeneratorService {
     let Meccsek_Száma = closestBase / 2;
     let teamNumber = 0;
     let matchID = 0;
-    let games:Object[] = [];
+    let games:Match[] = [];
     let RoundNumber = 1;
     let nextRoundID = Meccsek_Száma;
     let matchesAdded = 0; //Hány meccset adtunk eddig hozzá a kövi nextRoundID-hez
     //ELŐNYERŐK
     for (let i = 0; i < Elonyerok; i++) {
-      let newGame:Match = {
-        Csapatok: [],
-        Round: 0,
-        nextRoundID: 0,
-        Gyoztes: '',
-        Meccs_id: 0,
-        bye: false,
-        bottom: 0,
-        score0:null,
-        score1:null
-      };
-      
+      let newGame:Match = {Csapatok: [],Round: 0,nextRoundID: 0,Gyoztes: '',Meccs_id: 0,bye: false,bottom: 0,score0:null,score1:null,thirdPlace:false};
       let teams: string[] = [];
       teams.push(input[teamNumber]);
       teams.push("");
@@ -93,7 +82,7 @@ export class SEGeneratorService {
     }
     //MARADÉK JÁTSZÓK
     for (let i = 0; i < Meccsek_Száma - Elonyerok; i++) {
-      let newGame = {};
+      let newGame:Match = {Csapatok: [],Round: 0,nextRoundID: 0,Gyoztes: '',Meccs_id: 0,bye: false,bottom: 0,score0: null,score1: null, thirdPlace:false};
       let teams: string[] = [];
       teams.push(input[teamNumber]);
       teams.push(input[teamNumber + 1]);
@@ -139,7 +128,7 @@ export class SEGeneratorService {
         let teams: string[] = [];
         teams.push(meccs1['Gyoztes']);
         teams.push(meccs2['Gyoztes']);
-        let newGame = {};
+        let newGame:Match = {Csapatok: [],Round: 0,nextRoundID: 0,Gyoztes: '',Meccs_id: 0,bye: false,bottom: 0,score0: null,score1: null, thirdPlace:false};
         newGame['Meccs_id'] = matchID;
         if(matchesAdded != 2){
           newGame['nextRoundID'] = nextRoundID;
@@ -159,8 +148,9 @@ export class SEGeneratorService {
         newGame['bye'] = false;
         matchID++;
         games.push(newGame);
-      }     
+      }
     }
+    games.push({Csapatok: ['', ''],Round: RoundNumber+1,nextRoundID: -1,Gyoztes: '',Meccs_id: matchID++,bye: false,bottom: 0,score0: null,score1: null, thirdPlace:true});
     this.GeneratedGames = games;
     console.log(games);
   }

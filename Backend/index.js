@@ -163,7 +163,7 @@ app.post('/segame', (req, res) => {
     let msg = req.body.body;
     let gameName = req.body.name;
     let gameType = req.body.type;
-    let sql = 'REPLACE INTO SEMatches (gameName, winner, player1, player2, round, bye, score1, score2, bottom, nextMatch_ID, match_ID, gameType) VALUES '
+    let sql = 'REPLACE INTO SEMatches (gameName, winner, player1, player2, round, bye, score1, score2, bottom, nextMatch_ID, match_ID, gameType, thirdPlace) VALUES '
     let first = true;
     for (el of msg){
         let player1 = el.Csapatok[0];
@@ -176,6 +176,7 @@ app.post('/segame', (req, res) => {
         let bye = el.bye;
         let score0 = el.score0;
         let score1 = el.score1;
+        let thirdPlace = el.thirdPlace
         if(first){
             first = false;
         }
@@ -184,7 +185,7 @@ app.post('/segame', (req, res) => {
         }
         sql += `('${gameName}', '${winner}', '${player1}',
         '${player2}', ${round}, ${bye}, ${score0},
-        ${score1}, ${bottom}, ${nextMatch_ID}, ${match_ID}, '${gameType}')`;
+        ${score1}, ${bottom}, ${nextMatch_ID}, ${match_ID}, '${gameType}', ${thirdPlace})`;
     }
     let query = pool.query(sql, (err, result) => {
         if(err) throw err;
@@ -253,6 +254,13 @@ app.post('/degame', (req, res) => {
         })
     }
     res.send({msg: 'hey'})
+})
+app.delete('/dematch', (req, res) => {
+    let msg = req.body;
+    let gameName = msg.gameName;
+    let match_ID = msg.match_ID;
+    let sql = `DELETE FROM DEMatches WHERE (gameName = '${gameName}' AND match_ID = ${match_ID})`
+    runQuery(sql, res);
 })
 /////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////RRMATCHES////////////////////////////////////////////

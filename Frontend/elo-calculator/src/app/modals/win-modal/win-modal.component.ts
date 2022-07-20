@@ -15,6 +15,7 @@ export class WinModal {
     selPlayer = "Győztes"
     playerSelected: boolean = false;
     clicked:number = 0;
+    bracketType:string = 'single-elimination'; 
     constructor(public activeModal: NgbActiveModal) { }
     onSelect(name: string) {
       this.selPlayer = name;

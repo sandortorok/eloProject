@@ -120,7 +120,7 @@
     width: 95%;
     box-sizing: border-box;
     transition: all 0.3s ease-in-out;
-    opacity: 0.3;
+    opacity: 0.2;
 }
 
 .round {
@@ -270,10 +270,22 @@ h1 {
     color: rgb(71, 228, 9);
 }
 
-.win {
-    background-color: rgb(71, 228, 9) !important;
+.matchup .win {
+    background-color: rgb(71, 228, 9);
+    font-weight: bold;
 }
-
+.final-bracket .split .round:last-child .matchup .win{
+    background-color: gold;
+    opacity: 1;
+}
+.final-bracket .split .round:last-child .matchup .lose{
+    background-color: #C0C0C0;
+    opacity: 1;
+}
+.losers-bracket .split .round:last-child .matchup .lose{
+    background-color: #CD7F32;
+    opacity: 1;
+}
 .btn-wrapper {
     display: flex;
     flex-wrap: wrap;

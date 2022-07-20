@@ -9,6 +9,7 @@ import { SaveModal } from '../modals/save-modal/save-modal.component';
 import { Group, Match } from '../services/data.service';
 import { RRGeneratorService } from './rr-generator.service';
 import { Subscription } from 'rxjs/internal/Subscription';
+import { InfoModal } from '../modals/info-modal/info-modal.component';
 
 
 export interface playerScore{
@@ -80,14 +81,18 @@ export class RRBracketComponent implements OnInit {
     this.rrhelper.giveHoverEffect(teamElements, this.matches)
   }
   onTeamClick(event){
-    if(this.user.privilegeType=='Guest') return;
     let matchID = event.target.parentNode.id.match(/(\d+)/)![0];
     let thisMatch = this.matches.filter(m =>{ return m.Meccs_id == matchID})[0];
     if (!thisMatch) return;
     if(thisMatch.Gyoztes != "") return;
     if (thisMatch.Csapatok[0] == "" || thisMatch.Csapatok![1] == "") return;
+    if(this.user.privilegeType == 'Guest'){
+      this.modalService.open(InfoModal, { centered: true });
+      return;
+    };
     const modalRef = this.modalService.open(WinModal, { centered: true });
     modalRef.componentInstance.match = thisMatch;
+    modalRef.componentInstance.bracketType = 'round-robin';
     modalRef.componentInstance.updateEvent.subscribe((updatedMatch:Match)=>{
       thisMatch = updatedMatch;
       if(!this.groupMode){

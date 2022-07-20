@@ -132,9 +132,10 @@ export class RRHelperService {
       samePlayer.forEach(e => {
         e.onmouseover = () => {
           samePlayer.forEach(same => {
-            same.style.border = "1px solid rgb(71, 228, 9)";
+            let color = window.getComputedStyle( same,null).getPropertyValue('background-color')
+            same.style.border = `1px solid ${color}`;
             same.style.opacity = 1;
-            same.style.boxShadow = "0 0 5px rgb(71, 228, 9), 0 0 25px rgb(71, 228, 9)"
+            same.style.boxShadow = `0 0 5px ${color}, 0 0 25px ${color}`;
           })
         }
         e.onmouseleave = () => {

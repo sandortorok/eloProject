@@ -23,48 +23,44 @@
                         <div class="round-details">{{i+1}}. Forduló <br /><span class="date">KEDD</span></div>
                         <ul *ngFor="let match of round" class="matchup" id="match {{match.Meccs_id}}">
                             <li class="team" (click)="onTeamClick($event)"
-                                [class.win]="match.Csapatok[0]==match.Gyoztes && match.Gyoztes.length > 0">
+                                [class.win]="match.Csapatok[0]==match.Gyoztes && match.Gyoztes.length > 0"
+                                [class.lose]="match.Csapatok[0] != match.Gyoztes && match.Gyoztes.length > 0 && match.Gyoztes != 'draw' && match.Csapatok[0]!=''">
                                 {{match.Csapatok[0]}}<span class="score">{{match.score0}}</span></li>
                             <li class="team" (click)="onTeamClick($event)"
-                                [class.win]="match.Csapatok[1]==match.Gyoztes  && match.Gyoztes.length > 0">
+                                [class.win]="match.Csapatok[1]==match.Gyoztes  && match.Gyoztes.length > 0"
+                                [class.lose]="match.Csapatok[1] != match.Gyoztes && match.Gyoztes.length > 0 && match.Gyoztes != 'draw' && match.Csapatok[1]!=''">
                                 {{match.Csapatok[1]}}<span class="score">{{match.score1}}</span></li>
                         </ul>
                     </div> <!-- END ROUND ONE -->
                 </div>
-                <div *ngIf="(matches|sechampions:'semi1') as semi1" class="champion">
-                    <div class="semis-l">
-                        <div class="round-details">1. elődöntő <br /><span class="date">SZERDA</span></div>
-                        <ul class="matchup championship" id="match {{semi1.Meccs_id}}">
-                            <li class="team" (click)="onTeamClick($event)"
-                                [class.win]="semi1.Csapatok[0]==semi1.Gyoztes && semi1.Gyoztes.length > 0">
-                                {{semi1.Csapatok[0]}}<span class="score">{{semi1.score0}}</span></li>
-                            <li class="team" (click)="onTeamClick($event)"
-                                [class.win]="semi1.Csapatok[1]==semi1.Gyoztes && semi1.Gyoztes.length > 0">
-                                {{semi1.Csapatok[1]}}<span class="score">{{semi1.score1}}</span></li>
-                        </ul>
-                    </div>
-                    <div class="final" *ngIf="(matches|sechampions:'final') as final">
-                        <i class="fa fa-trophy"></i>
+                <div class="champion" [style]="{'width': (matches.length>20) ? '13%' : '30%'}">
+                    <div class="final" *ngIf="(matches|sechampions:'final') as final" [style]="{'margin': (matches.length > 10)? '4.5em 0' : '0'}">
                         <div class="round-details">DÖNTŐ <br /><span class="date">CSÜTÖRTÖK</span></div>
+                        <i *ngIf="matches.length>10" class="fa fa-trophy" style="color:gold; margin-right:30px"></i><i *ngIf="matches.length>10" class="fa fa-trophy" style="color:silver"></i>
                         <ul class="matchup championship" id="match {{final.Meccs_id}}">
                             <li class="team" (click)="onTeamClick($event)"
-                                [class.win]="final.Csapatok[0]==final.Gyoztes && final.Gyoztes.length > 0">
+                                [class.win]="final.Csapatok[0]==final.Gyoztes && final.Gyoztes.length > 0"
+                                [class.lose]="final.Csapatok[0] != final.Gyoztes && final.Gyoztes.length > 0 && final.Gyoztes != 'draw' && final.Csapatok[0]!=''">
                                 {{final.Csapatok[0]}}<span class="score">{{final.score0}}</span></li>
                             <li class="team" (click)="onTeamClick($event)"
-                                [class.win]="final.Csapatok[1]==final.Gyoztes && final.Gyoztes.length > 0">
+                                [class.win]="final.Csapatok[1]==final.Gyoztes && final.Gyoztes.length > 0"
+                                [class.lose]="final.Csapatok[1] != final.Gyoztes && final.Gyoztes.length > 0 && final.Gyoztes != 'draw' && final.Csapatok[1]!=''">
                                 {{final.Csapatok[1]}}<span class="score">{{final.score1}}</span></li>
                         </ul>
                     </div>
-                    <div class="semis-r" *ngIf="(matches|sechampions:'semi2') as semi2">
-                        <div class="round-details">2. elődöntő <br /><span class="date">SZERDA</span></div>
-                        <ul class="matchup championship" id="match {{semi2.Meccs_id}}">
+                    <div class="thirdPlace" *ngIf="(matches|sechampions:'thirdPlace') as third" [style]="{'margin': (matches.length > 10)? '4.5em 0' : '0'}">
+                        <ul class="matchup championship" id="match {{third.Meccs_id}}">
                             <li class="team" (click)="onTeamClick($event)"
-                                [class.win]="semi2.Csapatok[0]==semi2.Gyoztes && semi2.Gyoztes.length > 0">
-                                {{semi2.Csapatok[0]}}<span class="score">{{semi2.score0}}</span></li>
+                                [class.win]="third.Csapatok[0]==third.Gyoztes && third.Gyoztes.length > 0"
+                                [class.lose]="third.Csapatok[0] != third.Gyoztes && third.Gyoztes.length > 0 && third.Gyoztes != 'draw' && third.Csapatok[0]!=''">
+                                {{third.Csapatok[0]}}<span class="score">{{third.score0}}</span></li>
                             <li class="team" (click)="onTeamClick($event)"
-                                [class.win]="semi2.Csapatok[1]==semi2.Gyoztes && semi2.Gyoztes.length > 0">
-                                {{semi2.Csapatok[1]}}<span class="score">{{semi2.score1}}</span></li>
+                            [class.win]="third.Csapatok[1]==third.Gyoztes && third.Gyoztes.length > 0"
+                                [class.lose]="third.Csapatok[1] != third.Gyoztes && third.Gyoztes.length > 0 && third.Gyoztes != 'draw' && third.Csapatok[1]!=''">
+                                {{third.Csapatok[1]}}<span class="score">{{third.score1}}</span></li>
                         </ul>
+                        <i *ngIf="matches.length>10" class="fa fa-trophy" style="color:gold;"></i>
+                        <div class="round-details">Harmadik hely<br /><span class="date">CSÜTÖRTÖK</span></div>
                     </div>
                 </div>
                 <div *ngIf="matches.length>20" class="split split-two">
@@ -73,10 +69,12 @@
                         <div class="round-details">{{round[i].Round}}. Forduló<br /><span class="date">KEDD</span></div>
                         <ul *ngFor="let match of round" class="reverse matchup" id="match {{match.Meccs_id}}">
                             <li class="team" (click)="onTeamClick($event)"
-                                [class.win]="match.Csapatok[0]==match.Gyoztes && match.Gyoztes.length > 0">
+                                [class.win]="match.Csapatok[0]==match.Gyoztes && match.Gyoztes.length > 0"
+                                [class.lose]="match.Csapatok[1] != match.Gyoztes && match.Gyoztes.length > 0 && match.Gyoztes != 'draw' && match.Csapatok[1]!=''">
                                 {{match.Csapatok[0]}}<span class="score">{{match.score0}}</span></li>
                             <li class="team" (click)="onTeamClick($event)"
-                                [class.win]="match.Csapatok[1]==match.Gyoztes  && match.Gyoztes.length > 0">
+                                [class.win]="match.Csapatok[1]==match.Gyoztes  && match.Gyoztes.length > 0"
+                                [class.lose]="match.Csapatok[1] != match.Gyoztes && match.Gyoztes.length > 0 && match.Gyoztes != 'draw' && match.Csapatok[1]!=''">
                                 {{match.Csapatok[1]}}<span class="score">{{match.score1}}</span></li>
                         </ul>
                     </div> <!-- END ROUND ONE -->

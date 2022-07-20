@@ -10,6 +10,7 @@ import { LoadModal } from '../modals/load-modal/load-modal.component';
 import { NewModal } from '../modals/new-modal/new-modal.component';
 import { CacheElement, Match } from '../services/data.service';
 import { Subscription } from 'rxjs/internal/Subscription';
+import { InfoModal } from '../modals/info-modal/info-modal.component';
 
 @Component({
   selector: 'app-se-bracket',
@@ -18,15 +19,15 @@ import { Subscription } from 'rxjs/internal/Subscription';
 })
 export class SEBracketComponent implements OnInit {
   @ViewChild('container') container;
-  matches:Match[];
-  gameName:string = "";
-  user:User;
+  matches: Match[];
+  gameName: string = "";
+  user: User;
   @Input() gameType;
-  desktopView:boolean = false;
+  desktopView: boolean = false;
 
   private subscriptions: Array<Subscription> = [];
 
-  constructor(private bracket: SEGeneratorService, private modalService: NgbModal, private httpservice: HttpService, private userservice: UserService, private dataservice: DataService) {}
+  constructor(private bracket: SEGeneratorService, private modalService: NgbModal, private httpservice: HttpService, private userservice: UserService, private dataservice: DataService) { }
   ngOnInit(): void {
     this.loadCache();
     this.user = this.userservice.loggedUser;
@@ -34,46 +35,62 @@ export class SEBracketComponent implements OnInit {
     this.subscriptions.push(this.sub2Generated());
   }
   onTeamClick(event) {
-    if(this.user.privilegeType=='Guest') return;
     let matchID = event.target.parentNode.id.match(/(\d+)/)![0];
-    let thisMatch = this.matches.filter(m =>{ return m.Meccs_id == matchID})[0];
+    let thisMatch = this.matches.filter(m => { return m.Meccs_id == matchID })[0];
     if (!thisMatch) return;
-    if(thisMatch.Gyoztes != "") return;
+    if (thisMatch.Gyoztes != "") return;
     if (thisMatch.Csapatok[0] == "" || thisMatch.Csapatok![1] == "") return;
+    if (this.user.privilegeType == 'Guest') {
+      this.modalService.open(InfoModal, { centered: true });
+      return;
+    };
     const modalRef = this.modalService.open(WinModal, { centered: true });
     modalRef.componentInstance.match = thisMatch;
-    modalRef.componentInstance.updateEvent.subscribe((updatedMatch:Match)=>{
+    modalRef.componentInstance.updateEvent.subscribe((updatedMatch: Match) => {
       if (updatedMatch.Gyoztes == 'draw') return;
       thisMatch = updatedMatch;
       let nextID = thisMatch.nextRoundID
-      if(nextID >= 0){
-        let nextMatch:Match = this.matches.filter(m=>{return m.Meccs_id == nextID})[0]
+      if (nextID >= 0) {
+        let nextMatch: Match = this.matches.filter(m => { return m.Meccs_id == nextID })[0]
         nextMatch.Csapatok[thisMatch.bottom] = thisMatch.Gyoztes;
       }
-      this.httpservice.saveSEGame({body: this.matches, name: this.gameName, type:this.gameType}).subscribe({})
+      if (this.matches.filter(m => { return m.Round == thisMatch.Round }).length == 2) {//if its semi
+        let idx = 1 - thisMatch.Csapatok.indexOf(thisMatch.Gyoztes);
+        let lostPlayer = thisMatch.Csapatok[idx];
+        let thirdGame = this.matches.filter(m => { return m.thirdPlace == true })[0];
+        if (thirdGame != undefined) {
+          if (thirdGame.Csapatok[0] == '') {
+            thirdGame.Csapatok[0] = lostPlayer;
+          }
+          else {
+            thirdGame.Csapatok[1] = lostPlayer;
+          }
+        }
+      }
+      this.httpservice.saveSEGame({ body: this.matches, name: this.gameName, type: this.gameType }).subscribe({})
       this.saveCache();
       this.giveEffects();
     })
   }
-  onSave(){
-    if(this.matches == undefined) return;
-    if(this.matches.length < 1) return;
+  onSave() {
+    if (this.matches == undefined) return;
+    if (this.matches.length < 1) return;
     const modalRef = this.modalService.open(SaveModal, { centered: true });
     modalRef.componentInstance.matches = this.matches;
     modalRef.componentInstance.saveMode = 'single-elimination';
     modalRef.componentInstance.gameType = this.gameType;
-    if(this.gameName != '') modalRef.componentInstance.IN_gameID = this.gameName;
-    modalRef.componentInstance.saveEvent.subscribe(name=>{
+    if (this.gameName != '') modalRef.componentInstance.IN_gameID = this.gameName;
+    modalRef.componentInstance.saveEvent.subscribe(name => {
       this.gameName = name;
       this.saveCache();
     })
   }
-  onLoad(){
+  onLoad() {
     const modalRef = this.modalService.open(LoadModal, { centered: true });
     modalRef.componentInstance.matches = this.matches;
     modalRef.componentInstance.gameType = this.gameType;
     modalRef.componentInstance.loadMode = 'single-elimination';
-    modalRef.componentInstance.loadEvent.subscribe((loadData)=>{
+    modalRef.componentInstance.loadEvent.subscribe((loadData) => {
       this.gameName = loadData.name
       this.matches = []
       //kell idő amíg felfogja hogy a newMatches nem üres.......
@@ -86,9 +103,9 @@ export class SEBracketComponent implements OnInit {
       //meg kell várni míg renderel a view
     })
   }
-  onNewBracket(){
+  onNewBracket() {
     const modalRef = this.modalService.open(NewModal, { centered: true });
-    modalRef.componentInstance.generateEvent.subscribe((obj)=>{
+    modalRef.componentInstance.generateEvent.subscribe((obj) => {
       this.matches = []
       this.bracket.startGenerating('withNames', obj.players)
     })
@@ -96,10 +113,10 @@ export class SEBracketComponent implements OnInit {
   giveCurrentClass() {
     let matchups = this.container.nativeElement.querySelectorAll('ul');
     matchups.forEach(m => {
-      if(!m.innerHTML.includes('win')){
+      if (!m.innerHTML.includes('win')) {
         m.classList.add('current');
       }
-      else{
+      else {
         m.classList.remove('current')
       }
     });
@@ -110,14 +127,14 @@ export class SEBracketComponent implements OnInit {
       if (el.onmouseover != null) el.onmouseover = null;
       if (el.onmouseleave != null) el.onmouseleave = null;
     });
-    let players:string[] = []
-    this.matches.forEach(match=>{
+    let players: string[] = []
+    this.matches.forEach(match => {
       let p1 = match.Csapatok[0];
       let p2 = match.Csapatok[1];
-      if(p1 != "" && !players.includes(p1)){
+      if (p1 != "" && !players.includes(p1)) {
         players.push(p1);
       }
-      if(p2 != "" && !players.includes(p2)){
+      if (p2 != "" && !players.includes(p2)) {
         players.push(p2);
       }
     })
@@ -131,9 +148,10 @@ export class SEBracketComponent implements OnInit {
       samePlayer.forEach(e => {
         e.onmouseover = () => {
           samePlayer.forEach(same => {
-            same.style.border = "1px solid rgb(71, 228, 9)";
+            let color = window.getComputedStyle(same, null).getPropertyValue('background-color')
+            same.style.border = `1px solid ${color}`;
             same.style.opacity = 1;
-            same.style.boxShadow = "0 0 5px rgb(71, 228, 9), 0 0 25px rgb(71, 228, 9)"
+            same.style.boxShadow = `0 0 5px ${color}, 0 0 25px ${color}`
           })
         }
         e.onmouseleave = () => {
@@ -147,60 +165,60 @@ export class SEBracketComponent implements OnInit {
       })
     });
   }
-  giveEffects(){
+  giveEffects() {
     setTimeout(() => {
-      if (this.container != undefined){
+      if (this.container != undefined) {
         this.giveHoverEffect();
         this.giveCurrentClass();
       }
     });
   }
 
-  saveCache(){
-    this.httpservice.saveCache({gameName: this.gameName, bracketType:'single-elimination', gameType:this.gameType}).subscribe({})
+  saveCache() {
+    this.httpservice.saveCache({ gameName: this.gameName, bracketType: 'single-elimination', gameType: this.gameType }).subscribe({})
   }
-  loadCache(){
-    this.httpservice.getCacheFromGame(this.gameType).subscribe(res=>{
-      let myarray:Array<CacheElement> = Object.values(res);
-      if(myarray.length <= 0) return;
-      myarray.forEach(cacheEl=>{
-        if(cacheEl.bracketType == 'single-elimination'){
+  loadCache() {
+    this.httpservice.getCacheFromGame(this.gameType).subscribe(res => {
+      let myarray: Array<CacheElement> = Object.values(res);
+      if (myarray.length <= 0) return;
+      myarray.forEach(cacheEl => {
+        if (cacheEl.bracketType == 'single-elimination') {
           this.gameName = cacheEl.gameName;
         }
       })
-      if(this.gameName != ""){
+      if (this.gameName != "") {
         this.matches = [];
-        this.httpservice.getSEMatch(this.gameName).subscribe(data=>{
+        this.httpservice.getSEMatch(this.gameName).subscribe(data => {
           this.matches = this.dataservice.loadMatchesFromDataObject(data);
           this.giveEffects();
         })
       }
     })
   }
-  sub2Generated(){
-    return this.bracket.generated.subscribe(()=>{
-        this.matches = [];
-        this.matches = this.bracket.GeneratedGames
-        this.gameName = Math.random().toString(36).slice(2, 7);
-        this.httpservice.saveSEGame({body: this.matches, name: this.gameName, type: this.gameType}).subscribe({})
-        this.saveCache();
-        this.giveEffects();
+  sub2Generated() {
+    return this.bracket.generated.subscribe(() => {
+      this.matches = [];
+      this.matches = this.bracket.GeneratedGames
+      this.gameName = Math.random().toString(36).slice(2, 7);
+      this.httpservice.saveSEGame({ body: this.matches, name: this.gameName, type: this.gameType }).subscribe({})
+      this.saveCache();
+      this.giveEffects();
     })
   }
-  sub2UserChange(){
-    return this.userservice.userChanged.subscribe(()=>{
+  sub2UserChange() {
+    return this.userservice.userChanged.subscribe(() => {
       this.user = this.userservice.loggedUser
     });
   }
-  onPrintClick(){
+  onPrintClick() {
     window.print();
   }
-  viewChange(){
+  viewChange() {
     this.desktopView = !this.desktopView;
   }
-  ngOnDestroy(){
-    this.subscriptions.forEach((sub:Subscription) => {
+  ngOnDestroy() {
+    this.subscriptions.forEach((sub: Subscription) => {
       sub.unsubscribe();
-    });  
+    });
   }
 }

@@ -44,10 +44,7 @@ export class RoundsPipe implements PipeTransform {
     }
     for (let i = 0; i < 7; i++) {
       let newRound:any[] = matches.filter(el => { return el.Round == (i + 1) });
-      if (newRound.length == 2 && team32) {
-        //semi1, semi2
-      }
-      else if (newRound.length == 1 && team32) {
+      if (newRound.length == 1) {
         //final
       }
       else if (newRound.length > 0) {
