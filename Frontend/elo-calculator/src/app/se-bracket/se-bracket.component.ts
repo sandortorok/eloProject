@@ -20,9 +20,10 @@ import { InfoModal } from '../modals/info-modal/info-modal.component';
 export class SEBracketComponent implements OnInit {
   @ViewChild('container') container;
   matches: Match[];
-  gameName: string = "";
   user: User;
-  @Input() gameType;
+  @Input() gameName: string = "";
+  @Input() gameType:string;
+  @Input() groupMode:boolean = false;
   desktopView: boolean = false;
 
   private subscriptions: Array<Subscription> = [];
@@ -38,6 +39,7 @@ export class SEBracketComponent implements OnInit {
     let matchID = event.target.parentNode.id.match(/(\d+)/)![0];
     let thisMatch = this.matches.filter(m => { return m.Meccs_id == matchID })[0];
     if (!thisMatch) return;
+    if(thisMatch.Csapatok[0].includes('helyezett') || thisMatch.Csapatok[1].includes('helyezett')) return;
     if (thisMatch.Gyoztes != "") return;
     if (thisMatch.Csapatok[0] == "" || thisMatch.Csapatok![1] == "") return;
     if (this.user.privilegeType == 'Guest') {
@@ -67,7 +69,7 @@ export class SEBracketComponent implements OnInit {
           }
         }
       }
-      this.httpservice.saveSEGame({ body: this.matches, name: this.gameName, type: this.gameType }).subscribe({})
+      this.httpservice.saveSEGame({ body: this.matches, name: this.gameName, type: this.gameType }).subscribe({});
       this.saveCache();
       this.giveEffects();
     })
@@ -107,7 +109,7 @@ export class SEBracketComponent implements OnInit {
     const modalRef = this.modalService.open(NewModal, { centered: true });
     modalRef.componentInstance.generateEvent.subscribe((obj) => {
       this.matches = []
-      this.bracket.startGenerating('withNames', obj.players)
+      this.matches = this.bracket.startGenerating('withNames', obj.players)
     })
   }
   giveCurrentClass() {
@@ -175,31 +177,46 @@ export class SEBracketComponent implements OnInit {
   }
 
   saveCache() {
-    this.httpservice.saveCache({ gameName: this.gameName, bracketType: 'single-elimination', gameType: this.gameType }).subscribe({})
+    if(this.groupMode){
+      this.httpservice.saveCache({ gameName: this.gameName, bracketType: 'group-stage', gameType: this.gameType }).subscribe({})
+    }
+    else{
+      this.httpservice.saveCache({ gameName: this.gameName, bracketType: 'single-elimination', gameType: this.gameType }).subscribe({})
+    }
   }
   loadCache() {
-    this.httpservice.getCacheFromGame(this.gameType).subscribe(res => {
-      let myarray: Array<CacheElement> = Object.values(res);
-      if (myarray.length <= 0) return;
-      myarray.forEach(cacheEl => {
-        if (cacheEl.bracketType == 'single-elimination') {
-          this.gameName = cacheEl.gameName;
+    if(this.groupMode == true){
+      this.httpservice.getSEMatch(this.gameName).subscribe(data => {
+        this.matches = this.dataservice.loadMatchesFromDataObject(data);
+        this.giveEffects();
+      })
+    }
+    else{
+      this.httpservice.getCacheFromGame(this.gameType).subscribe(res => {
+        let myarray: Array<CacheElement> = Object.values(res);
+        if (myarray.length <= 0) return;
+        myarray.forEach(cacheEl => {
+          if (cacheEl.bracketType == 'single-elimination') {
+            this.gameName = cacheEl.gameName;
+          }
+        })
+        if (this.gameName != "") {
+          this.matches = [];
+          this.httpservice.getSEMatch(this.gameName).subscribe(data => {
+            this.matches = this.dataservice.loadMatchesFromDataObject(data);
+            this.giveEffects();
+          })
         }
       })
-      if (this.gameName != "") {
-        this.matches = [];
-        this.httpservice.getSEMatch(this.gameName).subscribe(data => {
-          this.matches = this.dataservice.loadMatchesFromDataObject(data);
-          this.giveEffects();
-        })
-      }
-    })
+    }
   }
   sub2Generated() {
     return this.bracket.generated.subscribe(() => {
       this.matches = [];
       this.matches = this.bracket.GeneratedGames
-      this.gameName = Math.random().toString(36).slice(2, 7);
+      if(!this.groupMode){
+        this.gameName = Math.random().toString(36).slice(2, 7);
+      }
       this.httpservice.saveSEGame({ body: this.matches, name: this.gameName, type: this.gameType }).subscribe({})
       this.saveCache();
       this.giveEffects();

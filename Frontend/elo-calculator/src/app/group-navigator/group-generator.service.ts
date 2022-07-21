@@ -33,23 +33,24 @@ export class GroupGeneratorService {
     }
   }
   generateGroups(players:string[], groupSize:number=4, qualify:number=2){
+    this.GeneratedGroups = []
     const alphabet = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
-    this.GeneratedGroups = [];
-    let groupNumber = 0;  
-    let newGroup:Group = {groupName: `${alphabet[groupNumber]} Csoport`,teams: [], qualifyNumber: qualify};
-    groupNumber++;
-    for(let p_idx = 0; p_idx < players.length; p_idx++){
-      let newPlayer:GroupPlayer = { name: players[p_idx],wins: 0,loses: 0,draws: 0,points: 0,last3Results: [], diff:0 }
-      if(newGroup.teams.length == groupSize){
-        this.GeneratedGroups.push(newGroup);
-        newGroup = {groupName: `${alphabet[groupNumber]} Csoport`,teams: [], qualifyNumber: qualify};
-        groupNumber++;
-      }
-      newGroup.teams.push(newPlayer);
-    }
-    if(newGroup.teams.length>0){
+    let numberOfGroups = Math.ceil(players.length/groupSize);
+    for(let i = 0; i < numberOfGroups; i++){
+      let newGroup:Group = {groupName: `${alphabet[i]} Csoport`,teams: [], qualifyNumber: qualify};
       this.GeneratedGroups.push(newGroup);
     }
+    let allTeams:GroupPlayer[][] = []
+    for(let i = 0; i < numberOfGroups; i++){
+      allTeams.push([])
+    }
+    for(let i = 0; i < players.length; i++){
+      let newPlayer:GroupPlayer = { name: players[i],wins: 0,loses: 0,draws: 0,points: 0,last3Results: [], diff:0 }
+      allTeams[i%numberOfGroups].push(newPlayer)
+    }
+    this.GeneratedGroups.forEach((group, index)=>{
+      group.teams = allTeams[index];
+    })
   }
   loadExampleTeams(how_many){
     this.exampleTeams = [];

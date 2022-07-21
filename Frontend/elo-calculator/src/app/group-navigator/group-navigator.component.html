@@ -1,7 +1,8 @@
-
 <div *ngIf="matches!=undefined" class="btn-wrapper">
     <app-neon-button text="CSOPORTOK" style="filter:hue-rotate(100deg);" (click)="groupstage.select(1)"></app-neon-button>
     <app-neon-button text="MECCSEK" style="filter:hue-rotate(100deg);" (click)="groupstage.select(2)"></app-neon-button>
+    <app-neon-button text="KIESÉS" style="filter:hue-rotate(100deg);" (click)="groupstage.select(3)"></app-neon-button>
+
 </div>
 <div *ngIf="user?.privilegeType == 'Admin'" class="btn-wrapper">
     <app-neon-button #new text="ÚJ CSOPORTOK" (click)="onNewGroup()"></app-neon-button>
@@ -31,11 +32,22 @@
         <a ngbNavLink>Matches</a>
         <ng-template ngbNavContent>
             <app-rr-bracket 
+                [gameType]="gameType"
                 [groupMode]="true" 
                 [groups]="groups" 
                 (groupsChange)="RRBracketUpdate($event)" 
                 [matches]="matches">
             </app-rr-bracket>
+        </ng-template>
+    </li>
+    <li [ngbNavItem] = "3" >
+        <a ngbNavLink>Matches</a>
+        <ng-template ngbNavContent>
+            <app-se-bracket 
+                [gameType]="gameType"
+                [gameName]="gameName"
+                [groupMode]="true">
+            </app-se-bracket>
         </ng-template>
     </li>
 </ul>

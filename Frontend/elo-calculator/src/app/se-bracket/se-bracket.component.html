@@ -1,5 +1,5 @@
 <div [style] = "desktopView?'min-width:1800px':''">
-    <header *ngIf="matches != undefined" class="hero">
+    <header *ngIf="matches != undefined && !groupMode" class="hero">
         <div class="hero-wrap">
             <p class="intro" id="intro" style="margin-bottom: 0;">Pányok</p>
             <h1 id="headline">{{gameType | gameType}} Bajnokság</h1>
@@ -35,7 +35,7 @@
                 </div>
                 <div class="champion" [style]="{'width': (matches.length>20) ? '13%' : '30%'}">
                     <div class="final" *ngIf="(matches|sechampions:'final') as final" [style]="{'margin': (matches.length > 10)? '4.5em 0' : '0'}">
-                        <div class="round-details">DÖNTŐ <br /><span class="date">CSÜTÖRTÖK</span></div>
+                        <div class="round-details" style="margin-top:20px; margin-bottom:0">DÖNTŐ <br /><span class="date">CSÜTÖRTÖK</span></div>
                         <i *ngIf="matches.length>10" class="fa fa-trophy" style="color:gold; margin-right:30px"></i><i *ngIf="matches.length>10" class="fa fa-trophy" style="color:silver"></i>
                         <ul class="matchup championship" id="match {{final.Meccs_id}}">
                             <li class="team" (click)="onTeamClick($event)"

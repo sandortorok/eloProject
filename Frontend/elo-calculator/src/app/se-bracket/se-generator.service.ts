@@ -38,7 +38,7 @@ export class SEGeneratorService {
         }, 1000);
         break;
     }
-
+    return this.GeneratedGames
   }
 
   generateMatches(input, isTeam?: boolean) {

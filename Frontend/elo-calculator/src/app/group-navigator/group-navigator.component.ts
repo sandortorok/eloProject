@@ -10,6 +10,7 @@ import { RRHelperService } from 'src/app/rr-bracket/rr-helper.service';
 import { RRGeneratorService } from 'src/app/rr-bracket/rr-generator.service';
 import { LoadModal } from '../modals/load-modal/load-modal.component';
 import { NewModal } from '../modals/new-modal/new-modal.component';
+import { SEGeneratorService } from '../se-bracket/se-generator.service';
 
 @Component({
   selector: 'app-group-navigator',
@@ -19,6 +20,7 @@ import { NewModal } from '../modals/new-modal/new-modal.component';
 export class GroupNavigatorComponent implements OnInit {
   groups: Group[];
   matches:Match[];
+  SEMatches:Match[];
   @Input() gameType:string;
   gameName: string;
   user:User;
@@ -29,6 +31,7 @@ export class GroupNavigatorComponent implements OnInit {
     private modalService: NgbModal, 
     private rrhelper: RRHelperService,
     private rrGenerator: RRGeneratorService,
+    private seGenerator: SEGeneratorService,
     private userservice: UserService
   ) { }
 
@@ -39,7 +42,6 @@ export class GroupNavigatorComponent implements OnInit {
     this.subscriptions.push(this.groupGeneratedSub());
     this.subscriptions.push(this.groupHelperSub());
     this.subscriptions.push(this.RRHelperSub());
-
   }
   saveCache() {
     this.groupHelper.saveCache(this.gameName, this.gameType);
@@ -105,7 +107,10 @@ export class GroupNavigatorComponent implements OnInit {
       this.groups = this.generator.GeneratedGroups;
       this.gameName = Math.random().toString(36).slice(2, 7);
       this.matches = this.rrGenerator.generateGroupMatches(this.groups);
+      let qualifiers:string[] = this.generateQualifiers();
+      let sematches:Match[] = this.seGenerator.startGenerating('withNames', qualifiers);
       this.rrhelper.saveRRGame(this.gameName, this.gameType, this.matches);
+      this.groupHelper.saveSEGame(this.gameName, this.gameType, sematches)
       this.groupHelper.saveGroups(this.gameName, this.gameType, this.groups);
       this.saveCache();
     })
@@ -115,12 +120,109 @@ export class GroupNavigatorComponent implements OnInit {
       this.user = this.userservice.loggedUser
     });
   }
+  generateQualifiers():string[]{
+    let names:string[] = []
+    let qualifyNumber = this.groups[0].qualifyNumber
+    for(let i = 0; i < qualifyNumber; i++){
+    this.groups.forEach(group=>{
+        if(group.teams.length >= i+1){
+          names.push(`${group.groupName} ${i+1}.helyezett`);
+        }
+      })
+    }
+    let byes = this.getClosest(names.length) - names.length;
+    let byePlayers:string[] = []
+    for(let i = 0; i < byes; i++){
+      let newName = names.shift();
+      if(newName){
+        byePlayers.push(newName);
+      }
+    }
+    names = this.shuffle(names);
+    let newNames:string[] = []
+    let counter = 0;
+    while(newNames.length != (names.length)){
+      names.forEach(name=>{
+        if(byePlayers.includes(name)) return;
+        if(newNames.includes(name)) return;
+        if(newNames.length == 0){
+          newNames.push(name);
+        }
+        else{
+          if(counter > 10){
+            newNames.push(name);
+            counter = 0;
+          }
+          let lastGroup = newNames[newNames.length-1].split(" ")[0];
+          let thisGroup = name.split(" ")[0];
+          if(thisGroup == lastGroup) return;
+          let placeOfLast = newNames[newNames.length-1].split(" ")[2];
+          let placeOfThis = name.split(" ")[2];
+          if(placeOfLast == placeOfThis) return;
+          newNames.push(name);
+        }
+      })
+      counter++;
+    }
+    newNames.forEach(n=>{
+      byePlayers.push(n)
+    })
+    return byePlayers
+  }
+  getClosest(players) {
+    const knownBrackets = [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024]
+    for (let i = 0; i < knownBrackets.length; i++) {
+      if (players == knownBrackets[i]) {
+        return knownBrackets[i]
+      }
+      if (players < knownBrackets[i]) {
+        return knownBrackets[i];
+      }
+    }
+    return -1;
+  }
+  shuffle(array) {
+    let currentIndex = array.length,  randomIndex;
+  
+    // While there remain elements to shuffle.
+    while (currentIndex != 0) {
+  
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+  
+    return array;
+  }
   RRBracketUpdate(obj:{groups:Group[], matches:Match[]}){
     this.groups = obj.groups;
     this.matches = obj.matches;
+    this.loadFinalStage(obj.matches);
     this.groupHelper.saveGroups(this.gameName, this.gameType, this.groups);
     this.rrhelper.saveRRGame(this.gameName, this.gameType, this.matches);
     this.saveCache();
+  }
+  loadFinalStage(matches:Match[]){
+    let finishedGroups:Group[] = []
+    this.groups.forEach(group=>{
+      let allFinished = true;
+      let groupGames = matches.filter(m=>{return m.groupName == group.groupName})
+      groupGames.forEach(game=>{
+        if(game.Gyoztes== ""){
+          allFinished = false;
+        }
+      })
+      if(allFinished == true){
+        finishedGroups.push(group)
+      }
+    })
+    if(finishedGroups.length > 0){
+      this.groupHelper.loadFinalStage(finishedGroups, this.gameName, this.gameType);
+    }
   }
   ngOnDestroy() {
     this.subscriptions.forEach((sub:Subscription) => {
