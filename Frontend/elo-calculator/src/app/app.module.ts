@@ -34,6 +34,7 @@ import { LoginFormComponent } from './login-form/login-form.component';
 import { InfoModal } from './modals/info-modal/info-modal.component';
 import { WaitScreenComponent } from './wait-screen/wait-screen.component';
 import { SwissBracketComponent } from './swiss-bracket/swiss-bracket.component';
+import { TieBreakerPipe } from './pipes/tie-breaker.pipe';
 
 
 @NgModule({
@@ -65,6 +66,7 @@ import { SwissBracketComponent } from './swiss-bracket/swiss-bracket.component';
     LoginFormComponent,
     WaitScreenComponent,
     SwissBracketComponent,
+    TieBreakerPipe,
   ],
   imports: [
     BrowserModule,
@@ -74,7 +76,7 @@ import { SwissBracketComponent } from './swiss-bracket/swiss-bracket.component';
     FormsModule,
     CommonModule
   ],
-  providers: [HttpService, DataService, SortPipe],
+  providers: [HttpService, DataService, SortPipe, TieBreakerPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

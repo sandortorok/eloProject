@@ -2,7 +2,7 @@ import { DataService } from './../services/data.service';
 import { User, UserService } from './../services/user-service.service';
 import { HttpService } from 'src/app/services/http.service';
 import { SaveModal } from '../modals/save-modal/save-modal.component';
-import { Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { WinModal } from '../modals/win-modal/win-modal.component';
 import { SEGeneratorService } from './se-generator.service';

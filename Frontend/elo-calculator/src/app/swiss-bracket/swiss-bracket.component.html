@@ -12,12 +12,14 @@
         <app-neon-button #load text="BETÖLTÉS" style="filter:hue-rotate(300deg);" (click)="onLoad()"></app-neon-button>
         <app-neon-button #save text="MENTÉS" (click)="onSave()"></app-neon-button>
         <app-neon-button text="NYOMTATÁS" style="filter:hue-rotate(300deg);" (click)="onPrintClick()"></app-neon-button>
-        <app-neon-button text="KÖVETKEZŐ KÖR" style="filter:hue-rotate(300deg);" (click)="onGenerateNext()"></app-neon-button>
+        <app-neon-button text="KÖVETKEZŐ KÖR" style="filter:hue-rotate(300deg);" (click)="onGenerateNext()">
+        </app-neon-button>
 
     </div>
     <app-spinner *ngIf="matches != undefined && matches.length == 0"></app-spinner>
-    <div *ngIf="matches != undefined && matches.length > 0" class="container" #container [ngStyle]="gridColumns(matches)">
-    <div *ngFor="let round of matches | rounds; let i = index" class="split-wrap">
+    <div *ngIf="matches != undefined && matches.length > 0" class="container" #container
+        [ngStyle]="gridColumns(matches)">
+        <div *ngFor="let round of matches | rounds; let i = index" class="split-wrap">
             <h1>{{i+1}}. Forduló</h1>
             <div class="round">
                 <ul *ngFor="let match of round" class="matchup" id="match {{match.Meccs_id}}">
@@ -26,20 +28,26 @@
                         [class.win]="match.Csapatok[0] == match.Gyoztes && match.Gyoztes.length > 0"
                         [class.lose]="match.Csapatok[0] != match.Gyoztes && match.Gyoztes.length > 0 && match.Gyoztes != 'draw' && match.Csapatok[0]!=''"
                         [class.draw]="match.Gyoztes=='draw'">
-                        <span class="name">{{match.Csapatok[0]}}</span><span class="score">{{myfunc(match.Csapatok[0])}}</span></li>
+                        <span class="name">{{match.Csapatok[0]}}</span><span
+                            class="score">{{myfunc(match.Csapatok[0])}}</span>
+                    </li>
                     <li class="team" (click)="onTeamClick($event)"
                         [class.win]="match.Csapatok[1] == match.Gyoztes  && match.Gyoztes.length > 0"
                         [class.lose]="match.Csapatok[1] != match.Gyoztes && match.Gyoztes.length > 0 && match.Gyoztes != 'draw' && match.Csapatok[1]!=''"
                         [class.draw]="match.Gyoztes=='draw'">
-                        <span class="name">{{match.Csapatok[1]}}</span><span class="score">{{myfunc(match.Csapatok[1])}}</span></li>
+                        <span class="name">{{match.Csapatok[1]}}</span><span
+                            class="score">{{myfunc(match.Csapatok[1])}}</span>
+                    </li>
                 </ul>
             </div>
         </div>
         <div class="scoreBoard">
             <h1>EREDMÉNYEK</h1>
             <div class="round" style="width: min(90%, 300px);align-self:center;margin:10px;gap:5px">
-                <li *ngFor="let player of players | sort: ['points', '!byes']" class="team current">
-                    <span class="name">{{player.name}}</span><span class="score">{{player.points}} pont</span></li>
+                <li *ngFor="let player of (players | sort: ['points', '!byes']) | tieBreaker: matches"
+                    class="team current">
+                    <span class="name">{{player.name}}</span><span class="score">{{player.points}} pont</span>
+                </li>
             </div>
         </div>
     </div>

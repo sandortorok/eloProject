@@ -1,3 +1,5 @@
+import { playerScore } from './../rr-bracket/rr-bracket.component';
+import { TieBreakerPipe } from './../pipes/tie-breaker.pipe';
 import { HttpService } from 'src/app/services/http.service';
 import { CacheElement, Match, swissPlayer, DataService } from './../services/data.service';
 import { SwissGeneratorService } from './swiss-generator.service';
@@ -32,7 +34,8 @@ export class SwissBracketComponent implements OnInit {
     private httpservice: HttpService, 
     private modalService: NgbModal, 
     private dataservice:DataService,
-    private mypipe:SortPipe
+    private mypipe:SortPipe,
+    private tieBreakerPipe:TieBreakerPipe
     ) { }
   
   ngOnInit(): void {
@@ -52,7 +55,7 @@ export class SwissBracketComponent implements OnInit {
   }
   gridColumns(matches){
     if(matches.filter(m=>{return m.Round > 3}).length > 0){
-      return {'grid-template-columns':'1fr 1fr 1fr 1fr'}
+      return {'grid-template-columns':'1fr 1fr 1fr 1fr 1fr'}
     }
     else if(matches.filter(m=>{return m.Round > 2}).length > 0){
       return {'grid-template-columns':'1fr 1fr 1fr 1fr'}
@@ -152,7 +155,7 @@ export class SwissBracketComponent implements OnInit {
   onLoad(){
     const modalRef = this.modalService.open(LoadModal, { centered: true });
     modalRef.componentInstance.matches = this.matches;
-    modalRef.componentInstance.loadMode = 'swiss-system';
+    modalRef.componentInstance.loadMode = 'swiss';
     modalRef.componentInstance.gameType = this.gameType;
     modalRef.componentInstance.loadEvent.subscribe((loadData)=>{
       this.gameName = loadData.name
@@ -252,7 +255,7 @@ export class SwissBracketComponent implements OnInit {
       })
     })
     playerNames.forEach(pName=>{
-      let newPlayerScore:swissPlayer = {name: pName,eloRating: 0,games: 0,gameType: this.gameType,gameName: this.gameName,points: 0, byes:0, blackWhiteHistory:[]}
+      let newPlayerScore:swissPlayer = {name: pName,eloRating: 1000,points: 0,games: 0,gameType: this.gameType,gameName: this.gameName, byes:0, blackWhiteHistory:[]}
       this.matches.forEach(m=>{
         if(m.Csapatok.includes(pName)){
           if(m.Gyoztes == 'draw'){
@@ -278,8 +281,35 @@ export class SwissBracketComponent implements OnInit {
       })
       playerScores.push(newPlayerScore);
     })
-  playerScores = this.mypipe.transform(playerScores, ['points', '!byes']);
-  this.players = playerScores
+    this.matches.forEach(m=>{
+      if(m.Gyoztes == "") return;
+      if(m.Csapatok.includes("")) return;
+      if(m.Gyoztes == "draw"){
+        let p1 = playerScores.filter(p=>{return p.name == m.Csapatok[0]})[0];
+        let p2 = playerScores.filter(p=>{return p.name == m.Csapatok[1]})[0];
+        let result = this.dataservice.match(p1.eloRating, p2.eloRating, 1);
+        p1['eloRating'] = result['newRatingA'];
+        p2['eloRating'] = result['newRatingB'];
+        return;
+      }
+      else{
+        let winner = m.Gyoztes;
+        let loserIdx = 1- m.Csapatok.indexOf(winner);
+        let loser = m.Csapatok[loserIdx];
+        let p1 = playerScores.filter(p=>{return p.name == winner})[0];
+        let p2 = playerScores.filter(p=>{return p.name == loser})[0];
+        let result = this.dataservice.match(p1.eloRating, p2.eloRating, 1);
+        p1['eloRating'] = result['newRatingA'];
+        p2['eloRating'] = result['newRatingB'];
+      }
+    })
+    playerScores = this.mypipe.transform(playerScores, ['points', '!byes']);
+    playerScores = this.tieBreakerPipe.transform(playerScores, this.matches);
+    
+    playerScores.forEach(p => {
+      console.log(p.points,'   ', Math.round(p.eloRating*100)/100,'   ', p['opponentScores'], p.name);
+    });
+    this.players = playerScores
   }
   onGenerateNext(){
     this.generator.generateNextRound(this.matches, this.players);

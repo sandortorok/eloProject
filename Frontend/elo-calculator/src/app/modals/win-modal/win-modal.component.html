@@ -21,7 +21,7 @@
         class="form-control" min="1" max="100" [(ngModel)] = "score1"/>
         <input type="number" style="width: 50%; margin-left:25%; display: inline-block; margin-bottom: 1rem; box-sizing: border-box;"
         class="form-control" min="1" max="100" [(ngModel)] = "score2"/>
-        <label *ngIf="bracketType =='swiss-system' || bracketType == 'round-robin'" style="grid-column: span 2;">
+        <label *ngIf="bracketType =='swiss' || bracketType == 'round-robin'" style="grid-column: span 2;">
             <input type="radio" name="radio" />
             <div style="aspect-ratio: 0;" class="back-end box" (click)="onSelect('draw')">
                 <span>Döntetlen</span>
