@@ -35,6 +35,16 @@ export class SEBracketComponent implements OnInit {
     this.subscriptions.push(this.sub2UserChange());
     this.subscriptions.push(this.sub2Generated());
   }
+  championWidth(matches:Match[]){
+    if(matches.length > 20) return '13%'
+    if(matches.length < 5) return '50%'
+    return '30%'
+  }
+  splitWidth(matches:Match[]){
+    if(matches.length > 20) return '42%'
+    if(matches.length < 5) return '50%'
+    return '100%'
+  }
   onTeamClick(event) {
     let matchID = event.target.parentNode.id.match(/(\d+)/)![0];
     let thisMatch = this.matches.filter(m => { return m.Meccs_id == matchID })[0];

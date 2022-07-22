@@ -8,7 +8,7 @@
         </div>
     </header>
     <section *ngIf="user?.privilegeType == 'Admin' || matches != undefined" id="bracket">
-        <div *ngIf="user?.privilegeType == 'Admin'" class="btn-wrapper">
+        <div *ngIf="user?.privilegeType == 'Admin' && !groupMode" class="btn-wrapper">
             <app-neon-button #new text="ÚJ BEOSZTÁS" (click)="onNewBracket()"></app-neon-button>
             <app-neon-button #load text="BETÖLTÉS" style="filter:hue-rotate(100deg);" (click)="onLoad()"></app-neon-button>
             <app-neon-button #save text="MENTÉS" (click)="onSave()"></app-neon-button>
@@ -18,7 +18,7 @@
         <div *ngIf="matches != undefined && matches.length > 0" class="split-wrap">
             <h1></h1>
             <div class="container" #container>
-                <div class="split split-one" [ngStyle]="{'width': (matches.length>20) ? '42%' : '100%'}">
+                <div class="split split-one" [style.width]="splitWidth(matches)">
                     <div *ngFor="let round of matches | rounds :'SELeft'; let i = index" class="round round-{{i+1}}">
                         <div class="round-details">{{i+1}}. Forduló <br /><span class="date">KEDD</span></div>
                         <ul *ngFor="let match of round" class="matchup" id="match {{match.Meccs_id}}">
@@ -33,7 +33,7 @@
                         </ul>
                     </div> <!-- END ROUND ONE -->
                 </div>
-                <div class="champion" [style]="{'width': (matches.length>20) ? '13%' : '30%'}">
+                <div class="champion" [style.width]="championWidth(matches)" [style]="{'margin-top': (matches.length<5) ? '0' : '60px'}">
                     <div class="final" *ngIf="(matches|sechampions:'final') as final" [style]="{'margin': (matches.length > 10)? '4.5em 0' : '0'}">
                         <div class="round-details" style="margin-top:20px; margin-bottom:0">DÖNTŐ <br /><span class="date">CSÜTÖRTÖK</span></div>
                         <i *ngIf="matches.length>10" class="fa fa-trophy" style="color:gold; margin-right:30px"></i><i *ngIf="matches.length>10" class="fa fa-trophy" style="color:silver"></i>

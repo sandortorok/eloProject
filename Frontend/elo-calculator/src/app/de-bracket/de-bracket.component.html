@@ -56,7 +56,7 @@
             <div class="split-wrap final-bracket">
                 <h1>DÖNTŐK</h1>
                 <div class="split">
-                    <div *ngFor="let round of matches | rounds: 'final'; let i = index" class="round loser-round-{{i+1}}">
+                    <div *ngFor="let round of matches | rounds: 'final'; let i = index" class="round loser-round-{{i+1}}" style="width: 100%">
                         <div class="round-details">{{i+1}}. Döntő<br /><span class="date">KEDD</span></div>
                         <ul *ngFor="let match of round" class="matchup loser-matchup" id="match {{match.Meccs_id}}"
                             [class.bye]="match.Csapatok[0].length <= 0 && match.Csapatok[1].length <=0 && i == 0">
